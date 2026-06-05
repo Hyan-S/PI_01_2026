@@ -1,120 +1,76 @@
 package pi.Senai.Senai.Entity;
 
 import jakarta.persistence.*;
+import pi.Senai.Senai.enums.NivelAcesso;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Table(name = "usuarios")
 public class Usuario {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column
+    @Column(nullable = false)
     private String nome;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String cpf;
 
-    @Column
-    private String Email;
+    @Column(unique = true)
+    private String email;
 
-    @Column
+    @Column(nullable = false)
     private String senha;
 
-    @Column
-    private int nivelAcesso;
-
-    @Column
+    @Column(name = "data_cadastro", updatable = false)
     private LocalDateTime dataCadastro;
 
-    @Column
-    private LocalDateTime dataAtualização;
+    @Column(name = "data_atualizacao")
+    private LocalDateTime dataAtualizacao;
 
-    @Column
-    private boolean UsuarioAtivo;
+    private boolean ativo = true;
 
-    @ManyToOne
-    @JoinColumn(name = "categoriaId")
-    private Categoria categoriaId;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private NivelAcesso nivelAcesso;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
 
     public Usuario() {
     }
 
-    public UUID getId() {
-        return id;
+    @PrePersist
+    protected void onCreate() {
+        this.dataCadastro = LocalDateTime.now();
+        this.dataAtualizacao = LocalDateTime.now();
     }
 
-    public String getNome() {
-        return nome;
+    @PreUpdate
+    protected void onUpdate() {
+        this.dataAtualizacao = LocalDateTime.now();
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public int getNivelAcesso() {
-        return nivelAcesso;
-    }
-
-    public void setNivelAcesso(int nivelAcesso) {
-        this.nivelAcesso = nivelAcesso;
-    }
-
-    public LocalDateTime getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(LocalDateTime dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
-
-    public LocalDateTime getDataAtualização() {
-        return dataAtualização;
-    }
-
-    public void setDataAtualização(LocalDateTime dataAtualização) {
-        this.dataAtualização = dataAtualização;
-    }
-
-    public boolean isUsuarioAtivo() {
-        return UsuarioAtivo;
-    }
-
-    public void setUsuarioAtivo(boolean usuarioAtivo) {
-        UsuarioAtivo = usuarioAtivo;
-    }
-
-    public Categoria getCategoriaId() {
-        return categoriaId;
-    }
-
-    public void setCategoriaId(Categoria categoriaId) {
-        this.categoriaId = categoriaId;
-    }
+    public UUID getId() { return id; }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+    public String getCpf() { return cpf; }
+    public void setCpf(String cpf) { this.cpf = cpf; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
+    public LocalDateTime getDataCadastro() { return dataCadastro; }
+    public LocalDateTime getDataAtualizacao() { return dataAtualizacao; }
+    public boolean isAtivo() { return ativo; }
+    public void setAtivo(boolean ativo) { this.ativo = ativo; }
+    public Categoria getCategoria() { return categoria; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
+    public NivelAcesso getNivelAcesso() { return nivelAcesso; }
+    public void setNivelAcesso(NivelAcesso nivelAcesso) { this.nivelAcesso = nivelAcesso; }
 }
