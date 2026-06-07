@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExportHistory">
+    <option name="exports">
+      <list>
+        <ExportEntry>
+          <option name="fileCount" value="5" />
+          <option name="filePaths">
+            <list>
+              <option value="PI_01_2026/BackEnd/Senai/Senai/src/main/java/pi/Senai/Senai/SenaiApplication.java" />
+              <option value="PI_01_2026/BackEnd/Senai/Senai/src/main/java/pi/Senai/Senai/entity/Ambulancia.java" />
+              <option value="PI_01_2026/BackEnd/Senai/Senai/src/main/java/pi/Senai/Senai/entity/dto/AmbulanciaRequestDTO.java" />
+              <option value="PI_01_2026/BackEnd/Senai/Senai/src/main/java/pi/Senai/Senai/entity/dto/AmbulanciaResponseDTO.java" />
+              <option value="PI_01_2026/BackEnd/Senai/Senai/src/main/java/pi/Senai/Senai/repository/AmbulanciaRepository.java" />
+            </list>
+          </option>
+          <option name="sizeBytes" value="5572" />
+          <option name="summary" value="5 files, 5,4 KB, ~1.279 tokens" />
+          <option name="timestamp" value="1780838081178" />
+          <option name="tokens" value="1279" />
+        </ExportEntry>
+        <ExportEntry>
+          <option name="fileCount" value="5" />
+          <option name="filePaths">
+            <list>
+              <option value="PI_01_2026/BackEnd/Senai/Senai/src/main/java/pi/Senai/Senai/SenaiApplication.java" />
+              <option value="PI_01_2026/BackEnd/Senai/Senai/src/main/java/pi/Senai/Senai/entity/Ambulancia.java" />
+              <option value="PI_01_2026/BackEnd/Senai/Senai/src/main/java/pi/Senai/Senai/entity/dto/AmbulanciaRequestDTO.java" />
+              <option value="PI_01_2026/BackEnd/Senai/Senai/src/main/java/pi/Senai/Senai/entity/dto/AmbulanciaResponseDTO.java" />
+              <option value="PI_01_2026/BackEnd/Senai/Senai/src/main/java/pi/Senai/Senai/repository/AmbulanciaRepository.java" />
+            </list>
+          </option>
+          <option name="sizeBytes" value="5232" />
+          <option name="summary" value="5 files, 5,1 KB, ~1.209 tokens" />
+          <option name="timestamp" value="1780838028799" />
+          <option name="tokens" value="1209" />
+        </ExportEntry>
+      </list>
+    </option>
+  </component>
+</project>
