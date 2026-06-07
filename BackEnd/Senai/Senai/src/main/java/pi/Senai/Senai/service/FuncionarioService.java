@@ -1,71 +1,39 @@
 package pi.Senai.Senai.service;
 
+import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import pi.Senai.Senai.entity.Funcionario;
+import pi.Senai.Senai.repository.FuncionarioRepository;
 
 @Service
 public class FuncionarioService {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID Id;
 
-    @Column
-    private String Funcao;
+    @Autowired
+    private FuncionarioRepository _FuncionarioRepository;
 
-    @Column
-    private String Descricao;
-
-    @Column
-    private String IdFuncao;
-
-    @Column
-    private String IdUsuario;
-
-    public UUID getId() {
-        return Id;
+    public void SalvarFuncionario(Funcionario funcionario){
+        _FuncionarioRepository.save(funcionario);
     }
 
-    public void setId(UUID id) {
-        Id = id;
+    public void AtualizarFuncionario(Funcionario funcionario){
+        if(!_FuncionarioRepository.existsById(funcionario.getId()))
+            throw new RuntimeException("Funcionário não cadastrado, não encontrado");
+
+        _FuncionarioRepository.save(funcionario);
     }
 
-    public String getFuncao() {
-        return Funcao;
+    public void ExcluirFuncionario(UUID id){
+        if(!_FuncionarioRepository.existsById(id))
+            throw new RuntimeException("Funcionário não cadastrado, não encontrado");
+
+        _FuncionarioRepository.deleteById(id);
     }
 
-    public void setFuncao(String funcao) {
-        Funcao = funcao;
+    public List<Funcionario> ListarFuncionarios(){
+        return _FuncionarioRepository.findAll();
     }
-
-    public String getDescricao() {
-        return Descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        Descricao = descricao;
-    }
-
-    public String getIdFuncao() {
-        return IdFuncao;
-    }
-
-    public void setIdFuncao(String idFuncao) {
-        IdFuncao = idFuncao;
-    }
-
-    public String getIdUsuario() {
-        return IdUsuario;
-    }
-
-    public void setIdUsuario(String idUsuario) {
-        IdUsuario = idUsuario;
-    }
-
-    
 }

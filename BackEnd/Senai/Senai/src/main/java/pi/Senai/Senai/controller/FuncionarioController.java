@@ -9,37 +9,37 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import pi.Senai.Senai.entity.Funcionario;
-import pi.Senai.Senai.repository.FuncionarioRepository;
+import pi.Senai.Senai.service.FuncionarioService;
 
 @RestController
 @RequestMapping("/funcionario")
 public class FuncionarioController {
-    
+
     @Autowired
-    private FuncionarioRepository _funcionarioRepository;
+    private FuncionarioService _funcionarioService;
 
     @PostMapping("/salvar")
     public void SalvarFuncionario(@RequestBody Funcionario funcionario) {
-        _funcionarioRepository.save(funcionario);
+        _funcionarioService.SalvarFuncionario(funcionario);
     }
 
     @PutMapping("/atualizar")
     public void AtualizarFuncionario(@RequestBody Funcionario funcionario) {
-        _funcionarioRepository.save(funcionario);
+        _funcionarioService.AtualizarFuncionario(funcionario);
     }
 
     @DeleteMapping("/excluir/{id}")
     public void ExcluirFuncionario(@PathVariable UUID id) {
-        _funcionarioRepository.deleteById(id);
+        _funcionarioService.ExcluirFuncionario(id);
     }
 
     @GetMapping("/listar")
     public List<Funcionario> ListarFuncionarios() {
-        return _funcionarioRepository.findAll();
+        return _funcionarioService.ListarFuncionarios();
     }
 }
