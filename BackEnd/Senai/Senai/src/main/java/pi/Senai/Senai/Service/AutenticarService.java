@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import pi.Senai.Senai.dto.LoginRequestDTO;
 import pi.Senai.Senai.dto.TokenResponseDTO;
-import pi.Senai.Senai.dto.UsuarioResponseDTO; // 👈 Importante não esquecer este import
+import pi.Senai.Senai.dto.UsuarioResponseDTO;
 import pi.Senai.Senai.entity.Usuario;
 import pi.Senai.Senai.repository.UsuarioRepository;
 
@@ -42,7 +42,7 @@ public class AutenticarService {
         // 4. Gera o Token JWT
         String token = tokenService.gerarToken(usuario);
         
-        // 5. Converte o modelo de Banco (Entity) para o modelo de Visualização (DTO)
+        // 5. Converte o modelo de entity para o modelo de visu (DTO)
         UsuarioResponseDTO usuarioDto = new UsuarioResponseDTO(usuario);
 
         // 6. Retorna o combo completo (Token + Dados do Usuário)

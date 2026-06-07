@@ -1,1 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* 1. CORES DE FUNDO (BACKGROUNDS) */
+  --bg-sidebar: #102a43; /* Azul Marinho */
+  --bg-sidebar-hover: #243b53; /* Azul mais claro para hover de botões */
+  --bg-main: #f4f6f8;    /* Branco Gelo (Fundo geral da tela) */
+  --bg-card: #ffffff;    /* Branco Neve (Fundo de tabelas, formulários e cards) */
+
+  /* 2. CORES DE MARCA E AÇÃO (SEMÂNTICAS) */
+  --color-primary: #0ea5e9;   /* Azul Destaque (Botões principais) */
+  --color-success: #10b981;   /* Verde (Operação concluída, usuário salvo) */
+  --color-warning: #f59e0b;   /* Amarelo/Laranja (Avisos, pendências) */
+  --color-danger:  #ef4444;   /* Vermelho (Erros, deletar, exclusão) */
+
+  /* 3. CORES DE TEXTO E TIPOGRAFIA */
+  --text-light: #f8fafc; /* Texto claro (Para usar dentro da Sidebar escura) */
+  --text-main:  #334155; /* Texto escuro padrão (Para títulos e textos corridos) */
+  --text-muted: #64748b; /* Cinza médio (Para placeholders, subtítulos e ícones inativos) */
+  --font-family: 'Inter', sans-serif; /* Fonte global */
+
+  /* 4. BORDAS E SOMBRAS */
+  --border-light: #e2e8f0; /* Divisórias sutis e bordas de inputs */
+  --radius-default: 8px;   /* Arredondamento padrão do sistema */
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+/* 2. FORÇANDO A FONTE E O FUNDO NA CASCA DO SISTEMA */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-family); /* 💡 Aplicando a fonte no corpo do site */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
