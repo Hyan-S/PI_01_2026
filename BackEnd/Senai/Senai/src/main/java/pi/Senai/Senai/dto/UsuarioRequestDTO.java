@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import pi.Senai.Senai.Entity.Usuario;
+import pi.Senai.Senai.entity.Usuario;
 import pi.Senai.Senai.enums.NivelAcesso;
 
 import java.util.UUID;

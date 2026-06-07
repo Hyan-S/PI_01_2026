@@ -1,4 +1,4 @@
-package pi.Senai.Senai.Service;
+package pi.Senai.Senai.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -7,9 +7,11 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.SignatureGenerationException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+
+import pi.Senai.Senai.entity.Usuario;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import pi.Senai.Senai.Entity.Usuario;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

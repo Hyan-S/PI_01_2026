@@ -1,4 +1,4 @@
-package pi.Senai.Senai.Entity;
+package pi.Senai.Senai.entity;
 
 import jakarta.persistence.*;
 import pi.Senai.Senai.enums.NivelAcesso;

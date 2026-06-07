@@ -3,10 +3,12 @@ package pi.Senai.Senai.dto;
 public class TokenResponseDTO {
     private String token;
     private String tipo;
+    private UsuarioResponseDTO usuario;
 
-    public TokenResponseDTO(String token){
+    public TokenResponseDTO(String token, UsuarioResponseDTO usuario){
         this.token=token;
         this.tipo="Bearer";
+        this.usuario = usuario;
     }
 
     public String getToken() {
@@ -23,5 +25,13 @@ public class TokenResponseDTO {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public UsuarioResponseDTO getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioResponseDTO usuario) {
+        this.usuario = usuario;
     }
 }

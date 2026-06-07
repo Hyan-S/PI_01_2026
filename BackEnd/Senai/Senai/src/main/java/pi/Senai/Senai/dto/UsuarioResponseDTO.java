@@ -1,7 +1,7 @@
 package pi.Senai.Senai.dto;
 
 import jakarta.persistence.Column;
-import pi.Senai.Senai.Entity.Usuario;
+import pi.Senai.Senai.entity.Usuario;
 import pi.Senai.Senai.enums.NivelAcesso;
 
 import java.util.UUID;

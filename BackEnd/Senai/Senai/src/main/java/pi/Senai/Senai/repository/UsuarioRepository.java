@@ -1,7 +1,8 @@
 package pi.Senai.Senai.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pi.Senai.Senai.Entity.Usuario;
+
+import pi.Senai.Senai.entity.Usuario;
 
 import java.util.List;
 import java.util.Optional;

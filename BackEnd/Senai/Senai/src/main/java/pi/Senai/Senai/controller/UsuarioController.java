@@ -4,9 +4,10 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pi.Senai.Senai.Service.UsuarioService;
+
 import pi.Senai.Senai.dto.UsuarioRequestDTO;
 import pi.Senai.Senai.dto.UsuarioResponseDTO;
+import pi.Senai.Senai.service.UsuarioService;
 
 import java.util.List;
 import java.util.UUID;

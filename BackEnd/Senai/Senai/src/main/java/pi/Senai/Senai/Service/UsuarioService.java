@@ -1,13 +1,14 @@
-package pi.Senai.Senai.Service;
+package pi.Senai.Senai.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-import pi.Senai.Senai.Entity.Usuario;
+
 import pi.Senai.Senai.dto.UsuarioRequestDTO;
 import pi.Senai.Senai.dto.UsuarioResponseDTO;
+import pi.Senai.Senai.entity.Usuario;
 import pi.Senai.Senai.repository.UsuarioRepository;
 
 import java.util.List;
