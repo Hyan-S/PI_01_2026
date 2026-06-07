@@ -13,33 +13,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import pi.Senai.Senai.entity.Permissao;
-import pi.Senai.Senai.service.PermissaoService;
+import pi.Senai.Senai.entity.Funcionario;
+import pi.Senai.Senai.service.FuncionarioService;
 
 @RestController
-@RequestMapping("/permissao")
-public class PermisssaoController {
-    
+@RequestMapping("/funcionario")
+public class FuncionarioController {
+
     @Autowired
-    private PermissaoService _permissaoService;
+    private FuncionarioService _funcionarioService;
 
     @PostMapping("/salvar")
-    public void SalvarPermissao(@RequestBody Permissao permissao) {
-        _permissaoService.SalvarPermissao(permissao);
+    public void SalvarFuncionario(@RequestBody Funcionario funcionario) {
+        _funcionarioService.SalvarFuncionario(funcionario);
     }
 
     @PutMapping("/atualizar")
-    public void AtualizarPermissao(@RequestBody Permissao permissao) {
-        _permissaoService.AtualizarPermissao(permissao);
+    public void AtualizarFuncionario(@RequestBody Funcionario funcionario) {
+        _funcionarioService.AtualizarFuncionario(funcionario);
     }
 
     @DeleteMapping("/excluir/{id}")
-    public void ExcluirPermissao(@PathVariable UUID id) {
-        _permissaoService.ExcluirPermissao(id);
+    public void ExcluirFuncionario(@PathVariable UUID id) {
+        _funcionarioService.ExcluirFuncionario(id);
     }
 
     @GetMapping("/listar")
-    public List<Permissao> ListarPermissoes() {
-        return _permissaoService.ListarPermissoes();
+    public List<Funcionario> ListarFuncionarios() {
+        return _funcionarioService.ListarFuncionarios();
     }
 }
