@@ -20,8 +20,8 @@ import { AuthService } from '../../../../core/services/auth.service';
     ReactiveFormsModule, 
     InputTextModule, 
     ButtonModule,
-    CardModule,   // 💡 Adicionado aqui
-    ToastModule   // 💡 Adicionado aqui para os alertas funcionarem na tela
+    CardModule,   
+    ToastModule  
   ],
   templateUrl: './login-form.html',
   styleUrl: './login-form.css',

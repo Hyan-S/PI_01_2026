@@ -100,7 +100,8 @@
 /* Campos do Formulário */
 .field-container {
   margin-bottom: 1.5rem;
-  text-align: center; /* 💡 Força a label a ficar centralizada */
+  text-align: left;
+  width: 100%;
 }
 
 .field-container label {
@@ -111,13 +112,14 @@
   font-size: 0.95rem;
 }
 
-/* Garante que a div com o ícone ocupe o centro sem quebrar o alinhamento */
-.field-container .p-input-icon-left {
+/* Garante que a div com o ícone e o input dentro dela ocupem 100% da largura */
+.field-container .p-input-icon-left,
+.field-container input {
   width: 100%;
 }
 
 .action-container {
   margin-top: 2rem;
   display: flex;
-  justify-content: center; /* 💡 Alinha o botão exatamente no centro do formulário */
+  justify-content: center;
 }
