@@ -1,0 +1,47 @@
+<p-toast></p-toast>
+
+<div class="login-container">
+  
+  <div class="branding-side">
+    <div class="branding-content">
+      <i class="pi pi-shield branding-icon"></i>
+      <h1>SOS-Rota</h1>
+      <p>Sistema Inteligente de Gestão e Despacho de Atendimentos</p>
+      <small>Vitalis Tech & Secretaria Municipal de Saúde</small>
+    </div>
+  </div>
+
+  <div class="form-side">
+    <p-card styleClass="login-card">
+      <div class="card-header">
+        <h2>Acesso ao Sistema</h2>
+        <p>Insira suas credenciais corporativas</p>
+      </div>
+
+      <form [formGroup]="formLogin" (ngSubmit)="entrar()">
+        
+        <div class="field-container">
+          <label for="login">CPF ou E-mail</label>
+          <div class="p-input-icon-left w-full">
+            <i class="pi pi-user"></i>
+            <input id="login" type="text" pInputText formControlName="login" class="w-full" placeholder="Digite seu usuário" />
+          </div>
+        </div>
+
+        <div class="field-container">
+          <label for="senha">Senha</label>
+          <div class="p-input-icon-left w-full">
+            <i class="pi pi-lock"></i>
+            <input id="senha" type="password" pInputText formControlName="senha" class="w-full" placeholder="••••••••" />
+          </div>
+        </div>
+
+        <div class="action-container">
+          <p-button type="submit" label="Login" [loading]="carregando"></p-button>
+        </div>
+
+      </form>
+    </p-card>
+  </div>
+
+</div>
