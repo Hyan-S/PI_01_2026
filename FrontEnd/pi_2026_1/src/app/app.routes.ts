@@ -24,13 +24,13 @@ export const routes: Routes = [
       import('./shared/components/layout/layout.component')
         .then(m => m.LayoutComponent),
     children: [
-      /*{
+      {
         path: 'dashboard',
         // Crie este componente de teste ou comente essa rota se ele não existir ainda
         loadComponent: () => 
           import('./features/dashboard/pages/dashboard-principal/dashboard-principal') 
-            .then(m => m.DashboardPrincipalComponent)
-      },*/
+            .then(m => m.DashboardPrincipal)
+      },
       {
         path: 'usuarios/cadastro',
         canActivate: [adminGuard],

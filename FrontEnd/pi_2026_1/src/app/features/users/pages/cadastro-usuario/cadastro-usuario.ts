@@ -17,7 +17,9 @@ import { UsuarioService } from '../../../../core/services/usuario.service';
     CommonModule, ReactiveFormsModule, InputTextModule, 
     InputMaskModule, PasswordModule, SelectModule, ButtonModule
   ],
-  templateUrl: './cadastro-usuario.html'
+  templateUrl: './cadastro-usuario.html',
+  styleUrl: './cadastro-usuario.css'
+
 })
 export class CadastroUsuarioComponent implements OnInit {
   formUsuario!: FormGroup;

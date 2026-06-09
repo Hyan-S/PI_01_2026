@@ -6,11 +6,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import pi.Senai.Senai.dto.UsuarioResponseDTO;
 import pi.Senai.Senai.entity.Usuario;
 import pi.Senai.Senai.repository.UsuarioRepository;
 import pi.Senai.Senai.service.TokenService;
