@@ -1,5 +1,6 @@
 package pi.Senai.Senai.entity;
 
+import java.sql.Date;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -7,9 +8,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import pi.Senai.Senai.entity.base.EntidadeGerenciavel;
 
 @Entity
-public class Ambulancia {
+public class Ambulancia implements EntidadeGerenciavel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID Id;
@@ -24,47 +27,38 @@ public class Ambulancia {
     private String Observacao;
 
     @Column
-    private Boolean Ativo;
+    private double PesoBaseKg;
 
-    public UUID getId() {
-        return Id;
-    }
+    @Column
+    private Date DataCriacao;
 
-    public void setId(UUID id) {
-        Id = id;
-    }
+    @Column
+    private Date UltimaAtualizacao;
 
-    public String getDescricao() {
-        return Descricao;
-    }
+    @Column
+    private boolean Ativo;
 
-    public void setDescricao(String descricao) {
-        Descricao = descricao;
-    }
+    public UUID getId() { return Id; }
+    public void setId(UUID id) { Id = id; }
 
-    public String getPlaca() {
-        return Placa;
-    }
+    public String getDescricao() { return Descricao; }
+    public void setDescricao(String descricao) { Descricao = descricao; }
 
-    public void setPlaca(String placa) {
-        Placa = placa;
-    }
+    public String getPlaca() { return Placa; }
+    public void setPlaca(String placa) { Placa = placa; }
 
-    public String getObservacao() {
-        return Observacao;
-    }
+    public String getObservacao() { return Observacao; }
+    public void setObservacao(String observacao) { Observacao = observacao; }
 
-    public void setObservacao(String observacao) {
-        Observacao = observacao;
-    }
+    public double getPesoBaseKg() { return PesoBaseKg; }
+    public void setPesoBaseKg(double pesoBaseKg) { PesoBaseKg = pesoBaseKg; }
 
-    public Boolean getAtivo() {
-        return Ativo;
-    }
+    public Date getDataCriacao() { return DataCriacao; }
+    public void setDataCriacao(Date dataCriacao) { DataCriacao = dataCriacao; }
 
-    public void setAtivo(Boolean ativo) {
-        Ativo = ativo;
-    }
+    public Date getUltimaAtualizacao() { return UltimaAtualizacao; }
+    public void setUltimaAtualizacao(Date ultimaAtualizacao) { UltimaAtualizacao = ultimaAtualizacao; }
 
-    
+    public boolean isAtivo() { return Ativo; }
+    public void setAtivo(boolean ativo) { Ativo = ativo; }
 }

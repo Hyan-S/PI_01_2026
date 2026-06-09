@@ -1,44 +1,33 @@
 package pi.Senai.Senai.service;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import pi.Senai.Senai.entity.Ambulancia;
 import pi.Senai.Senai.repository.AmbulanciaRepository;
+import pi.Senai.Senai.service.base.CrudBaseService;
 
 @Service
-public class AmbulanciaService {
+public class AmbulanciaService extends CrudBaseService<Ambulancia, UUID> {
+
     @Autowired
-    private AmbulanciaRepository _AmbulanciaRepository;
+    private AmbulanciaRepository repositorio;
 
-    public void SalvarAmbulancia(Ambulancia ambulancia){
-        ambulancia.setAtivo(true);
-
-        _AmbulanciaRepository.save(ambulancia);
+    @Override
+    protected JpaRepository<Ambulancia, UUID> getRepositorio() {
+        return repositorio;
     }
 
-    public void AtualizarAmbulancia(Ambulancia ambulancia){
-        if(!_AmbulanciaRepository.existsById(ambulancia.getId()))
-            throw new RuntimeException("Ambulância não cadastrada, não encontrada");
-
-        _AmbulanciaRepository.save(ambulancia);
+    @Override
+    protected String getMensagemNaoEncontrado() {
+        return "Ambulância não encontrada";
     }
 
-    public void ExcluirAmbulancia(UUID id){
-        if(!_AmbulanciaRepository.existsById(id))
-            throw new RuntimeException("Ambulância não cadastrada, não encontrada");
-
-        var ambulancia = _AmbulanciaRepository.findById(id).get();
-
-        ambulancia.setAtivo(false);
-
-        _AmbulanciaRepository.save(ambulancia);
-    }
-
-    public List<Ambulancia> ListarAmbulancias(){
-        return _AmbulanciaRepository.findAll();
+    @Override
+    protected UUID getIdDaEntidade(Ambulancia entidade) {
+        return entidade.getId();
     }
 }
