@@ -8,9 +8,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import pi.Senai.Senai.entity.base.EntidadeGerenciavel;
 
 @Entity
-public class Categoria{
+public class Categoria implements EntidadeGerenciavel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

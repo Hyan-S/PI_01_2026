@@ -21,25 +21,25 @@ import pi.Senai.Senai.service.EquipamentoService;
 public class EquipamentoController {
 
     @Autowired
-    private EquipamentoService _equipamentoService;
+    private EquipamentoService equipamentoService;
 
     @PostMapping("/salvar")
-    public void SalvarEquipamento(@RequestBody Equipamento equipamento) {
-        _equipamentoService.SalvarEquipamento(equipamento);
+    public void salvar(@RequestBody Equipamento equipamento) {
+        equipamentoService.salvar(equipamento);
     }
 
     @PutMapping("/atualizar")
-    public void AtualizarEquipamento(@RequestBody Equipamento equipamento) {
-        _equipamentoService.AtualizarEquipamento(equipamento);
+    public void atualizar(@RequestBody Equipamento equipamento) {
+        equipamentoService.atualizar(equipamento);
     }
 
     @DeleteMapping("/excluir/{id}")
-    public void ExcluirEquipamento(@PathVariable UUID id) {
-        _equipamentoService.ExcluirEquipamento(id);
+    public void excluir(@PathVariable UUID id) {
+        equipamentoService.excluir(id);
     }
 
     @GetMapping("/listar")
-    public List<Equipamento> ListarEquipamentos() {
-        return _equipamentoService.ListarEquipamentos();
+    public List<Equipamento> listar() {
+        return equipamentoService.listar();
     }
 }

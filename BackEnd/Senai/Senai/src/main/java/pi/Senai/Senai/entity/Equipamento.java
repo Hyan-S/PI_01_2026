@@ -8,9 +8,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import pi.Senai.Senai.entity.base.EntidadeGerenciavel;
 
 @Entity
-public class Equipamento {
+public class Equipamento implements EntidadeGerenciavel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID Id;
@@ -35,7 +36,7 @@ public class Equipamento {
     private Date UltimaAtualizacao;
 
     @Column
-    private Boolean Ativo;
+    private boolean Ativo;
 
     public UUID getId() {
         return Id;
@@ -77,11 +78,11 @@ public class Equipamento {
         IdEquipe = idEquipe;
     }
 
-    public Boolean getAtivo() {
+    public boolean isAtivo() {
         return Ativo;
     }
 
-    public void setAtivo(Boolean ativo) {
+    public void setAtivo(boolean ativo) {
         Ativo = ativo;
     }
 

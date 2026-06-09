@@ -15,11 +15,12 @@ import pi.Senai.Senai.entity.Usuario;
 import pi.Senai.Senai.repository.UsuarioRepository;
 import pi.Senai.Senai.service.TokenService;
 
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
-import java.security.Security;
-import java.util.Collection;
 import java.util.Collections;
 
+@Component
 public class SecurityFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
     private final UsuarioRepository usuarioRepository;

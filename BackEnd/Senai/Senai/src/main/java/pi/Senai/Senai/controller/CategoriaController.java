@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import pi.Senai.Senai.entity.Categoria;
-import pi.Senai.Senai.service.CategoriaService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,32 +13,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import pi.Senai.Senai.entity.Categoria;
+import pi.Senai.Senai.service.CategoriaService;
 
 @RestController
 @RequestMapping("/categoria")
 public class CategoriaController {
 
     @Autowired
-    private CategoriaService _categoriaService;
+    private CategoriaService categoriaService;
 
     @PostMapping("/salvar")
-    public void SalvarCategoria(@RequestBody Categoria categoria) {
-        _categoriaService.SalvarCategoria(categoria);
+    public void salvar(@RequestBody Categoria categoria) {
+        categoriaService.salvar(categoria);
     }
 
     @PutMapping("/atualizar")
-    public void AtualizarCategoria(@RequestBody Categoria categoria) {
-        _categoriaService.AtualizarCategoria(categoria);
+    public void atualizar(@RequestBody Categoria categoria) {
+        categoriaService.atualizar(categoria);
     }
 
     @DeleteMapping("/excluir/{id}")
-    public void ExcluirCategoria(@PathVariable UUID id) {
-        _categoriaService.ExcluirCategoria(id);
+    public void excluir(@PathVariable UUID id) {
+        categoriaService.excluir(id);
     }
 
     @GetMapping("/listar")
-    public List<Categoria> ListarCategorias() {
-        return _categoriaService.ListarCategorias();
+    public List<Categoria> listar() {
+        return categoriaService.listar();
     }
-
 }
