@@ -1,47 +1,33 @@
 package pi.Senai.Senai.service;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import pi.Senai.Senai.entity.Equipamento;
 import pi.Senai.Senai.repository.EquipamentoRepository;
+import pi.Senai.Senai.service.base.CrudBaseService;
 
 @Service
-public class EquipamentoService {
+public class EquipamentoService extends CrudBaseService<Equipamento, UUID> {
+
     @Autowired
-    private EquipamentoRepository _EquipamentoRepository;
+    private EquipamentoRepository repositorio;
 
-    public void SalvarEquipamento(Equipamento equipamento){
-        equipamento.setDataCriacao(new java.sql.Date(System.currentTimeMillis()));
-        equipamento.setAtivo(true);
-
-        _EquipamentoRepository.save(equipamento);
+    @Override
+    protected JpaRepository<Equipamento, UUID> getRepositorio() {
+        return repositorio;
     }
 
-    public void AtualizarEquipamento(Equipamento equipamento){
-        if(!_EquipamentoRepository.existsById(equipamento.getId()))
-            throw new RuntimeException("Equipamento não cadastrado, não encontrado");
-        
-        equipamento.setUltimaAtualizacao(new java.sql.Date(System.currentTimeMillis()));
-
-        _EquipamentoRepository.save(equipamento);
+    @Override
+    protected String getMensagemNaoEncontrado() {
+        return "Equipamento não encontrado";
     }
 
-    public void ExcluirEquipamento(UUID id){
-        if(!_EquipamentoRepository.existsById(id))
-            throw new RuntimeException("Equipamento não cadastrado, não encontrado");
-
-        var equipamento = _EquipamentoRepository.findById(id).get();
-
-        equipamento.setAtivo(false);
-
-        _EquipamentoRepository.save(equipamento);
-    }
-
-    public List<Equipamento> ListarEquipamentos(){
-        return _EquipamentoRepository.findAll();
+    @Override
+    protected UUID getIdDaEntidade(Equipamento entidade) {
+        return entidade.getId();
     }
 }

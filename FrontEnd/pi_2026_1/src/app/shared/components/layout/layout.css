@@ -1,0 +1,50 @@
+/* Utilizando as nossas variáveis globais! */
+
+.layout-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.layout-sidebar {
+  width: 260px;
+  background-color: var(--bg-sidebar); /* Azul Petróleo */
+  color: var(--text-light);            /* Branco Neve */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+.layout-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-main);    /* Branco Gelo */
+  overflow-y: auto;
+}
+
+.layout-topbar {
+  height: 70px;
+  background-color: var(--bg-card);    /* Branco Neve */
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 2rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.layout-content {
+  padding: 2rem;
+  flex: 1;
+}
+
+.card-neve {
+  background-color: var(--bg-card);    /* Branco Neve */
+  border-radius: var(--radius-default);
+  box-shadow: var(--shadow-card);
+  padding: 2rem;
+  min-height: 100%;
+}
