@@ -5,9 +5,12 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import pi.Senai.Senai.entity.base.EntidadeGerenciavel;
 
 @Entity
@@ -25,9 +28,9 @@ public class Equipamento implements EntidadeGerenciavel {
     @Column
     private String Observacao;
 
-    //Implementação futura
-    @Column
-    private String IdEquipe;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ambulancia_id")
+    private Ambulancia ambulancia;
 
     @Column
     private Date DataCriacao;
@@ -70,12 +73,12 @@ public class Equipamento implements EntidadeGerenciavel {
         Observacao = observacao;
     }
 
-    public String getIdEquipe() {
-        return IdEquipe;
+    public Ambulancia getAmbulancia() {
+        return ambulancia;
     }
 
-    public void setIdEquipe(String idEquipe) {
-        IdEquipe = idEquipe;
+    public void setAmbulancia(Ambulancia ambulancia) {
+        this.ambulancia = ambulancia;
     }
 
     public boolean isAtivo() {

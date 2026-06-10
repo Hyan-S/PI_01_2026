@@ -42,6 +42,10 @@ public class Usuario {
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "funcionario_id")
+    private Funcionario funcionario;
+
     public Usuario() {
     }
 
@@ -73,4 +77,6 @@ public class Usuario {
     public void setCategoria(Categoria categoria) { this.categoria = categoria; }
     public NivelAcesso getNivelAcesso() { return nivelAcesso; }
     public void setNivelAcesso(NivelAcesso nivelAcesso) { this.nivelAcesso = nivelAcesso; }
+    public Funcionario getFuncionario() { return funcionario; }
+    public void setFuncionario(Funcionario funcionario) { this.funcionario = funcionario;   }
 }
