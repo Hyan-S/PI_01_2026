@@ -21,25 +21,25 @@ import pi.Senai.Senai.service.AmbulanciaService;
 public class AmbulanciaController {
 
     @Autowired
-    private AmbulanciaService _ambulanciaService;
+    private AmbulanciaService ambulanciaService;
 
     @PostMapping("/salvar")
-    public void SalvarAmbulancia(@RequestBody Ambulancia ambulancia) {
-        _ambulanciaService.SalvarAmbulancia(ambulancia);
+    public void salvar(@RequestBody Ambulancia ambulancia) {
+        ambulanciaService.salvar(ambulancia);
     }
 
     @PutMapping("/atualizar")
-    public void AtualizarAmbulancia(@RequestBody Ambulancia ambulancia) {
-        _ambulanciaService.AtualizarAmbulancia(ambulancia);
+    public void atualizar(@RequestBody Ambulancia ambulancia) {
+        ambulanciaService.atualizar(ambulancia);
     }
 
     @DeleteMapping("/excluir/{id}")
-    public void ExcluirAmbulancia(@PathVariable UUID id) {
-        _ambulanciaService.ExcluirAmbulancia(id);
+    public void excluir(@PathVariable UUID id) {
+        ambulanciaService.excluir(id);
     }
 
     @GetMapping("/listar")
-    public List<Ambulancia> ListarAmbulancias() {
-        return _ambulanciaService.ListarAmbulancias();
+    public List<Ambulancia> listar() {
+        return ambulanciaService.listar();
     }
 }
