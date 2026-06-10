@@ -5,10 +5,10 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import pi.Senai.Senai.entity.Ambulancia;
+import pi.Senai.Senai.entity.Equipe;
 
 @Repository
-public interface AmbulanciaRepository extends JpaRepository<Ambulancia, UUID>{
+public interface EquipeRepository extends JpaRepository<Equipe, UUID> {
 
-    long countByAtivoTrue();
+    long countByAmbulanciaIsNotNull();
 }
