@@ -1,0 +1,36 @@
+/* Segue exatamente o padrão fornecido para a tela de cadastro */
+.cadastro-container {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: var(--radius-default);
+  box-shadow: var(--shadow-card);
+}
+
+.cadastro-container h2 {
+  color: var(--text-main);
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 1rem;
+}
+
+.p-field {
+  margin-bottom: 1.5rem;
+}
+
+.p-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.p-error {
+  display: block;
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+  font-weight: 500;
+}
