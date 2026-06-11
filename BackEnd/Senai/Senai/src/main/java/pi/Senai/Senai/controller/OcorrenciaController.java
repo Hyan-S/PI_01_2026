@@ -43,4 +43,9 @@ public class OcorrenciaController {
     public List<Ocorrencia> ListarOcorrencias() {
         return _ocorrenciaService.ListarOcorrencias();
     }
+
+    @GetMapping("/listar/prioridade")
+    public List<Ocorrencia> listarPorPrioridade() {
+        return _ocorrenciaService.listarPorPrioridade();
+    }
 }
