@@ -1,33 +1,95 @@
-.lista-container {
-  background: var(--bg-card);
-  padding: 1.5rem;
-  border-radius: var(--radius-default);
-  box-shadow: var(--shadow-card);
+.p-input-icon-left {
+  position: relative;
+  display: inline-block;
 }
 
-.header-actions {
+.p-input-icon-left i {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0.75rem;
+  color: #64748b;
+  z-index: 1;
+}
+
+.p-input-icon-left input {
+  padding-left: 2.5rem !important;
+}
+
+.p-tag {
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-disponivel,
+.status-ativo {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+  border: 1px solid #34d399;
+}
+
+.status-indisponivel,
+.status-inativo {
+  background-color: #fee2e2 !important;
+  color: #b91c1c !important;
+  border: 1px solid #f87171;
+}
+
+.status-em-uso {
+  background-color: #dbeafe !important;
+  color: #1e40af !important;
+  border: 1px solid #60a5fa;
+}
+
+.status-manutencao,
+.status-em-manutencao {
+  background-color: #fef3c7 !important;
+  color: #92400e !important;
+  border: 1px solid #fbbf24;
+}
+
+.status-sem-status {
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1px solid #cbd5e1;
+}
+.detalhes-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.detalhe-item {
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-light);
-  padding-bottom: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 0.5rem;
 }
 
-.header-actions h2 {
-  margin: 0;
-  color: var(--text-main);
-  font-weight: 600;
+.detalhe-item strong {
+  width: 120px;
+  color: #475569;
 }
 
-.status-badge {
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: 600;
+.detalhe-item span {
+  color: #1e293b;
+}
+.status-a-caminho {
+  background-color: #fef08a !important;
+  color: #854d0e !important;
+  border: 1px solid #facc15;
 }
 
-.status-badge.DISPONIVEL { background-color: #d1fae5; color: #065f46; }
-.status-badge.A_CAMINHO { background-color: #dbeafe; color: #1e40af; }
-.status-badge.EM_ATENDIMENTO { background-color: #fef3c7; color: #92400e; }
-.status-badge.EM_MANUTENCAO { background-color: #fee2e2; color: #b91c1c; }
+.status-em-atendimento {
+  background-color: #e0e7ff !important;
+  color: #4338ca !important;
+  border: 1px solid #818cf8;
+}

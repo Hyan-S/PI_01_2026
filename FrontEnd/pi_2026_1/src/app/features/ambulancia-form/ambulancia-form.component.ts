@@ -1,12 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
+import { TextareaModule } from 'primeng/textarea';
 import { AmbulanciaService } from '../../core/services/ambulancia.service';
 import { Ambulancia } from '../../core/models/ambulancia.model';
 
@@ -17,17 +25,24 @@ import { Ambulancia } from '../../core/models/ambulancia.model';
     CommonModule,
     ReactiveFormsModule,
     InputTextModule,
-    InputNumberModule,
+    TextareaModule,
     SelectModule,
     ButtonModule,
+    DialogModule,
   ],
   templateUrl: './ambulancia-form.component.html',
   styleUrl: './ambulancia-form.component.css',
 })
-export class AmbulanciaFormComponent implements OnInit {
+export class AmbulanciaFormComponent implements OnInit, OnChanges {
+  @Input() visible: boolean = false;
+  @Input() ambulanciaId: string | null = null;
+  @Input() modoSomenteLeitura: boolean = false;
+
+  @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() salvo = new EventEmitter<void>();
+
+  titulo: string = 'Nova Ambulância';
   formAmbulancia!: FormGroup;
-  ambulanciaId: string | null = null;
-  modoSomenteLeitura: boolean = false;
 
   opcoesStatus = [
     { label: 'Disponível', value: 'DISPONIVEL' },
@@ -39,46 +54,56 @@ export class AmbulanciaFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ambulanciaService: AmbulanciaService,
-    private router: Router,
-    private route: ActivatedRoute,
     private messageService: MessageService,
   ) {}
 
   ngOnInit() {
     this.iniciarFormulario();
-    this.verificarRota();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (!this.formAmbulancia) return;
+
+    if (changes['ambulanciaId']) {
+      this.titulo = this.ambulanciaId ? 'Editar Ambulância' : 'Nova Ambulância';
+
+      if (this.ambulanciaId) {
+        this.carregarDadosAmbulancia(this.ambulanciaId);
+
+      } else {
+        this.formAmbulancia.reset({
+          id: null,
+          descricao: '',
+          placa: '',
+          observacao: '',
+          status: 'DISPONIVEL',
+        });
+      }
+      this.formAmbulancia.get('status')?.disable();
+    }
+
+    if (changes['modoSomenteLeitura']) {
+      if (this.modoSomenteLeitura) {
+        this.formAmbulancia.disable();
+      } else {
+        this.formAmbulancia.enable();
+        this.formAmbulancia.get('status')?.disable();
+      }
+    }
+  }
   iniciarFormulario() {
     this.formAmbulancia = this.fb.group({
       id: [null],
       descricao: ['', Validators.required],
       placa: ['', Validators.required],
-      pesoBaseKg: [null, [Validators.required, Validators.min(0)]],
       observacao: [''],
-      status: ['DISPONIVEL', Validators.required],
+      status: [{ value: 'DISPONIVEL', disabled: true }, Validators.required],
     });
-  }
-
-  verificarRota() {
-    const urlSegment = this.route.snapshot.url[0]?.path;
-    this.ambulanciaId = this.route.snapshot.paramMap.get('id');
-
-    if (urlSegment === 'detalhes') {
-      this.modoSomenteLeitura = true;
-      this.formAmbulancia.disable();
-    }
-
-    if (this.ambulanciaId) {
-      this.carregarDadosAmbulancia(this.ambulanciaId);
-    }
   }
 
   carregarDadosAmbulancia(id: string) {
     this.ambulanciaService.listar().subscribe({
       next: (ambulancias) => {
-        // Como o endpoint de buscar por ID não estava no controler enviado,
-        // pegamos da lista para exemplificar. No mundo real, crie um endpoint GET /listar/{id} no Java
         const ambulancia = ambulancias.find((a) => a.id === id);
         if (ambulancia) {
           this.formAmbulancia.patchValue(ambulancia);
@@ -97,46 +122,68 @@ export class AmbulanciaFormComponent implements OnInit {
       return;
     }
 
-    const ambulancia: Ambulancia = this.formAmbulancia.value;
+    const ambulancia: Ambulancia = this.formAmbulancia.getRawValue();
 
-    if (this.ambulanciaId) {
-      this.ambulanciaService.atualizar(ambulancia).subscribe({
-        next: () => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: 'Ambulância atualizada!',
-          });
-          this.voltar();
-        },
-        error: () =>
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Erro',
-            detail: 'Falha ao atualizar.',
-          }),
-      });
-    } else {
-      this.ambulanciaService.salvar(ambulancia).subscribe({
-        next: () => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: 'Ambulância cadastrada!',
-          });
-          this.voltar();
-        },
-        error: () =>
+    this.ambulanciaService.listar().subscribe({
+      next: (listaAmbulancias) => {
+
+        const placaDuplicada = listaAmbulancias.find(
+          (a) =>
+            a.placa.trim().toUpperCase() === ambulancia.placa.trim().toUpperCase() &&
+            a.id !== ambulancia.id,
+        );
+
+        if (placaDuplicada) {
           this.messageService.add({
             severity: 'error',
-            summary: 'Erro',
-            detail: 'Falha ao cadastrar.',
-          }),
-      });
-    }
+            summary: 'Placa Inválida',
+            detail: `A placa ${ambulancia.placa} já está cadastrada no sistema!`,
+          });
+          return;
+        }
+
+        const request = this.ambulanciaId
+          ? this.ambulanciaService.atualizar(ambulancia)
+          : this.ambulanciaService.salvar(ambulancia);
+
+        request.subscribe({
+          next: () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: 'Operação realizada com sucesso!',
+            });
+            this.salvo.emit();
+            this.fechar();
+          },
+          error: () => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Ocorreu uma falha na operação com o banco de dados.',
+            });
+          },
+        });
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível validar a placa. Verifique sua conexão.',
+        });
+      },
+    });
   }
-
-  voltar() {
-    this.router.navigate(['/ambulancias']);
+  fechar() {
+    this.ambulanciaId = null;
+    this.formAmbulancia.reset({
+      id: null,
+      descricao: '',
+      placa: '',
+      observacao: '',
+      status: 'DISPONIVEL',
+    });
+    this.formAmbulancia.get('status')?.disable();
+    this.visibleChange.emit(false);
   }
 }
