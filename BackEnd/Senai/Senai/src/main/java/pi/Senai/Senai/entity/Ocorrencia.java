@@ -1,20 +1,18 @@
 package pi.Senai.Senai.entity;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -55,9 +53,11 @@ public class Ocorrencia {
     @Column(nullable = false)
     private String Endereco;
 
+    // EXCLUIR 
     @Column
     private Double Latitude;
 
+    // EXCLUIR 
     @Column
     private Double Longitude;
 
@@ -77,13 +77,9 @@ public class Ocorrencia {
     @Column
     private UUID VeiculoId;
 
-    @ManyToMany
-    @JoinTable(
-        name = "ocorrencia_equipamento",
-        joinColumns = @JoinColumn(name = "ocorrencia_id"),
-        inverseJoinColumns = @JoinColumn(name = "equipamento_id")
-    )
-    private Set<Equipamento> ListaEquipamentos = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ambulancia_id")
+    private Ambulancia ambulancia;
 
     public UUID getId() {
         return Id;
@@ -205,11 +201,11 @@ public class Ocorrencia {
         VeiculoId = veiculoId;
     }
 
-    public Set<Equipamento> getListaEquipamentos() {
-        return ListaEquipamentos;
+    public Ambulancia getAmbulancia() {
+        return ambulancia;
     }
 
-    public void setListaEquipamentos(Set<Equipamento> listaEquipamentos) {
-        ListaEquipamentos = listaEquipamentos;
+    public void setAmbulancia(Ambulancia ambulancia) {
+        this.ambulancia = ambulancia;
     }
 }

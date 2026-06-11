@@ -6,7 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Ambulancia } from '../../core/models/Ambulancia.model';
+import { Ambulancia } from '../../core/models/ambulancia.model';
 import { AmbulanciaService } from '../../core/services/ambulancia.service';
 import { Router } from '@angular/router';
 
