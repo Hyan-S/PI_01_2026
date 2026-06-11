@@ -19,11 +19,6 @@ public class KitPrimeirosAuxiliosDecorator extends ItemMedicoDecorator {
     }
 
     @Override
-    public double getPesoKg() {
-        return recurso.getPesoKg() + TipoItemMedico.KIT_PRIMEIROS_AUXILIOS.getPesoKg();
-    }
-
-    @Override
     public List<String> getItensEquipados() {
         List<String> itens = new ArrayList<>(recurso.getItensEquipados());
         itens.add(TipoItemMedico.KIT_PRIMEIROS_AUXILIOS.name());
