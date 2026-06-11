@@ -1,0 +1,89 @@
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+<div class="page-container">
+  
+  <div class="page-header">
+    <h2>Gerenciamento de Usuários</h2>
+    <p>Controle de acesso e cadastro de funcionários no sistema</p>
+  </div>
+
+  <div class="card-tabela">
+    
+    <div class="toolbar-container">
+      
+      <div class="toolbar-left">
+        <span class="p-input-icon-left w-full search-bar">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="filtrarGlobal($event)" placeholder="Pesquisar por nome..." />
+        </span>
+      </div>
+
+      <div class="toolbar-right">
+        <p-select 
+          [options]="niveisAcesso" 
+          optionLabel="label"
+          optionValue="value"
+          (onChange)="dt.filter($event.value, 'nivelAcesso', 'equals')" 
+          placeholder="Filtrar por Categoria" 
+          styleClass="dropdown-filtro">
+        </p-select>
+
+        <p-button 
+          label="Cadastrar Novo" 
+          icon="pi pi-plus" 
+          styleClass="p-button-primary" 
+          (onClick)="novoUsuario()">
+        </p-button>
+      </div>
+
+    </div>
+
+    <p-table 
+      #dt 
+      [value]="usuarios" 
+      [paginator]="true" 
+      [rows]="10" 
+      [globalFilterFields]="['nome']" 
+      [loading]="carregando"
+      styleClass="p-datatable-sm tabela-minimalista">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>E-mail</th>
+          <th>Acesso</th>
+          <th class="text-center">Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-usuario>
+        <tr>
+          <td class="font-semibold text-main">{{ usuario.nome }}</td>
+          <td class="text-muted">{{ usuario.cpf }}</td>
+          <td class="text-muted">{{ usuario.email }}</td>
+          <td>
+            <p-tag [value]="usuario.nivelAcesso" [severity]="getSeveridadeAcesso(usuario.nivelAcesso)"></p-tag>
+          </td>
+          <td class="text-center">  
+            <div class="action-buttons">
+              <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-text p-button-secondary" (onClick)="editarUsuario(usuario.id)"></p-button>
+              <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text p-button-danger" (onClick)="excluirUsuario(usuario)"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="text-center p-4 text-muted">
+            Nenhum usuário encontrado na pesquisa.
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+
+  </div>
+</div>

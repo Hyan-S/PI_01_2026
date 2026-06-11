@@ -10,6 +10,8 @@ import pi.Senai.Senai.entity.Ambulancia;
 
 @Repository
 public interface AmbulanciaRepository extends JpaRepository<Ambulancia, UUID>{
+
     List<Ambulancia> findByAtivoTrue();
+
     long countByAtivoTrue();
 }
