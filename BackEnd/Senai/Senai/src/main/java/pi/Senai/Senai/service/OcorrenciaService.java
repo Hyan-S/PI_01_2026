@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import pi.Senai.Senai.entity.Ocorrencia;
 import pi.Senai.Senai.entity.StatusOcorrencia;
 import pi.Senai.Senai.repository.OcorrenciaRepository;
+import pi.Senai.Senai.service.iterator.ListaOcorrencias;
 
 @Service
 public class OcorrenciaService {
@@ -51,6 +52,13 @@ public class OcorrenciaService {
 
     public List<Ocorrencia> ListarOcorrencias(){
         return _OcorrenciaRepository.findAll();
+    }
+
+    public List<Ocorrencia> listarPorPrioridade() {
+        ListaOcorrencias lista = new ListaOcorrencias(_OcorrenciaRepository.findAll());
+        List<Ocorrencia> resultado = new java.util.ArrayList<>();
+        lista.forEach(resultado::add);
+        return resultado;
     }
 
     private String GerarProtocolo(){
