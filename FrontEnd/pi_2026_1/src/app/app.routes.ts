@@ -26,13 +26,32 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        // Crie este componente de teste ou comente essa rota se ele não existir ainda
         loadComponent: () => 
           import('./features/dashboard/pages/dashboard-principal/dashboard-principal') 
             .then(m => m.DashboardPrincipal)
       },
+      
+      // 💡 Rota Atualizada: Apontando para o seu pacote correto de Gerenciamento
+      {
+        path: 'usuarios',
+        canActivate: [adminGuard],
+        loadComponent: () => 
+          import('./features/users/pages/gerenciamento-usuario/gerenciamento-usuario/gerenciamento-usuario')
+            .then(m => m.GerenciamentoUsuarioComponent) // 
+      },
+
+      // Rota de Cadastro
       {
         path: 'usuarios/cadastro',
+        canActivate: [adminGuard],
+        loadComponent: () => 
+          import('./features/users/pages/cadastro-usuario/cadastro-usuario')
+            .then(m => m.CadastroUsuarioComponent)
+      },
+
+      // Rota de Edição (Reaproveitando o componente de cadastro)
+      {
+        path: 'usuarios/editar/:id',
         canActivate: [adminGuard],
         loadComponent: () => 
           import('./features/users/pages/cadastro-usuario/cadastro-usuario')

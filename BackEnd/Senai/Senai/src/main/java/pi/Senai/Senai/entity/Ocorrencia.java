@@ -53,9 +53,11 @@ public class Ocorrencia {
     @Column(nullable = false)
     private String Endereco;
 
+    // EXCLUIR 
     @Column
     private Double Latitude;
 
+    // EXCLUIR 
     @Column
     private Double Longitude;
 
