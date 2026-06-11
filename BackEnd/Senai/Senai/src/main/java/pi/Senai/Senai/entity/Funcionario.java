@@ -4,8 +4,11 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.GenerationType;
 
 @Entity
@@ -23,8 +26,9 @@ public class Funcionario {
     @Column
     private int NumeroFuncao;
 
-    @Column
-    private String IdUsuario;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "equipe_id")
+    private Equipe equipe;
 
     public UUID getId() {
         return Id;
@@ -58,13 +62,11 @@ public class Funcionario {
         NumeroFuncao = numeroFuncao;
     }
 
-    public String getIdUsuario() {
-        return IdUsuario;
+    public Equipe getEquipe() {
+        return equipe;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        IdUsuario = idUsuario;
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
     }
-
-    
 }

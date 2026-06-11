@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import pi.Senai.Senai.dto.AmbulanciaEquipadaDTO;
 import pi.Senai.Senai.entity.Ambulancia;
+import pi.Senai.Senai.enums.TipoItemMedico;
 import pi.Senai.Senai.service.AmbulanciaService;
 
 @RestController
@@ -41,5 +43,15 @@ public class AmbulanciaController {
     @GetMapping("/listar")
     public List<Ambulancia> listar() {
         return ambulanciaService.listar();
+    }
+
+    @PostMapping("/{id}/equipar")
+    public AmbulanciaEquipadaDTO equipar(@PathVariable UUID id, @RequestBody List<TipoItemMedico> itens) {
+        return ambulanciaService.equipar(id, itens);
+    }
+
+    @GetMapping("/{id}/equipada")
+    public AmbulanciaEquipadaDTO obterEquipada(@PathVariable UUID id) {
+        return ambulanciaService.obterEquipada(id);
     }
 }
