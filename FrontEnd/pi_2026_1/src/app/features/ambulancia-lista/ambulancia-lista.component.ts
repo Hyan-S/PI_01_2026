@@ -9,9 +9,6 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Ambulancia } from '../../core/models/ambulancia.model';
 import { AmbulanciaService } from '../../core/services/ambulancia.service';
 import { Router } from '@angular/router';
-import { AmbulanciaFormComponent } from '../ambulancia-form/ambulancia-form.component';
-import { DialogModule } from 'primeng/dialog';
-import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-ambulancia-lista',
@@ -23,9 +20,6 @@ import { ToastModule } from 'primeng/toast';
     InputTextModule,
     ConfirmDialogModule,
     FormsModule,
-    AmbulanciaFormComponent,
-    DialogModule,
-    ToastModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './ambulancia-lista.component.html',
@@ -34,9 +28,6 @@ import { ToastModule } from 'primeng/toast';
 export class AmbulanciaListaComponent implements OnInit {
   ambulancias: Ambulancia[] = [];
   termoBusca: string = '';
-
-  exibirDialogDetalhes: boolean = false;
-  ambulanciaDetalhe: Ambulancia | null = null;
 
   constructor(
     private ambulanciaService: AmbulanciaService,
@@ -52,8 +43,7 @@ export class AmbulanciaListaComponent implements OnInit {
   carregarAmbulancias() {
     this.ambulanciaService.listar().subscribe({
       next: (dados) => {
-        this.ambulancias = dados.filter((amb) => amb.ativo === true);
-
+        this.ambulancias = dados;
       },
       error: () => {
         this.messageService.add({
@@ -65,21 +55,18 @@ export class AmbulanciaListaComponent implements OnInit {
     });
   }
 
-  detalhes(id: string) {
-    this.ambulanciaService.buscarPorId(id).subscribe({
-      next: (dados) => {
-        this.ambulanciaDetalhe = dados;
-        this.exibirDialogDetalhes = true;
-      },
-      error: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Falha ao carregar os detalhes da ambulância.',
-        });
-      },
-    });
+  novaAmbulancia() {
+    this.router.navigate(['/ambulancias/novo']);
   }
+
+  editar(id: string) {
+    this.router.navigate(['/ambulancias/editar', id]);
+  }
+
+  detalhes(id: string) {
+    this.router.navigate(['/ambulancias/detalhes', id]);
+  }
+
   confirmarExclusao(ambulancia: Ambulancia) {
     this.confirmationService.confirm({
       message: `Tem certeza que deseja excluir a ambulância placa ${ambulancia.placa}?`,
@@ -97,8 +84,7 @@ export class AmbulanciaListaComponent implements OnInit {
                 summary: 'Sucesso',
                 detail: 'Ambulância excluída.',
               });
-
-              this.ambulancias = this.ambulancias.filter((a) => a.id !== ambulancia.id);
+              this.carregarAmbulancias();
             },
             error: () => {
               this.messageService.add({
@@ -112,34 +98,5 @@ export class AmbulanciaListaComponent implements OnInit {
       },
     });
   }
-  exibirDialog: boolean = false;
-  idParaEditar: string | null = null;
-
-  novaAmbulancia() {
-    this.idParaEditar = null;
-    this.exibirDialog = true;
-  }
-
-  editar(id: string) {
-    this.idParaEditar = id;
-    this.exibirDialog = true;
-  }
-  fecharModalForm(visivel: boolean) {
-    this.exibirDialog = visivel;
-    if (!visivel) {
-      this.idParaEditar = null;
-    }
-  }
-
-  obterClasseStatus(status?: string): string {
-    if (!status) return 'status-sem-status';
-
-    const statusFormatado = status
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[\s_]+/g, '-');
-
-    return `status-${statusFormatado}`;
-  }
 }
+

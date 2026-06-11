@@ -3,6 +3,10 @@ export interface Ambulancia {
   descricao: string;
   placa: string;
   observacao?: string;
-  status: string;
+  pesoBaseKg: number;
+  dataCriacao?: string;
+  ultimaAtualizacao?: string;
   ativo?: boolean;
+  status?: string;
+  itensMedicos?: string[];
 }

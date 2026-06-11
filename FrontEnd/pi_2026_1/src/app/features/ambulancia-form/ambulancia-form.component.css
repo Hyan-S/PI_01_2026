@@ -1,36 +1,36 @@
-.form-ambulancia {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  margin-top: 1rem;
+
+.cadastro-container {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: var(--radius-default);
+  box-shadow: var(--shadow-card);
 }
 
-.campo {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.campo label {
-  margin-bottom: 0.5rem;
+.cadastro-container h2 {
+  color: var(--text-main);
+  margin-top: 0;
+  margin-bottom: 2rem;
   font-weight: 600;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 1rem;
 }
 
-.campo input,
-.campo textarea,
-.campo p-select {
-  width: 100%;
+.p-field {
+  margin-bottom: 1.5rem;
 }
 
-:host ::ng-deep .p-select {
-  width: 100%;
+.p-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-main);
+  font-size: 0.95rem;
 }
 
-:host ::ng-deep .p-inputtext {
-  width: 100%;
-}
-
-:host ::ng-deep textarea.p-inputtextarea {
-  width: 100%;
-  resize: vertical;
+.p-error {
+  display: block;
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+  font-weight: 500;
 }

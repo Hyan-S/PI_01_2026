@@ -7,7 +7,7 @@ import { Ambulancia } from '../models/ambulancia.model';
   providedIn: 'root',
 })
 export class AmbulanciaService {
-  private apiUrl = 'http://localhost:8081/ambulancia';
+  private apiUrl = 'http://localhost:8080/ambulancia';
 
   constructor(private http: HttpClient) {}
 
@@ -22,9 +22,7 @@ export class AmbulanciaService {
   atualizar(ambulancia: Ambulancia): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/atualizar`, ambulancia);
   }
-  buscarPorId(id: string): Observable<Ambulancia> {
-    return this.http.get<Ambulancia>(`${this.apiUrl}/${id}`);
-  }
+
   excluir(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/excluir/${id}`);
   }
