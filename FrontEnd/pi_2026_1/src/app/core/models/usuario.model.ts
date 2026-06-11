@@ -20,3 +20,11 @@ export interface UsuarioRequest {
   nivelAcesso: string;
   categoriaId?: string;
 }
+
+export interface Usuario {
+  id: string;
+  nome: string;
+  cpf: string;
+  email: string;
+  nivelAcesso: string;
+}
