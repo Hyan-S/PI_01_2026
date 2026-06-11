@@ -16,6 +16,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import pi.Senai.Senai.enums.GravidadeOcorrencia;
+import pi.Senai.Senai.enums.StatusOcorrencia;
 
 @Entity
 public class Ocorrencia {
