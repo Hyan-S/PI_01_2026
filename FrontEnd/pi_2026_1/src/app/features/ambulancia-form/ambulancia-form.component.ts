@@ -8,7 +8,7 @@ import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { AmbulanciaService } from '../../core/services/ambulancia.service';
-import { Ambulancia } from '../../core/models/Ambulancia.model';
+import { Ambulancia } from '../../core/models/ambulancia.model';
 
 @Component({
   selector: 'app-ambulancia-form',
