@@ -29,7 +29,10 @@ public class AmbulanciaController {
     public void salvar(@RequestBody Ambulancia ambulancia) {
         ambulanciaService.salvar(ambulancia);
     }
-
+    @GetMapping("/{id}")
+    public Ambulancia buscarPorId(@PathVariable UUID id) {
+        return ambulanciaService.buscarPorId(id);
+    }
     @PutMapping("/atualizar")
     public void atualizar(@RequestBody Ambulancia ambulancia) {
         ambulanciaService.atualizar(ambulancia);

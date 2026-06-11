@@ -1,0 +1,33 @@
+.lista-container {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: var(--radius-default);
+  box-shadow: var(--shadow-card);
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 1rem;
+}
+
+.header-actions h2 {
+  margin: 0;
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-badge.DISPONIVEL { background-color: #d1fae5; color: #065f46; }
+.status-badge.A_CAMINHO { background-color: #dbeafe; color: #1e40af; }
+.status-badge.EM_ATENDIMENTO { background-color: #fef3c7; color: #92400e; }
+.status-badge.EM_MANUTENCAO { background-color: #fee2e2; color: #b91c1c; }

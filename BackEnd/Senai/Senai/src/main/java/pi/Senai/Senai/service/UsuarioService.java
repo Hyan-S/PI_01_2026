@@ -56,6 +56,43 @@ public class UsuarioService {
         return new UsuarioResponseDTO(usuario);
     }
 
+    @Transactional
+    public UsuarioResponseDTO atualizar(UUID id, UsuarioRequestDTO dto) {
+        Usuario usuario = usuarioRepository.findByIdAndAtivoIsTrue(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado ou inativo. ID: " + id));
+
+        validadorFormatoCpf(dto.getCpf());
+
+        // Valida se o CPF pertence a OUTRO usuário
+        usuarioRepository.findByCpf(dto.getCpf()).ifPresent(userExistente -> {
+            if (!userExistente.getId().equals(usuario.getId())) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "O CPF informado já está em uso por outro usuário.");
+            }
+        });
+
+        // Valida se o E-mail pertence a OUTRO usuário
+        if (dto.getEmail() != null && !dto.getEmail().trim().isEmpty()) {
+            usuarioRepository.findByEmail(dto.getEmail()).ifPresent(userExistente -> {
+                if (!userExistente.getId().equals(usuario.getId())) {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, "O E-mail informado já está em uso por outro usuário.");
+                }
+            });
+            usuario.setEmail(dto.getEmail());
+        }
+
+        usuario.setNome(dto.getNome());
+        usuario.setCpf(dto.getCpf());
+        usuario.setNivelAcesso(dto.getNivelAcesso());
+
+        // Se o front-end mandar uma senha nova, nós atualizamos o Hash. Se vier vazia, mantemos a antiga.
+        if (dto.getSenha() != null && !dto.getSenha().trim().isEmpty()) {
+            usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
+        }
+
+        return new UsuarioResponseDTO(usuarioRepository.save(usuario));
+    }
+
+
     public List<UsuarioResponseDTO> listarTodos() {
         List<Usuario> usuarios = usuarioRepository.findByAtivoTrue();
         return usuarios.stream().map(UsuarioResponseDTO::new).toList();
