@@ -11,6 +11,7 @@ import pi.Senai.Senai.entity.Ocorrencia;
 
 import pi.Senai.Senai.enums.StatusOcorrencia;
 
+
 @Repository
 public interface OcorrenciaRepository extends JpaRepository<Ocorrencia, UUID>{
 
