@@ -44,8 +44,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> {
                     // Libera acesso público EXCLUSIVAMENTE para a rota de login
                     req.requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll();
+
                     
-                    // Qualquer outra requisição precisará do Token JWT válido
+                    req.requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll();
+    
+
                     req.anyRequest().authenticated();
                 })
                 
