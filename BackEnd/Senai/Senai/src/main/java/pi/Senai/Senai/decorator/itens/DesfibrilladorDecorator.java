@@ -18,6 +18,10 @@ public class DesfibrilladorDecorator extends ItemMedicoDecorator {
         return recurso.getDescricao() + " + " + TipoItemMedico.DESFIBRILADOR.getDescricao();
     }
 
+    @Override
+    public double getPesoKg() {
+        return recurso.getPesoKg() + TipoItemMedico.DESFIBRILADOR.getPesoKg();
+    }
 
     @Override
     public List<String> getItensEquipados() {

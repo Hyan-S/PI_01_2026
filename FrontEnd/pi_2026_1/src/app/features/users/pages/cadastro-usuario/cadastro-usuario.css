@@ -1,84 +1,38 @@
-/* 💡 Contêiner Principal Centralizado */
 .cadastro-container {
-  max-width: 800px;
-  margin: 0 auto;
-  background-color: var(--bg-card, #ffffff);
-  padding: 2.5rem;
-  border-radius: var(--radius-lg, 8px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.cadastro-container h2 {
-  color: var(--text-main);
-  margin-top: 0;
-  margin-bottom: 2rem;
-  font-weight: 600;
-  border-bottom: 1px solid var(--border-light, #e2e8f0);
-  padding-bottom: 1rem;
-}
-
-/* 💡 Recriando o Grid Responsivo nativamente (Sem depender do PrimeFlex) */
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-  margin-right: -0.75rem;
-  margin-left: -0.75rem;
-}
-
-.col-12 {
-  width: 100%;
-  padding: 0 0.75rem;
-}
-
-/* Em telas de tablet para cima, a classe md:col-6 ocupa 50% */
-@media (min-width: 768px) {
-  .md\:col-6 {
-    width: 50%;
+  h2 {
+    color: var(--text-main);
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 1rem;
   }
 }
 
-/* 💡 Estilização dos Campos e Labels */
+/* Ajustes para o grid p-fluid do PrimeNG */
 .p-field {
   margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-main);
+    font-size: 0.95rem;
+  }
 }
 
-.p-field label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: var(--text-main);
-  font-size: 0.95rem;
-}
-
-/* 💡 Forçando os componentes do PrimeNG a usarem toda a largura da coluna */
-:host ::ng-deep .p-inputtext,
-:host ::ng-deep .p-inputmask,
-:host ::ng-deep .p-password input,
-:host ::ng-deep .p-password,
-:host ::ng-deep .p-select {
-  width: 100% !important;
-}
-
-/* 💡 Resolvendo os botões colados */
-.flex.gap-2 {
-  display: flex;
-  gap: 1rem; /* Dá o espaço exato entre o Cancelar e o Salvar */
-  justify-content: flex-start;
-}
-
-/* Feedback de Erros */
+/* Validações e feedback de erro inline */
 .p-error {
   display: block;
-  color: var(--color-danger, #ef4444);
+  color: var(--color-danger);
   font-size: 0.85rem;
-  margin-top: 0.4rem;
+  margin-top: 0.3rem;
   font-weight: 500;
 }
 
-.text-danger {
-  color: var(--color-danger, #ef4444);
-}
-
-.text-muted {
-  color: var(--text-muted, #64748b);
+/* Garante que o componente de senha ocupe toda a largura da coluna no PrimeNG */
+:host ::ng-deep p-password .p-password,
+:host ::ng-deep p-password input {
+  width: 100%;
 }

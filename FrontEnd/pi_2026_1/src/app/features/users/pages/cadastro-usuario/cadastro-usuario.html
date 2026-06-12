@@ -1,23 +1,29 @@
-<p-toast></p-toast>
-
 <div class="cadastro-container">
-  <h2>{{ tituloPagina }}</h2>
+  <h2>Cadastro de Novo Usuário</h2>
   
   <form [formGroup]="formUsuario" (ngSubmit)="salvar()">
     
     <div class="p-fluid grid">
       
       <div class="p-field col-12">
-        <label for="nome">Nome Completo <span class="text-danger">*</span></label>
-        <input id="nome" type="text" pInputText formControlName="nome" />
+        <label for="nome">Nome Completo</label>
+        <input 
+          id="nome" 
+          type="text" 
+          pInputText 
+          formControlName="nome" />
         @if (formUsuario.get('nome')?.touched && formUsuario.get('nome')?.invalid) {
           <small class="p-error">O nome completo é obrigatório.</small>
         }
       </div>
 
       <div class="p-field col-12 md:col-6">
-        <label for="cpf">CPF <span class="text-danger">*</span></label>
-        <p-inputmask id="cpf" formControlName="cpf" mask="999.999.999-99" placeholder="000.000.000-00" />
+        <label for="cpf">CPF</label>
+        <p-inputmask 
+          id="cpf" 
+          formControlName="cpf" 
+          mask="999.999.999-99" 
+          placeholder="000.000.000-00" />
         @if (formUsuario.get('cpf')?.touched && formUsuario.get('cpf')?.invalid) {
           <small class="p-error">CPF inválido ou não informado.</small>
         }
@@ -25,38 +31,51 @@
 
       <div class="p-field col-12 md:col-6">
         <label for="email">E-mail</label>
-        <input id="email" type="email" pInputText formControlName="email" />
+        <input 
+          id="email" 
+          type="email" 
+          pInputText 
+          formControlName="email" />
         @if (formUsuario.get('email')?.touched && formUsuario.get('email')?.invalid) {
           <small class="p-error">Insira um formato de e-mail válido.</small>
         }
       </div>
 
       <div class="p-field col-12">
-        <label for="nivelAcesso">Nível de Acesso <span class="text-danger">*</span></label>
-        <p-select id="nivelAcesso" [options]="niveisAcesso" formControlName="nivelAcesso" placeholder="Selecione um nível" styleClass="w-full"></p-select>
+        <label for="nivelAcesso">Nível de Acesso</label>
+        <p-select 
+          id="nivelAcesso" 
+          [options]="niveisAcesso" 
+          formControlName="nivelAcesso" 
+          placeholder="Selecione um nível" 
+          styleClass="w-full" />
         @if (formUsuario.get('nivelAcesso')?.touched && formUsuario.get('nivelAcesso')?.invalid) {
           <small class="p-error">O nível de acesso é obrigatório.</small>
         }
       </div>
 
       <div class="p-field col-12 md:col-6">
-        <label for="senha">
-          Senha 
-          <span *ngIf="!isEdicao" class="text-danger">*</span>
-        </label>
-        <p-password id="senha" formControlName="senha" [toggleMask]="true" promptLabel="Digite a senha" weakLabel="Fraca" mediumLabel="Média" strongLabel="Forte" />
-        <small class="text-muted block mt-1" *ngIf="isEdicao">Deixe em branco para manter a senha atual.</small>
+        <label for="senha">Senha</label>
+        <p-password 
+          id="senha" 
+          formControlName="senha" 
+          [toggleMask]="true" 
+          promptLabel="Digite a senha" 
+          weakLabel="Fraca" 
+          mediumLabel="Média" 
+          strongLabel="Forte" />
         @if (formUsuario.get('senha')?.touched && formUsuario.get('senha')?.invalid) {
-          <small class="p-error">A senha precisa ter no mínimo 6 caracteres.</small>
+          <small class="p-error">A senha é obrigatória (mínimo 6 caracteres).</small>
         }
       </div>
 
       <div class="p-field col-12 md:col-6">
-        <label for="confirmarSenha">
-          Confirmar Senha
-          <span *ngIf="!isEdicao" class="text-danger">*</span>
-        </label>
-        <p-password id="confirmarSenha" formControlName="confirmarSenha" [toggleMask]="true" [feedback]="false" />
+        <label for="confirmarSenha">Confirmar Senha</label>
+        <p-password 
+          id="confirmarSenha" 
+          formControlName="confirmarSenha" 
+          [toggleMask]="true" 
+          [feedback]="false" />
         @if (formUsuario.hasError('senhasDiferentes') && formUsuario.get('confirmarSenha')?.touched) {
           <small class="p-error">As senhas não coincidem.</small>
         }
@@ -65,8 +84,19 @@
     </div>
 
     <div class="flex gap-2 mt-4">
-      <p-button type="button" label="Cancelar" icon="pi pi-times" severity="secondary" [outlined]="true" (onClick)="voltar()" />
-      <p-button type="submit" label="Salvar Usuário" icon="pi pi-check" [disabled]="formUsuario.invalid" />
+      <p-button 
+        type="button" 
+        label="Cancelar" 
+        icon="pi pi-times" 
+        severity="secondary" 
+        [outlined]="true" 
+        (onClick)="voltar()" />
+        
+      <p-button 
+        type="submit" 
+        label="Salvar Usuário" 
+        icon="pi pi-check" 
+        [disabled]="formUsuario.invalid" />
     </div>
 
   </form>

@@ -16,38 +16,36 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.PrePersist;
 import pi.Senai.Senai.entity.base.EntidadeGerenciavel;
 import pi.Senai.Senai.enums.TipoItemMedico;
-import pi.Senai.Senai.enums.StatusAmbulancia;
 
 @Entity
 public class Ambulancia implements EntidadeGerenciavel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private UUID Id;
 
     @Column
-    private String descricao;
+    private String Descricao;
 
     @Column
-    private String placa;
+    private String Placa;
 
     @Column
-    private String observacao;
+    private String Observacao;
 
     @Column
-    private Date dataCriacao;
+    private double PesoBaseKg;
 
     @Column
-    private Date ultimaAtualizacao;
+    private Date DataCriacao;
 
     @Column
-    private boolean ativo;
+    private Date UltimaAtualizacao;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private StatusAmbulancia status;
+    @Column
+    private boolean Ativo;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "ambulancia_itens", joinColumns = @JoinColumn(name = "ambulancia_id"))
@@ -55,85 +53,30 @@ public class Ambulancia implements EntidadeGerenciavel {
     @Column(name = "tipo_item")
     private Set<TipoItemMedico> ItensMedicos = new HashSet<>();
 
-    @PrePersist
-    protected void onCreate() {
-        if (this.status == null) {
-            this.status = StatusAmbulancia.DISPONIVEL;
-        }
-    }
+    public UUID getId() { return Id; }
+    public void setId(UUID id) { Id = id; }
 
-    public UUID getId() {
-        return id;
-    }
+    public String getDescricao() { return Descricao; }
+    public void setDescricao(String descricao) { Descricao = descricao; }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+    public String getPlaca() { return Placa; }
+    public void setPlaca(String placa) { Placa = placa; }
 
-    public String getDescricao() {
-        return descricao;
-    }
+    public String getObservacao() { return Observacao; }
+    public void setObservacao(String observacao) { Observacao = observacao; }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+    public double getPesoBaseKg() { return PesoBaseKg; }
+    public void setPesoBaseKg(double pesoBaseKg) { PesoBaseKg = pesoBaseKg; }
 
-    public String getPlaca() {
-        return placa;
-    }
+    public Date getDataCriacao() { return DataCriacao; }
+    public void setDataCriacao(Date dataCriacao) { DataCriacao = dataCriacao; }
 
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
+    public Date getUltimaAtualizacao() { return UltimaAtualizacao; }
+    public void setUltimaAtualizacao(Date ultimaAtualizacao) { UltimaAtualizacao = ultimaAtualizacao; }
 
-    public String getObservacao() {
-        return observacao;
-    }
+    public boolean isAtivo() { return Ativo; }
+    public void setAtivo(boolean ativo) { Ativo = ativo; }
 
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
-
-    public Date getDataCriacao() {
-        return dataCriacao;
-    }
-
-    @Override
-    public void setDataCriacao(Date dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
-
-    public Date getUltimaAtualizacao() {
-        return ultimaAtualizacao;
-    }
-
-    @Override
-    public void setUltimaAtualizacao(Date ultimaAtualizacao) {
-        this.ultimaAtualizacao = ultimaAtualizacao;
-    }
-
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    @Override
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
-
-    public StatusAmbulancia getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusAmbulancia status) {
-        this.status = status;
-    }
-
-    public Set<TipoItemMedico> getItensMedicos() {
-        return ItensMedicos;
-    }
-
-    public void setItensMedicos(Set<TipoItemMedico> itensMedicos) {
-        ItensMedicos = itensMedicos;
-    }
+    public Set<TipoItemMedico> getItensMedicos() { return ItensMedicos; }
+    public void setItensMedicos(Set<TipoItemMedico> itensMedicos) { ItensMedicos = itensMedicos; }
 }
