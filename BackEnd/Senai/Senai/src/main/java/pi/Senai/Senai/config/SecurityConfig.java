@@ -38,7 +38,6 @@ public class SecurityConfig {
                 
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll();
-                    req.requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll();
                     req.requestMatchers("/ambulancia/**").permitAll();
                     req.anyRequest().authenticated();
                 })
