@@ -23,8 +23,6 @@ public class AmbulanciaService extends CrudBaseService<Ambulancia, UUID> {
 
     private static final Map<TipoItemMedico, Function<RecursoDeEmergencia, RecursoDeEmergencia>> DECORADORES;
 
-
-
     static {
         DECORADORES = new EnumMap<>(TipoItemMedico.class);
         DECORADORES.put(TipoItemMedico.DESFIBRILADOR, DesfibrilladorDecorator::new);
