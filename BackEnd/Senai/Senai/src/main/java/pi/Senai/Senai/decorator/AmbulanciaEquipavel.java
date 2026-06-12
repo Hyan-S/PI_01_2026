@@ -18,6 +18,10 @@ public class AmbulanciaEquipavel implements RecursoDeEmergencia {
         return ambulancia.getDescricao();
     }
 
+    @Override
+    public double getPesoKg() {
+        return ambulancia.getPesoBaseKg();
+    }
 
     @Override
     public List<String> getItensEquipados() {

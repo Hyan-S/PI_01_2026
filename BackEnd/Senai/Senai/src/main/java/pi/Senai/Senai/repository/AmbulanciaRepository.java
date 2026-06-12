@@ -1,6 +1,5 @@
 package pi.Senai.Senai.repository;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,8 +9,6 @@ import pi.Senai.Senai.entity.Ambulancia;
 
 @Repository
 public interface AmbulanciaRepository extends JpaRepository<Ambulancia, UUID>{
-
-    List<Ambulancia> findByAtivoTrue();
 
     long countByAtivoTrue();
 }

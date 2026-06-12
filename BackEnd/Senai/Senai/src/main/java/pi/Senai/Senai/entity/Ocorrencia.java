@@ -16,8 +16,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import pi.Senai.Senai.enums.GravidadeOcorrencia;
-import pi.Senai.Senai.enums.StatusOcorrencia;
 
 @Entity
 public class Ocorrencia {
@@ -55,11 +53,9 @@ public class Ocorrencia {
     @Column(nullable = false)
     private String Endereco;
 
-    // EXCLUIR 
     @Column
     private Double Latitude;
 
-    // EXCLUIR 
     @Column
     private Double Longitude;
 

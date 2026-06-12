@@ -42,7 +42,7 @@ public abstract class CrudBaseService<T extends EntidadeGerenciavel, ID> {
         getRepositorio().save(entidade);
     }
 
-    public  List<T> listar() {
+    public final List<T> listar() {
         return getRepositorio().findAll();
     }
 }

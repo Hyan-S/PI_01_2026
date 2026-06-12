@@ -1,8 +1,7 @@
-package pi.Senai.Senai.enums;
+package pi.Senai.Senai.entity;
 
 public enum StatusOcorrencia {
     AGUARDANDO,
-    A_CAMINHO,
     EM_ATENDIMENTO,
     ENCERRADA,
     CANCELADA

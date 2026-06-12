@@ -1,130 +1,50 @@
-/* Container Geral da Aplicação */
+/* Utilizando as nossas variáveis globais! */
+
 .layout-wrapper {
   display: flex;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background-color: var(--bg-main); /* Fundo cinza claro global */
 }
 
-/* ---------------- SIDEBAR MINIMALISTA ---------------- */
 .layout-sidebar {
   width: 260px;
-  background-color: var(--bg-card); /* Fundo branco neve */
-  border-right: 1px solid var(--border-light);
+  background-color: var(--bg-sidebar); /* Azul Petróleo */
+  color: var(--text-light);            /* Branco Neve */
   display: flex;
   flex-direction: column;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.02);
+  box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+  z-index: 10;
 }
 
-/* 1. Branding (Topo) */
-.sidebar-header {
-  padding: 1.5rem;
+.layout-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-main);    /* Branco Gelo */
+  overflow-y: auto;
+}
+
+.layout-topbar {
+  height: 70px;
+  background-color: var(--bg-card);    /* Branco Neve */
+  box-shadow: var(--shadow-card);
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  justify-content: flex-end;
+  padding: 0 2rem;
   border-bottom: 1px solid var(--border-light);
 }
 
-.brand-icon {
-  font-size: 1.8rem;
-  color: var(--color-primary);
-}
-
-.brand-name {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-main);
-  letter-spacing: 0.5px;
-}
-
-/* 2. Área do Menu */
-.sidebar-menu-container {
-  flex: 1;
-  padding: 1.5rem 1rem;
-  overflow-y: auto;
-}
-
-/* Customização Profunda do Menu PrimeNG para ficar Invisível/Minimalista */
-:host ::ng-deep .menu-minimalista {
-  width: 100%;
-  border: none;
-  background: transparent;
-}
-
-/* Títulos dos Grupos (Principal, Gestão, Conta) */
-:host ::ng-deep .menu-minimalista .p-submenu-header {
-  background: transparent;
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  padding: 1rem 0.5rem 0.5rem 0.5rem;
-}
-
-/* Estilo de cada botão do menu */
-:host ::ng-deep .menu-minimalista .p-menuitem-link {
-  padding: 0.85rem 1rem;
-  border-radius: var(--radius-default);
-  margin-bottom: 0.3rem;
-  color: var(--text-main);
-  transition: all 0.2s ease;
-}
-
-/* Efeito de Hover (Passar o mouse) */
-:host ::ng-deep .menu-minimalista .p-menuitem-link:hover {
-  background-color: var(--bg-main);
-  color: var(--color-primary);
-}
-
-:host ::ng-deep .menu-minimalista .p-menuitem-icon {
-  color: inherit;
-  margin-right: 0.75rem;
-  font-size: 1.1rem;
-}
-
-/* Destacar o botão de SAIR em Vermelho */
-:host ::ng-deep .menu-minimalista .p-menuitem:last-child .p-menuitem-link {
-  color: var(--color-danger);
-}
-:host ::ng-deep .menu-minimalista .p-menuitem:last-child .p-menuitem-link:hover {
-  background-color: #fee2e2;
-}
-
-/* 3. Rodapé do Perfil do Usuário */
-.sidebar-footer {
-  padding: 1.25rem;
-  border-top: 1px solid var(--border-light);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.user-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.user-name {
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--text-main);
-}
-
-.user-role {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-/* ---------------- ÁREA DE CONTEÚDO ---------------- */
 .layout-content {
+  padding: 2rem;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
 }
 
-.content-body {
-  padding: 2.5rem;
-  flex: 1;
+.card-neve {
+  background-color: var(--bg-card);    /* Branco Neve */
+  border-radius: var(--radius-default);
+  box-shadow: var(--shadow-card);
+  padding: 2rem;
+  min-height: 100%;
 }

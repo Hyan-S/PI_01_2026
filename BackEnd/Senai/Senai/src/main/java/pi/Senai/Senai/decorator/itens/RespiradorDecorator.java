@@ -18,6 +18,10 @@ public class RespiradorDecorator extends ItemMedicoDecorator {
         return recurso.getDescricao() + " + " + TipoItemMedico.RESPIRADOR.getDescricao();
     }
 
+    @Override
+    public double getPesoKg() {
+        return recurso.getPesoKg() + TipoItemMedico.RESPIRADOR.getPesoKg();
+    }
 
     @Override
     public List<String> getItensEquipados() {
