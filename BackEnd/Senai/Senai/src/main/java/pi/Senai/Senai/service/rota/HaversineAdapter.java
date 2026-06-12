@@ -6,12 +6,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class HaversineAdapter implements CalculadorDeDistancia {
 
-    private final ServicoDeGeolocalizacao servico = new HaversineCalculador();
+    private final HaversineCalculador calculador = new HaversineCalculador();
 
     @Override
     public double calcular(double latOrigem, double lonOrigem, double latDestino, double lonDestino) {
-        Coordenada origem = new Coordenada(latOrigem, lonOrigem);
-        Coordenada destino = new Coordenada(latDestino, lonDestino);
-        return servico.calcularDistanciaEntrePontos(origem, destino);
+        return calculador.calcularDistancia(latOrigem, lonOrigem, latDestino, lonDestino);
     }
 }
