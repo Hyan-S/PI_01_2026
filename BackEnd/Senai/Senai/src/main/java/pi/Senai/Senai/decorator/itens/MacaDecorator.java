@@ -18,10 +18,6 @@ public class MacaDecorator extends ItemMedicoDecorator {
         return recurso.getDescricao() + " + " + TipoItemMedico.MACA.getDescricao();
     }
 
-    @Override
-    public double getPesoKg() {
-        return recurso.getPesoKg() + TipoItemMedico.MACA.getPesoKg();
-    }
 
     @Override
     public List<String> getItensEquipados() {

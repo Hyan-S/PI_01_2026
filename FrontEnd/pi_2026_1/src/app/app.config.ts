@@ -7,27 +7,25 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MessageService } from 'primeng/api';
 import Aura from '@primeuix/themes/aura';
 import { providePrimeNG } from 'primeng/config';
-import { authInterceptor } from './interceptors/auth.interceptor';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withFetch()),
     provideAnimationsAsync(),
     MessageService,
-    
+    provideHttpClient(withInterceptors([authInterceptor])),
     providePrimeNG({
       theme: {
           preset: Aura,
           options: {
-          darkModeSelector: 'none' 
+          darkModeSelector: 'none'
         }
       }
     })
-  
-  
-    
+
   ]
 };

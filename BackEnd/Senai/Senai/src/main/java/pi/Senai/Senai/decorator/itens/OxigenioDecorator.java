@@ -19,11 +19,6 @@ public class OxigenioDecorator extends ItemMedicoDecorator {
     }
 
     @Override
-    public double getPesoKg() {
-        return recurso.getPesoKg() + TipoItemMedico.OXIGENIO.getPesoKg();
-    }
-
-    @Override
     public List<String> getItensEquipados() {
         List<String> itens = new ArrayList<>(recurso.getItensEquipados());
         itens.add(TipoItemMedico.OXIGENIO.name());
