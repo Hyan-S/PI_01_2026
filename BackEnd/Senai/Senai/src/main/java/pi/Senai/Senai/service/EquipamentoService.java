@@ -1,5 +1,6 @@
 package pi.Senai.Senai.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,9 @@ public class EquipamentoService extends CrudBaseService<Equipamento, UUID> {
     @Override
     protected UUID getIdDaEntidade(Equipamento entidade) {
         return entidade.getId();
+    }
+
+    public List<Equipamento> buscarPorNome(String nome) {
+        return repositorio.findByNomeContainingIgnoreCase(nome);
     }
 }

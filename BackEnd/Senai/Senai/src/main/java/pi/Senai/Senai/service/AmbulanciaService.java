@@ -89,6 +89,11 @@ public class AmbulanciaService extends CrudBaseService<Ambulancia, UUID> {
         return montarCadeia(ambulancia);
     }
 
+    public Ambulancia buscarPorPlaca(String placa) {
+        return repositorio.findByPlaca(placa)
+                .orElseThrow(() -> new RuntimeException("Ambulância não encontrada com a placa: " + placa));
+    }
+
     private AmbulanciaEquipadaDTO montarCadeia(Ambulancia ambulancia) {
         RecursoDeEmergencia recurso = new AmbulanciaEquipavel(ambulancia);
 

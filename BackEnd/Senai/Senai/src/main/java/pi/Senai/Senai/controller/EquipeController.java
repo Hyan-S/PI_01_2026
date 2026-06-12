@@ -47,4 +47,9 @@ public class EquipeController {
     public Equipe buscarPorId(@PathVariable UUID id) {
         return equipeService.buscarPorId(id);
     }
+
+    @GetMapping("/identificador/{identificador}")
+    public Equipe buscarPorIdentificador(@PathVariable String identificador) {
+        return equipeService.buscarPorIdentificador(identificador);
+    }
 }

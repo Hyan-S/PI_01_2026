@@ -36,4 +36,8 @@ public class FuncionarioService {
     public List<Funcionario> ListarFuncionarios(){
         return _FuncionarioRepository.findAll();
     }
+
+    public List<Funcionario> buscarPorFuncao(String funcao) {
+        return _FuncionarioRepository.findByFuncao(funcao);
+    }
 }

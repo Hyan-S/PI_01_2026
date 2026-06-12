@@ -42,4 +42,9 @@ public class EquipamentoController {
     public List<Equipamento> listar() {
         return equipamentoService.listar();
     }
+
+    @GetMapping("/nome/{nome}")
+    public List<Equipamento> buscarPorNome(@PathVariable String nome) {
+        return equipamentoService.buscarPorNome(nome);
+    }
 }

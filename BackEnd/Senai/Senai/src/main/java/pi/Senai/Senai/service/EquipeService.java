@@ -39,4 +39,9 @@ public class EquipeService {
         return equipeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Equipe não encontrada"));
     }
+
+    public Equipe buscarPorIdentificador(String identificador) {
+        return equipeRepository.findByIdentificador(identificador)
+                .orElseThrow(() -> new RuntimeException("Equipe não encontrada com o identificador: " + identificador));
+    }
 }
