@@ -14,6 +14,7 @@ import pi.Senai.Senai.enums.StatusAmbulancia;
 import pi.Senai.Senai.enums.StatusOcorrencia;
 import pi.Senai.Senai.repository.AmbulanciaRepository;
 import pi.Senai.Senai.repository.OcorrenciaRepository;
+import pi.Senai.Senai.service.iterator.ListaOcorrencias;
 
 
 
@@ -74,6 +75,13 @@ public class OcorrenciaService {
 
     public List<Ocorrencia> ListarOcorrencias(){
         return _OcorrenciaRepository.findAll();
+    }
+
+    public List<Ocorrencia> listarPorPrioridade() {
+        ListaOcorrencias lista = new ListaOcorrencias(_OcorrenciaRepository.findAll());
+        List<Ocorrencia> resultado = new java.util.ArrayList<>();
+        lista.forEach(resultado::add);
+        return resultado;
     }
 
     private String GerarProtocolo(){

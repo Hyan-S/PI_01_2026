@@ -26,11 +26,21 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        // Crie este componente de teste ou comente essa rota se ele não existir ainda
         loadComponent: () =>
           import('./features/dashboard/pages/dashboard-principal/dashboard-principal')
             .then(m => m.DashboardPrincipal)
       },
+      
+      // 💡 Rota Atualizada: Apontando para o seu pacote correto de Gerenciamento
+      {
+        path: 'usuarios',
+        canActivate: [adminGuard],
+        loadComponent: () => 
+          import('./features/users/pages/gerenciamento-usuario/gerenciamento-usuario/gerenciamento-usuario')
+            .then(m => m.GerenciamentoUsuarioComponent)
+      },
+
+      // Rota de Cadastro
       {
         path: 'usuarios/cadastro',
         canActivate: [adminGuard],
@@ -38,7 +48,17 @@ export const routes: Routes = [
           import('./features/users/pages/cadastro-usuario/cadastro-usuario')
             .then(m => m.CadastroUsuarioComponent)
       },
-      // ROTAS DE AMBULÂNCIAS
+
+      // Rota de Edição (Adicionada pela branch DevelopRefactor)
+      {
+        path: 'usuarios/editar/:id',
+        canActivate: [adminGuard],
+        loadComponent: () => 
+          import('./features/users/pages/cadastro-usuario/cadastro-usuario')
+            .then(m => m.CadastroUsuarioComponent)
+      },
+
+      // ROTAS DE AMBULÂNCIAS (Adicionadas pela branch feature/ambulanciaCompleta)
       {
         path: 'ambulancias',
         loadComponent: () => import('./features/ambulancia-lista/ambulancia-lista.component')
