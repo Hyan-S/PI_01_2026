@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea5c409d-bc80-4af6-87bf-680db40c082f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/BackEnd/Senai/Senai/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/Senai/Senai/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="ea5c409d-bc80-4af6-87bf-680db40c082f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,7 +80,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Spring Boot.SenaiApplication.executor": "Run",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "refactor/develop",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/pabli/Documents/PI_01_2026",
     "node.js.detected.package.eslint": "true",
@@ -132,7 +130,7 @@
       <workItem from="1781263653100" duration="6431000" />
       <workItem from="1781272858151" duration="2296000" />
       <workItem from="1781280370858" duration="723000" />
-      <workItem from="1781281163020" duration="3226000" />
+      <workItem from="1781281163020" duration="3755000" />
     </task>
     <servers />
   </component>
