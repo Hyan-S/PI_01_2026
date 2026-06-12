@@ -34,25 +34,49 @@ public class AmbulanciaService extends CrudBaseService<Ambulancia, UUID> {
 
     static {
         DECORADORES = new EnumMap<>(TipoItemMedico.class);
-        DECORADORES.put(TipoItemMedico.DESFIBRILADOR,       DesfibrilladorDecorator::new);
+        DECORADORES.put(TipoItemMedico.DESFIBRILADOR, DesfibrilladorDecorator::new);
         DECORADORES.put(TipoItemMedico.KIT_PRIMEIROS_AUXILIOS, KitPrimeirosAuxiliosDecorator::new);
-        DECORADORES.put(TipoItemMedico.MACA,                MacaDecorator::new);
-        DECORADORES.put(TipoItemMedico.OXIGENIO,            OxigenioDecorator::new);
-        DECORADORES.put(TipoItemMedico.RESPIRADOR,          RespiradorDecorator::new);
+        DECORADORES.put(TipoItemMedico.MACA, MacaDecorator::new);
+        DECORADORES.put(TipoItemMedico.OXIGENIO, OxigenioDecorator::new);
+        DECORADORES.put(TipoItemMedico.RESPIRADOR, RespiradorDecorator::new);
     }
 
     @Override
-    protected JpaRepository<Ambulancia, UUID> getRepositorio() { return repositorio; }
+    public List<Ambulancia> listar() {
+        return repositorio.findByAtivoTrue();
+    }
 
     @Override
-    protected String getMensagemNaoEncontrado() { return "Ambulância não encontrada"; }
+    protected void prepararParaAtualizar(Ambulancia entidade) {
+        Ambulancia existente = repositorio.findById(entidade.getId()).orElse(null);
+        if (existente != null) {
+            entidade.setAtivo(existente.isAtivo());
+            entidade.setDataCriacao(existente.getDataCriacao());
+        }
+    }
 
     @Override
-    protected UUID getIdDaEntidade(Ambulancia entidade) { return entidade.getId(); }
+    protected JpaRepository<Ambulancia, UUID> getRepositorio() { 
+        return repositorio; 
+    }
+
+    @Override
+    protected String getMensagemNaoEncontrado() { 
+        return "Ambulância não encontrada"; 
+    }
+
+    @Override
+    protected UUID getIdDaEntidade(Ambulancia entidade) { 
+        return entidade.getId(); 
+    }
+
+    public Ambulancia buscarPorId(UUID id) {
+        return repositorio.findById(id)
+                .orElseThrow(() -> new RuntimeException(getMensagemNaoEncontrado() + " com o ID: " + id));
+    }
 
     public AmbulanciaEquipadaDTO equipar(UUID id, List<TipoItemMedico> itens) {
-        Ambulancia ambulancia = repositorio.findById(id)
-                .orElseThrow(() -> new RuntimeException(getMensagemNaoEncontrado()));
+        Ambulancia ambulancia = buscarPorId(id);
 
         ambulancia.setItensMedicos(Set.copyOf(itens));
         repositorio.save(ambulancia);
@@ -61,9 +85,7 @@ public class AmbulanciaService extends CrudBaseService<Ambulancia, UUID> {
     }
 
     public AmbulanciaEquipadaDTO obterEquipada(UUID id) {
-        Ambulancia ambulancia = repositorio.findById(id)
-                .orElseThrow(() -> new RuntimeException(getMensagemNaoEncontrado()));
-
+        Ambulancia ambulancia = buscarPorId(id);
         return montarCadeia(ambulancia);
     }
 
@@ -74,9 +96,9 @@ public class AmbulanciaService extends CrudBaseService<Ambulancia, UUID> {
             recurso = DECORADORES.get(item).apply(recurso);
         }
 
+        // DTO instanciado apenas com a descrição e a lista de itens!
         return new AmbulanciaEquipadaDTO(
                 recurso.getDescricao(),
-                recurso.getPesoKg(),
                 recurso.getItensEquipados()
         );
     }

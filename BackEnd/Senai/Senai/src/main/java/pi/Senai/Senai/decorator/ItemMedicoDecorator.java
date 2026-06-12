@@ -16,11 +16,6 @@ public abstract class ItemMedicoDecorator implements RecursoDeEmergencia {
     }
 
     @Override
-    public double getPesoKg() {
-        return recurso.getPesoKg();
-    }
-
-    @Override
     public List<String> getItensEquipados() {
         return recurso.getItensEquipados();
     }

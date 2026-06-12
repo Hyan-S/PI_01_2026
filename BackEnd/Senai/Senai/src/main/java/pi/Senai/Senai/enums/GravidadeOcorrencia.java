@@ -1,4 +1,4 @@
-package pi.Senai.Senai.entity;
+package pi.Senai.Senai.enums;
 
 public enum GravidadeOcorrencia {
     BAIXO,

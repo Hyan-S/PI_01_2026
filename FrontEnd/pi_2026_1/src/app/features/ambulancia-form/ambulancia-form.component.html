@@ -1,0 +1,58 @@
+<p-dialog
+  [header]="titulo"
+  [visible]="visible"
+  (visibleChange)="fechar()"
+  [modal]="true"
+  [style]="{ width: '40rem' }"
+  [closable]="true"
+>
+  <form [formGroup]="formAmbulancia" class="form-ambulancia">
+    <div class="campo">
+      <label for="descricao">Descrição *</label>
+      <input pInputText id="descricao" formControlName="descricao" placeholder="Ex: UTI Móvel 01" />
+    </div>
+
+    <div class="campo">
+      <label for="placa">Placa *</label>
+      <input pInputText id="placa" formControlName="placa" placeholder="ABC-1234" />
+    </div>
+
+    <div class="campo">
+      <label for="status">Status *</label>
+      <p-select
+        id="status"
+        formControlName="status"
+        [options]="opcoesStatus"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Selecione o Status"
+        [appendTo]="'body'"
+      >
+      </p-select>
+    </div>
+
+    <div class="campo">
+      <label for="observacao">Observações</label>
+      <textarea pTextarea id="observacao" formControlName="observacao" rows="4"> </textarea>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Cancelar"
+      icon="pi pi-times"
+      [text]="true"
+      severity="secondary"
+      (click)="fechar()"
+    >
+    </p-button>
+
+    <p-button
+      label="Salvar"
+      icon="pi pi-check"
+      (click)="salvar()"
+      [disabled]="formAmbulancia.invalid || modoSomenteLeitura"
+    >
+    </p-button>
+  </ng-template>
+</p-dialog>
