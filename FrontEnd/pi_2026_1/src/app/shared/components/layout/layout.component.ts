@@ -31,10 +31,11 @@ export class LayoutComponent implements OnInit {
     this.construirMenu();
   }
 
-  construirMenu() {
-    const cargo = this.usuario?.nivelAcesso || '';
+construirMenu() {
+    // Fallback seguro caso não tenha sessão
+    const nivelAcesso = this.usuario?.nivelAcesso || ''; 
 
-    // BLOCO 1: Rotas comuns a TODOS os usuários (Motorista, Médico, Operador, Admin)
+    // BLOCO 1: Rotas comuns a TODOS (Dashboard, Ocorrências)
     const itens: MenuItem[] = [
       {
         label: 'Principal',
@@ -45,15 +46,27 @@ export class LayoutComponent implements OnInit {
       }
     ];
 
-    // BLOCO 2: Rotas de Gestão (Visível apenas para Administradores e Operadores)
-    if (cargo === 'ADMIN' || cargo === 'OPERADOR') {
+    // BLOCO 2: Operacional (Médicos e Enfermeiros)
+    if (nivelAcesso === 'MEDICO' || nivelAcesso === 'ENFERMEIRO' || nivelAcesso === 'ADMIN') {
+      itens.push({
+        label: 'Operacional',
+        items: [
+          { label: 'Equipamentos', icon: 'pi pi-box', routerLink: '/equipamentos' }
+        ]
+      });
+    }
+
+    // BLOCO 3: Gestão (Visível apenas para Administradores e Reguladores)
+    if (nivelAcesso === 'ADMIN' || nivelAcesso === 'REGULADOR') {
       const itensGestao: MenuItem[] = [
         { label: 'Equipes', icon: 'pi pi-users', routerLink: '/equipes' },
         { label: 'Ambulâncias', icon: 'pi pi-car', routerLink: '/ambulancias' },
+        // Botão de Funcionários adicionado conforme solicitado
+        { label: 'Funcionários', icon: 'pi pi-id-card', routerLink: '/funcionarios' } 
       ];
 
-      // Apenas o ADMIN pode gerenciar outros Usuários
-      if (cargo === 'ADMIN') {
+      // Apenas o ADMIN gerencia Usuários (IAM/Credenciais)
+      if (nivelAcesso === 'ADMIN') {
         itensGestao.unshift({ label: 'Usuários', icon: 'pi pi-user-edit', routerLink: '/usuarios' });
       }
 
