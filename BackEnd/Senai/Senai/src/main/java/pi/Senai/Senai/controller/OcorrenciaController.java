@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import pi.Senai.Senai.dto.DespachoDTO;
 import pi.Senai.Senai.entity.Ocorrencia;
 import pi.Senai.Senai.enums.GravidadeOcorrencia;
 import pi.Senai.Senai.enums.StatusOcorrencia;
@@ -27,8 +28,8 @@ public class OcorrenciaController {
     private OcorrenciaService _ocorrenciaService;
 
     @PostMapping("/salvar")
-    public void SalvarOcorrencia(@Valid @RequestBody Ocorrencia ocorrencia) {
-        _ocorrenciaService.SalvarOcorrencia(ocorrencia);
+    public Ocorrencia SalvarOcorrencia(@Valid @RequestBody Ocorrencia ocorrencia) {
+        return _ocorrenciaService.SalvarOcorrencia(ocorrencia);
     }
 
     @PutMapping("/atualizar")
@@ -39,6 +40,11 @@ public class OcorrenciaController {
     @DeleteMapping("/excluir/{id}")
     public void ExcluirOcorrencia(@PathVariable UUID id) {
         _ocorrenciaService.ExcluirOcorrencia(id);
+    }
+
+    @PutMapping("/despachar/{id}")
+    public void DespacharOcorrencia(@PathVariable UUID id, @RequestBody DespachoDTO dto) {
+        _ocorrenciaService.DespacharOcorrencia(id, dto);
     }
 
     @GetMapping("/listar")

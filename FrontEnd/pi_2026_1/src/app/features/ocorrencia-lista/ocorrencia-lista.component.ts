@@ -7,9 +7,14 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
+import { SelectModule } from 'primeng/select';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Ocorrencia } from '../../core/models/ocorrencia.model';
+import { Ambulancia } from '../../core/models/ambulancia.model';
+import { Equipe } from '../../core/models/equipe.model';
 import { OcorrenciaService } from '../../core/services/ocorrencia.service';
+import { AmbulanciaService } from '../../core/services/ambulancia.service';
+import { EquipeService } from '../../core/services/equipe.service';
 import { OcorrenciaFormComponent } from '../ocorrencia-form/ocorrencia-form.component';
 
 @Component({
@@ -24,6 +29,7 @@ import { OcorrenciaFormComponent } from '../ocorrencia-form/ocorrencia-form.comp
     ConfirmDialogModule,
     DialogModule,
     ToastModule,
+    SelectModule,
     OcorrenciaFormComponent,
   ],
   providers: [ConfirmationService],
@@ -39,14 +45,25 @@ export class OcorrenciaListaComponent implements OnInit {
   exibirDialogDetalhes: boolean = false;
   ocorrenciaDetalhe: Ocorrencia | null = null;
 
+  exibirDialogDespacho: boolean = false;
+  ocorrenciaParaDespachar: Ocorrencia | null = null;
+  ambulanciasSelecionada: string | null = null;
+  equipeSelecionada: string | null = null;
+  ambulancias: Ambulancia[] = [];
+  equipes: Equipe[] = [];
+
   constructor(
     private ocorrenciaService: OcorrenciaService,
+    private ambulanciaService: AmbulanciaService,
+    private equipeService: EquipeService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
   ) {}
 
   ngOnInit(): void {
     this.carregarOcorrencias();
+    this.carregarAmbulanciasFiltros();
+    this.carregarEquipes();
   }
 
   carregarOcorrencias() {
@@ -55,12 +72,20 @@ export class OcorrenciaListaComponent implements OnInit {
         this.ocorrencias = dados.filter((o) => o.status !== 'CANCELADA');
       },
       error: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Falha ao carregar as ocorrências.',
-        });
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao carregar as ocorrências.' });
       },
+    });
+  }
+
+  carregarAmbulanciasFiltros() {
+    this.ambulanciaService.listar().subscribe({
+      next: (lista) => (this.ambulancias = lista.filter((a) => a.status === 'DISPONIVEL')),
+    });
+  }
+
+  carregarEquipes() {
+    this.equipeService.listar().subscribe({
+      next: (lista) => (this.equipes = lista),
     });
   }
 
@@ -77,6 +102,38 @@ export class OcorrenciaListaComponent implements OnInit {
   detalhes(ocorrencia: Ocorrencia) {
     this.ocorrenciaDetalhe = ocorrencia;
     this.exibirDialogDetalhes = true;
+  }
+
+  abrirDespacho(ocorrencia: Ocorrencia) {
+    this.ocorrenciaParaDespachar = ocorrencia;
+    this.ambulanciasSelecionada = null;
+    this.equipeSelecionada = null;
+    this.carregarAmbulanciasFiltros();
+    this.exibirDialogDespacho = true;
+  }
+
+  confirmarDespacho() {
+    if (!this.ocorrenciaParaDespachar?.id || !this.ambulanciasSelecionada) return;
+
+    this.ocorrenciaService
+      .despachar(this.ocorrenciaParaDespachar.id, this.ambulanciasSelecionada, this.equipeSelecionada ?? undefined)
+      .subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Despachado', detail: 'Ambulância despachada com sucesso!' });
+          this.exibirDialogDespacho = false;
+          this.carregarOcorrencias();
+        },
+        error: () => {
+          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao despachar.' });
+        },
+      });
+  }
+
+  onOcorrenciaSalva(criada: Ocorrencia | null) {
+    this.carregarOcorrencias();
+    if (criada) {
+      this.abrirDespacho(criada);
+    }
   }
 
   fecharModalForm(visivel: boolean) {
@@ -98,19 +155,11 @@ export class OcorrenciaListaComponent implements OnInit {
         if (ocorrencia.id) {
           this.ocorrenciaService.excluir(ocorrencia.id).subscribe({
             next: () => {
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Sucesso',
-                detail: 'Ocorrência cancelada.',
-              });
+              this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Ocorrência cancelada.' });
               this.carregarOcorrencias();
             },
             error: () => {
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Erro',
-                detail: 'Falha ao cancelar ocorrência.',
-              });
+              this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao cancelar ocorrência.' });
             },
           });
         }

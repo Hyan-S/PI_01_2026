@@ -107,3 +107,49 @@
 .detalhe-item span {
   color: #1e293b;
 }
+
+.despacho-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 0.5rem 0;
+}
+
+.despacho-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #f0f9ff;
+  border-radius: 8px;
+  border-left: 4px solid #0284c7;
+}
+
+.despacho-protocolo {
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0284c7;
+}
+
+.despacho-titulo {
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.campo label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.sem-ambulancias {
+  color: #ef4444;
+  font-size: 0.8rem;
+}

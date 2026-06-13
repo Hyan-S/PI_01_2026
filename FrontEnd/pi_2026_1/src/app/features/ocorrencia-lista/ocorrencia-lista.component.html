@@ -48,33 +48,24 @@
         <td>{{ oc.titulo }}</td>
         <td>{{ oc.tipo }}</td>
         <td>
-          <span class="p-tag" [ngClass]="obterClasseGravidade(oc.gravidade)">
-            {{ oc.gravidade }}
-          </span>
+          <span class="p-tag" [ngClass]="obterClasseGravidade(oc.gravidade)">{{ oc.gravidade }}</span>
         </td>
         <td>
-          <span class="p-tag" [ngClass]="obterClasseStatus(oc.status)">
-            {{ oc.status }}
-          </span>
+          <span class="p-tag" [ngClass]="obterClasseStatus(oc.status)">{{ oc.status }}</span>
         </td>
         <td>{{ oc.endereco }}</td>
         <td class="text-center">
           <div class="flex justify-content-center gap-2">
+            <p-button icon="pi pi-eye" styleClass="p-button-rounded p-button-info p-button-text" (onClick)="detalhes(oc)"></p-button>
+            <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-warning p-button-text" (onClick)="editar(oc)"></p-button>
             <p-button
-              icon="pi pi-eye"
-              styleClass="p-button-rounded p-button-info p-button-text"
-              (onClick)="detalhes(oc)"
+              icon="pi pi-send"
+              styleClass="p-button-rounded p-button-success p-button-text"
+              pTooltip="Despachar ambulância"
+              (onClick)="abrirDespacho(oc)"
+              *ngIf="oc.status === 'AGUARDANDO'"
             ></p-button>
-            <p-button
-              icon="pi pi-pencil"
-              styleClass="p-button-rounded p-button-warning p-button-text"
-              (onClick)="editar(oc)"
-            ></p-button>
-            <p-button
-              icon="pi pi-ban"
-              styleClass="p-button-rounded p-button-danger p-button-text"
-              (click)="confirmarCancelamento(oc)"
-            ></p-button>
+            <p-button icon="pi pi-ban" styleClass="p-button-rounded p-button-danger p-button-text" (click)="confirmarCancelamento(oc)"></p-button>
           </div>
         </td>
       </tr>
@@ -86,9 +77,55 @@
   [visible]="exibirDialog"
   (visibleChange)="fecharModalForm($event)"
   [ocorrencia]="ocorrenciaParaEditar"
-  (salvo)="carregarOcorrencias()"
+  (salvo)="onOcorrenciaSalva($event)"
 >
 </app-ocorrencia-form>
+
+<p-dialog
+  header="Despachar Ambulância"
+  [(visible)]="exibirDialogDespacho"
+  [modal]="true"
+  [style]="{ width: '42rem' }"
+  [closable]="true"
+>
+  <div class="despacho-container" *ngIf="ocorrenciaParaDespachar">
+    <div class="despacho-info">
+      <span class="despacho-protocolo">{{ ocorrenciaParaDespachar.protocolo }}</span>
+      <span class="despacho-titulo">{{ ocorrenciaParaDespachar.titulo }}</span>
+    </div>
+
+    <div class="campo">
+      <label>Ambulância *</label>
+      <p-select
+        [(ngModel)]="ambulanciasSelecionada"
+        [options]="ambulancias"
+        optionLabel="placa"
+        optionValue="id"
+        placeholder="Selecione uma ambulância disponível"
+        [appendTo]="'body'"
+      ></p-select>
+      <small *ngIf="ambulancias.length === 0" class="sem-ambulancias">Nenhuma ambulância disponível no momento.</small>
+    </div>
+
+    <div class="campo">
+      <label>Equipe (opcional)</label>
+      <p-select
+        [(ngModel)]="equipeSelecionada"
+        [options]="equipes"
+        optionLabel="nomeEquipe"
+        optionValue="id"
+        placeholder="Selecione uma equipe"
+        [showClear]="true"
+        [appendTo]="'body'"
+      ></p-select>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Despachar Mais Tarde" icon="pi pi-clock" [text]="true" severity="secondary" (click)="exibirDialogDespacho = false"></p-button>
+    <p-button label="Despachar" icon="pi pi-send" [disabled]="!ambulanciasSelecionada" (click)="confirmarDespacho()"></p-button>
+  </ng-template>
+</p-dialog>
 
 <p-dialog
   header="Detalhes da Ocorrência"

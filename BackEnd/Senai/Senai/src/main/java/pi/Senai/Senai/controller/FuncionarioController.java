@@ -47,4 +47,9 @@ public class FuncionarioController {
     public List<Funcionario> buscarPorFuncao(@PathVariable String funcao) {
         return _funcionarioService.buscarPorFuncao(funcao);
     }
+
+    @GetMapping("/equipe/{equipeId}")
+    public List<Funcionario> buscarPorEquipe(@PathVariable UUID equipeId) {
+        return _funcionarioService.buscarPorEquipe(equipeId);
+    }
 }
