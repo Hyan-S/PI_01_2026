@@ -1,0 +1,56 @@
+<p-dialog
+  [header]="titulo"
+  [visible]="visible"
+  (visibleChange)="fechar()"
+  [modal]="true"
+  [style]="{ width: '45rem' }"
+  [closable]="true"
+>
+  <form [formGroup]="formOcorrencia" class="form-ocorrencia">
+    <div class="campo">
+      <label for="titulo">Título *</label>
+      <input pInputText id="titulo" formControlName="titulo" placeholder="Ex: Colisão na Av. Principal" />
+    </div>
+
+    <div class="linha-dupla">
+      <div class="campo">
+        <label for="tipo">Tipo *</label>
+        <p-select
+          id="tipo"
+          formControlName="tipo"
+          [options]="opcoesTipo"
+          optionLabel="label"
+          optionValue="value"
+          [appendTo]="'body'"
+        ></p-select>
+      </div>
+
+      <div class="campo">
+        <label for="gravidade">Gravidade *</label>
+        <p-select
+          id="gravidade"
+          formControlName="gravidade"
+          [options]="opcoesGravidade"
+          optionLabel="label"
+          optionValue="value"
+          [appendTo]="'body'"
+        ></p-select>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="endereco">Endereço *</label>
+      <input pInputText id="endereco" formControlName="endereco" placeholder="Ex: Rua das Flores, 123" />
+    </div>
+
+    <div class="campo">
+      <label for="descricao">Descrição *</label>
+      <textarea pTextarea id="descricao" formControlName="descricao" rows="4" placeholder="Descreva a ocorrência..."></textarea>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="secondary" (click)="fechar()"></p-button>
+    <p-button label="Salvar" icon="pi pi-check" (click)="salvar()" [disabled]="formOcorrencia.invalid"></p-button>
+  </ng-template>
+</p-dialog>

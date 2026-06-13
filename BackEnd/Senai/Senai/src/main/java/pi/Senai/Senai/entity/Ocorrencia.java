@@ -24,183 +24,181 @@ public class Ocorrencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID Id;
+    private UUID id;
 
     @Column(nullable = false, unique = true, length = 20)
-    private String Protocolo;
+    private String protocolo;
 
     @NotBlank
     @Size(max = 120)
     @Column(nullable = false, length = 120)
-    private String Titulo;
+    private String titulo;
 
     @NotBlank
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String Descricao;
+    private String descricao;
 
     @NotBlank
     @Column(nullable = false)
-    private String Tipo;
+    private String tipo;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private GravidadeOcorrencia Gravidade;
+    private GravidadeOcorrencia gravidade;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private StatusOcorrencia Status;
+    private StatusOcorrencia status;
 
     @NotBlank
     @Column(nullable = false)
-    private String Endereco;
+    private String endereco;
 
-    // EXCLUIR 
     @Column
-    private Double Latitude;
+    private Double latitude;
 
-    // EXCLUIR 
     @Column
-    private Double Longitude;
+    private Double longitude;
 
     @Column(nullable = false)
-    private LocalDateTime DataHoraAbertura;
+    private LocalDateTime dataHoraAbertura;
 
     @Column
-    private LocalDateTime DataHoraEncerramento;
+    private LocalDateTime dataHoraEncerramento;
 
     @NotNull
     @Column(nullable = false)
-    private UUID OperadorId;
+    private UUID operadorId;
 
     @Column
-    private UUID EquipeId;
+    private UUID equipeId;
 
     @Column
-    private UUID VeiculoId;
+    private UUID veiculoId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ambulancia_id")
     private Ambulancia ambulancia;
 
     public UUID getId() {
-        return Id;
+        return id;
     }
 
     public void setId(UUID id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getProtocolo() {
-        return Protocolo;
+        return protocolo;
     }
 
     public void setProtocolo(String protocolo) {
-        Protocolo = protocolo;
+        this.protocolo = protocolo;
     }
 
     public String getTitulo() {
-        return Titulo;
+        return titulo;
     }
 
     public void setTitulo(String titulo) {
-        Titulo = titulo;
+        this.titulo = titulo;
     }
 
     public String getDescricao() {
-        return Descricao;
+        return descricao;
     }
 
     public void setDescricao(String descricao) {
-        Descricao = descricao;
+        this.descricao = descricao;
     }
 
     public String getTipo() {
-        return Tipo;
+        return tipo;
     }
 
     public void setTipo(String tipo) {
-        Tipo = tipo;
+        this.tipo = tipo;
     }
 
     public GravidadeOcorrencia getGravidade() {
-        return Gravidade;
+        return gravidade;
     }
 
     public void setGravidade(GravidadeOcorrencia gravidade) {
-        Gravidade = gravidade;
+        this.gravidade = gravidade;
     }
 
     public StatusOcorrencia getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(StatusOcorrencia status) {
-        Status = status;
+        this.status = status;
     }
 
     public String getEndereco() {
-        return Endereco;
+        return endereco;
     }
 
     public void setEndereco(String endereco) {
-        Endereco = endereco;
+        this.endereco = endereco;
     }
 
     public Double getLatitude() {
-        return Latitude;
+        return latitude;
     }
 
     public void setLatitude(Double latitude) {
-        Latitude = latitude;
+        this.latitude = latitude;
     }
 
     public Double getLongitude() {
-        return Longitude;
+        return longitude;
     }
 
     public void setLongitude(Double longitude) {
-        Longitude = longitude;
+        this.longitude = longitude;
     }
 
     public LocalDateTime getDataHoraAbertura() {
-        return DataHoraAbertura;
+        return dataHoraAbertura;
     }
 
     public void setDataHoraAbertura(LocalDateTime dataHoraAbertura) {
-        DataHoraAbertura = dataHoraAbertura;
+        this.dataHoraAbertura = dataHoraAbertura;
     }
 
     public LocalDateTime getDataHoraEncerramento() {
-        return DataHoraEncerramento;
+        return dataHoraEncerramento;
     }
 
     public void setDataHoraEncerramento(LocalDateTime dataHoraEncerramento) {
-        DataHoraEncerramento = dataHoraEncerramento;
+        this.dataHoraEncerramento = dataHoraEncerramento;
     }
 
     public UUID getOperadorId() {
-        return OperadorId;
+        return operadorId;
     }
 
     public void setOperadorId(UUID operadorId) {
-        OperadorId = operadorId;
+        this.operadorId = operadorId;
     }
 
     public UUID getEquipeId() {
-        return EquipeId;
+        return equipeId;
     }
 
     public void setEquipeId(UUID equipeId) {
-        EquipeId = equipeId;
+        this.equipeId = equipeId;
     }
 
     public UUID getVeiculoId() {
-        return VeiculoId;
+        return veiculoId;
     }
 
     public void setVeiculoId(UUID veiculoId) {
-        VeiculoId = veiculoId;
+        this.veiculoId = veiculoId;
     }
 
     public Ambulancia getAmbulancia() {
