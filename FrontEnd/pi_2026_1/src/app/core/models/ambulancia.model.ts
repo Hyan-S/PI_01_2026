@@ -5,4 +5,5 @@ export interface Ambulancia {
   observacao?: string;
   status: string;
   ativo?: boolean;
+  equipamentos?: any[];
 }
