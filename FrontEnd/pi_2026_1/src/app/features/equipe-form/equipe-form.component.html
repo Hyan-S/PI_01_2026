@@ -1,0 +1,43 @@
+<p-dialog
+  [header]="titulo"
+  [visible]="visible"
+  (visibleChange)="fechar()"
+  [modal]="true"
+  [style]="{ width: '40rem' }"
+  [closable]="true"
+>
+  <form [formGroup]="formEquipe" class="form-equipe">
+    <div class="campo">
+      <label for="nomeEquipe">Nome da Equipe *</label>
+      <input pInputText id="nomeEquipe" formControlName="nomeEquipe" placeholder="Ex: Alpha 01" />
+    </div>
+
+    <div class="campo">
+      <label for="identificador">Identificador *</label>
+      <input
+        pInputText
+        id="identificador"
+        formControlName="identificador"
+        placeholder="Ex: EQ-001"
+      />
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Cancelar"
+      icon="pi pi-times"
+      [text]="true"
+      severity="secondary"
+      (click)="fechar()"
+    >
+    </p-button>
+    <p-button
+      label="Salvar"
+      icon="pi pi-check"
+      (click)="salvar()"
+      [disabled]="formEquipe.invalid"
+    >
+    </p-button>
+  </ng-template>
+</p-dialog>
