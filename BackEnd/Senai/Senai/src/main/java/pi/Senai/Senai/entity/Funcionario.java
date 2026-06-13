@@ -2,6 +2,8 @@ package pi.Senai.Senai.entity;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,16 +15,21 @@ import jakarta.persistence.GenerationType;
 
 @Entity
 public class Funcionario {
+
+    @JsonProperty("id")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID Id;
 
+    @JsonProperty("funcao")
     @Column
     private String Funcao;
 
+    @JsonProperty("descricao")
     @Column
     private String Descricao;
 
+    @JsonProperty("numeroFuncao")
     @Column
     private int NumeroFuncao;
 

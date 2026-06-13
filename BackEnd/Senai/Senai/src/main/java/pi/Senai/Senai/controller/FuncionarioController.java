@@ -1,20 +1,15 @@
 package pi.Senai.Senai.controller;
 
-import java.util.List;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import pi.Senai.Senai.entity.Funcionario;
 import pi.Senai.Senai.service.FuncionarioService;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/funcionario")
@@ -24,32 +19,30 @@ public class FuncionarioController {
     private FuncionarioService _funcionarioService;
 
     @PostMapping("/salvar")
-    public void SalvarFuncionario(@RequestBody Funcionario funcionario) {
-        _funcionarioService.SalvarFuncionario(funcionario);
+    public ResponseEntity<Funcionario> SalvarFuncionario(@RequestBody Funcionario funcionario) {
+        Funcionario salvo = _funcionarioService.SalvarFuncionario(funcionario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
     }
 
     @PutMapping("/atualizar")
-    public void AtualizarFuncionario(@RequestBody Funcionario funcionario) {
-        _funcionarioService.AtualizarFuncionario(funcionario);
+    public ResponseEntity<Funcionario> AtualizarFuncionario(@RequestBody Funcionario funcionario) {
+        Funcionario atualizado = _funcionarioService.AtualizarFuncionario(funcionario);
+        return ResponseEntity.ok(atualizado);
     }
 
     @DeleteMapping("/excluir/{id}")
-    public void ExcluirFuncionario(@PathVariable UUID id) {
+    public ResponseEntity<Void> ExcluirFuncionario(@PathVariable UUID id) {
         _funcionarioService.ExcluirFuncionario(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/listar")
-    public List<Funcionario> ListarFuncionarios() {
-        return _funcionarioService.ListarFuncionarios();
+    public ResponseEntity<List<Funcionario>> ListarFuncionarios() {
+        return ResponseEntity.ok(_funcionarioService.ListarFuncionarios());
     }
 
     @GetMapping("/funcao/{funcao}")
-    public List<Funcionario> buscarPorFuncao(@PathVariable String funcao) {
-        return _funcionarioService.buscarPorFuncao(funcao);
-    }
-
-    @GetMapping("/equipe/{equipeId}")
-    public List<Funcionario> buscarPorEquipe(@PathVariable UUID equipeId) {
-        return _funcionarioService.buscarPorEquipe(equipeId);
+    public ResponseEntity<List<Funcionario>> buscarPorFuncao(@PathVariable String funcao) {
+        return ResponseEntity.ok(_funcionarioService.buscarPorFuncao(funcao));
     }
 }

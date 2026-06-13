@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import pi.Senai.Senai.entity.Funcionario;
 import pi.Senai.Senai.repository.FuncionarioRepository;
@@ -15,20 +17,20 @@ public class FuncionarioService {
     @Autowired
     private FuncionarioRepository _FuncionarioRepository;
 
-    public void SalvarFuncionario(Funcionario funcionario){
-        _FuncionarioRepository.save(funcionario);
+    public Funcionario SalvarFuncionario(Funcionario funcionario){
+        return _FuncionarioRepository.save(funcionario);
     }
 
-    public void AtualizarFuncionario(Funcionario funcionario){
+    public Funcionario AtualizarFuncionario(Funcionario funcionario){
         if(!_FuncionarioRepository.existsById(funcionario.getId()))
-            throw new RuntimeException("Funcionário não cadastrado, não encontrado");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não cadastrado, não encontrado");
 
-        _FuncionarioRepository.save(funcionario);
+        return _FuncionarioRepository.save(funcionario);
     }
 
     public void ExcluirFuncionario(UUID id){
         if(!_FuncionarioRepository.existsById(id))
-            throw new RuntimeException("Funcionário não cadastrado, não encontrado");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não cadastrado, não encontrado");
 
         _FuncionarioRepository.deleteById(id);
     }
@@ -39,9 +41,5 @@ public class FuncionarioService {
 
     public List<Funcionario> buscarPorFuncao(String funcao) {
         return _FuncionarioRepository.findByFuncao(funcao);
-    }
-
-    public List<Funcionario> buscarPorEquipe(UUID equipeId) {
-        return _FuncionarioRepository.findByEquipeId(equipeId);
     }
 }
