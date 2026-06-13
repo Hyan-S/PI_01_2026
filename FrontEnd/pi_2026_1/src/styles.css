@@ -36,3 +36,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.btn-novo-equipamento {
+  margin-left: 20px;
+}

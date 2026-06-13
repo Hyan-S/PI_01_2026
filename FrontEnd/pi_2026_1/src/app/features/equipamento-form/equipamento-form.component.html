@@ -1,0 +1,44 @@
+<p-dialog
+  [header]="titulo"
+  [visible]="visible"
+  (visibleChange)="fechar()"
+  [modal]="true"
+  [style]="{ width: '40rem' }"
+  [closable]="true"
+>
+  <form [formGroup]="formEquipamento" class="form-ambulancia">
+    <div class="campo">
+      <label for="nome">Nome do Insumo/Equipamento *</label>
+      <input pInputText id="nome" formControlName="nome" placeholder="Ex: Soro Fisiológico" />
+    </div>
+
+    <div class="campo" *ngIf="!equipamentoId">
+      <label for="quantidade">Quantidade Inicial *</label>
+      <input pInputText type="number" id="quantidade" formControlName="quantidade" placeholder="0" />
+    </div>
+
+    <div class="campo">
+      <label for="unidadeMedida">Unidade de Medida *</label>
+      <p-select
+        id="unidadeMedida"
+        formControlName="unidadeMedida"
+        [options]="opcoesUnidade"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Selecione a Unidade"
+        [appendTo]="'body'"
+      >
+      </p-select>
+    </div>
+
+    <div class="campo">
+      <label for="observacao">Observações</label>
+      <textarea pTextarea id="observacao" formControlName="observacao" rows="4"></textarea>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="secondary" (click)="fechar()"></p-button>
+    <p-button label="Salvar" icon="pi pi-check" (click)="salvar()" [disabled]="formEquipamento.invalid"></p-button>
+  </ng-template>
+</p-dialog>
