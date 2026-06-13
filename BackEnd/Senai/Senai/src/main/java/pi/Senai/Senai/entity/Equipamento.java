@@ -1,107 +1,76 @@
 package pi.Senai.Senai.entity;
 
+import jakarta.persistence.*;
+import pi.Senai.Senai.entity.base.EntidadeGerenciavel;
+import pi.Senai.Senai.enums.UnidadeMedida;
+
 import java.sql.Date;
 import java.util.UUID;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import pi.Senai.Senai.entity.base.EntidadeGerenciavel;
-
 @Entity
 public class Equipamento implements EntidadeGerenciavel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID Id;
+    private UUID id;
 
     @Column(nullable = false)
-    private String Nome; 
+    private String nome;
 
     @Column
-    private String Historico;
+    private String historico;
+
+    @Column(nullable = false)
+    private Double quantidade;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UnidadeMedida unidadeMedida;
 
     @Column
-    private String Observacao;
+    private String observacao;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ambulancia_id")
     private Ambulancia ambulancia;
 
     @Column
-    private Date DataCriacao;
+    private Date dataCriacao;
 
     @Column
-    private Date UltimaAtualizacao;
+    private Date ultimaAtualizacao;
 
     @Column
-    private boolean Ativo;
+    private boolean ativo;
 
-    public UUID getId() {
-        return Id;
-    }
 
-    public void setId(UUID id) {
-        Id = id;
-    }
+    public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
 
-    public String getNome() {
-        return Nome;
-    }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public void setNome(String nome) {
-        Nome = nome;
-    }
+    public String getHistorico() { return historico; }
+    public void setHistorico(String historico) { this.historico = historico; }
 
-    public String getHistorico() {
-        return Historico;
-    }
+    public Double getQuantidade() { return quantidade; }
+    public void setQuantidade(Double quantidade) { this.quantidade = quantidade; } // Corrigido o this.quantidade
 
-    public void setHistorico(String historico) {
-        Historico = historico;
-    }
+    public UnidadeMedida getUnidadeMedida() { return unidadeMedida; }
+    public void setUnidadeMedida(UnidadeMedida unidadeMedida) { this.unidadeMedida = unidadeMedida; }
 
-    public String getObservacao() {
-        return Observacao;
-    }
+    public String getObservacao() { return observacao; }
+    public void setObservacao(String observacao) { this.observacao = observacao; }
 
-    public void setObservacao(String observacao) {
-        Observacao = observacao;
-    }
+    public Ambulancia getAmbulancia() { return ambulancia; }
+    public void setAmbulancia(Ambulancia ambulancia) { this.ambulancia = ambulancia; }
 
-    public Ambulancia getAmbulancia() {
-        return ambulancia;
-    }
+    public Date getDataCriacao() { return dataCriacao; }
+    public void setDataCriacao(Date dataCriacao) { this.dataCriacao = dataCriacao; }
 
-    public void setAmbulancia(Ambulancia ambulancia) {
-        this.ambulancia = ambulancia;
-    }
+    public Date getUltimaAtualizacao() { return ultimaAtualizacao; }
+    public void setUltimaAtualizacao(Date ultimaAtualizacao) { this.ultimaAtualizacao = ultimaAtualizacao; }
 
-    public boolean isAtivo() {
-        return Ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        Ativo = ativo;
-    }
-
-    public Date getDataCriacao() {
-        return DataCriacao;
-    }
-
-    public void setDataCriacao(Date dataCriacao) {
-        DataCriacao = dataCriacao;
-    }
-
-    public Date getUltimaAtualizacao() {
-        return UltimaAtualizacao;
-    }
-
-    public void setUltimaAtualizacao(Date ultimaAtualizacao) {
-        UltimaAtualizacao = ultimaAtualizacao;
-    }
+    public boolean isAtivo() { return ativo; }
+    public void setAtivo(boolean ativo) { this.ativo = ativo; }
 }

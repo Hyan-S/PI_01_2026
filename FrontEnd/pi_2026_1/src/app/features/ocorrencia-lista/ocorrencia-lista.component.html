@@ -98,10 +98,12 @@
       <label>Ambulância *</label>
       <p-select
         [(ngModel)]="ambulanciasSelecionada"
-        [options]="ambulancias"
+        (ngModelChange)="onAmbulanciaDespachoChange($event)"
+        [options]="ambulanciasFiltradas"
         optionLabel="placa"
         optionValue="id"
         placeholder="Selecione uma ambulância disponível"
+        [showClear]="true"
         [appendTo]="'body'"
       ></p-select>
       <small *ngIf="ambulancias.length === 0" class="sem-ambulancias">Nenhuma ambulância disponível no momento.</small>
@@ -111,7 +113,8 @@
       <label>Equipe (opcional)</label>
       <p-select
         [(ngModel)]="equipeSelecionada"
-        [options]="equipes"
+        (ngModelChange)="onEquipeDespachoChange($event)"
+        [options]="equipesFiltradas"
         optionLabel="nomeEquipe"
         optionValue="id"
         placeholder="Selecione uma equipe"

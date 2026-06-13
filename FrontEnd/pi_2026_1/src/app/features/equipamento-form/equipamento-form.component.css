@@ -1,0 +1,40 @@
+.form-ambulancia {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.campo label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.campo input,
+.campo textarea,
+.campo p-select {
+  width: 100%;
+}
+
+:host ::ng-deep .p-select {
+  width: 100%;
+}
+
+:host ::ng-deep .p-inputtext {
+  width: 100%;
+}
+
+.btn-novo-equipamento {
+  margin-left: 20px;
+}
+
+:host ::ng-deep textarea.p-inputtextarea {
+  width: 100%;
+  resize: vertical;
+}

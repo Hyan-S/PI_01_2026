@@ -13,7 +13,7 @@ import { UsuarioSession } from '../../../core/models/usuario.model';
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, MenuModule, AvatarModule], 
+  imports: [CommonModule, RouterModule, MenuModule, AvatarModule],
   templateUrl: './layout.html',
   styleUrls: ['./layout.css']
 })
@@ -26,7 +26,7 @@ export class LayoutComponent implements OnInit {
   ngOnInit() {
     // 1. Recupera quem está logado
     this.usuario = this.authService.getUsuarioSessao();
-    
+
     // 2. Constrói o menu baseado no cargo da pessoa
     this.construirMenu();
   }
@@ -61,6 +61,7 @@ construirMenu() {
       const itensGestao: MenuItem[] = [
         { label: 'Equipes', icon: 'pi pi-users', routerLink: '/equipes' },
         { label: 'Ambulâncias', icon: 'pi pi-car', routerLink: '/ambulancias' },
+        { label: 'Equipamentos', icon: 'pi pi-box', routerLink: '/equipamentos' },
         // Botão de Funcionários adicionado conforme solicitado
         { label: 'Funcionários', icon: 'pi pi-id-card', routerLink: '/funcionarios' } 
       ];
@@ -80,10 +81,10 @@ construirMenu() {
     itens.push({
       label: 'Conta',
       items: [
-        { 
-          label: 'Sair do Sistema', 
-          icon: 'pi pi-sign-out', 
-          command: () => this.sair() 
+        {
+          label: 'Sair do Sistema',
+          icon: 'pi pi-sign-out',
+          command: () => this.sair()
         }
       ]
     });
