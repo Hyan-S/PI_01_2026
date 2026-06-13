@@ -18,14 +18,18 @@ public class EquipeService {
     private EquipeRepository equipeRepository;
 
     public Equipe salvar(Equipe equipe) {
+
+        if(equipe.getNomeEquipe() == null || equipe.getNomeEquipe().isBlank())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O Nome da equipe é obrigatório.");
+
         if(equipe.getIdentificador() == null || equipe.getIdentificador().isEmpty())
-            throw new RuntimeException("Identificador da equipe é obrigatório");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Identificador da equipe é obrigatório");
 
         String identificador = equipe.getIdentificador().toUpperCase().trim();
         equipe.setIdentificador(identificador);
 
         if (!identificador.matches("^[A-Z]{2}-\\d{3}$")) 
-            throw new RuntimeException("Formato de identificador inválido! Use o padrão LL-NNN (Exemplo: AB-123).");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de identificador inválido! Use o padrão LL-NNN (Exemplo: AB-123)."); 
     
         return equipeRepository.save(equipe);
     }
