@@ -91,11 +91,15 @@ export class AmbulanciaFormComponent implements OnInit, OnChanges {
       }
     }
   }
-  iniciarFormulario() {
+iniciarFormulario() {
     this.formAmbulancia = this.fb.group({
       id: [null],
       descricao: ['', Validators.required],
-      placa: ['', Validators.required],
+      // Só aceita padrão AAA1A11 (Mercosul)
+      placa: ['', [
+        Validators.required, 
+        Validators.pattern(/^[A-Za-z]{3}\d[A-Za-z]\d{2}$/) 
+      ]],
       observacao: [''],
       status: [{ value: 'DISPONIVEL', disabled: true }, Validators.required],
     });
@@ -109,65 +113,29 @@ export class AmbulanciaFormComponent implements OnInit, OnChanges {
     });
   }
 
-  salvar() {
+salvar() {
     if (this.formAmbulancia.invalid) {
-      this.messageService.add({
-        severity: 'warn',
-        summary: 'Atenção',
-        detail: 'Preencha os campos obrigatórios.',
-      });
+      this.messageService.add({ severity: 'warn', summary: 'Atenção', detail: 'Preencha os campos corretamente. A placa deve ser no formato AAA1A11.' });
       return;
     }
 
     const ambulancia: Ambulancia = this.formAmbulancia.getRawValue();
 
-    this.ambulanciaService.listar().subscribe({
-      next: (listaAmbulancias) => {
+    // Faz a requisição DIRETO. Se duplicar, o Backend avisa.
+    const request = this.ambulanciaId
+      ? this.ambulanciaService.atualizar(ambulancia)
+      : this.ambulanciaService.salvar(ambulancia);
 
-        const placaDuplicada = listaAmbulancias.find(
-          (a) =>
-            a.placa.trim().toUpperCase() === ambulancia.placa.trim().toUpperCase() &&
-            a.id !== ambulancia.id,
-        );
-
-        if (placaDuplicada) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Placa Inválida',
-            detail: `A placa ${ambulancia.placa} já está cadastrada no sistema!`,
-          });
-          return;
-        }
-
-        const request = this.ambulanciaId
-          ? this.ambulanciaService.atualizar(ambulancia)
-          : this.ambulanciaService.salvar(ambulancia);
-
-        request.subscribe({
-          next: () => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Sucesso',
-              detail: 'Operação realizada com sucesso!',
-            });
-            this.salvo.emit();
-            this.fechar();
-          },
-          error: () => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Erro',
-              detail: 'Ocorreu uma falha na operação com o banco de dados.',
-            });
-          },
-        });
+    request.subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Ambulância salva com sucesso!' });
+        this.salvo.emit();
+        this.fechar();
       },
-      error: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Não foi possível validar a placa. Verifique sua conexão.',
-        });
+      error: (erro) => {
+        // Se o backend devolver 400 (Bad Request)
+        const msgErro = erro.error?.message || 'Falha na operação ou placa já existente/inválida.';
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: msgErro });
       },
     });
   }
