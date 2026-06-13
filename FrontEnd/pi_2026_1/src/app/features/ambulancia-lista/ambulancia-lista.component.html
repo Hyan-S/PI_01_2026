@@ -2,7 +2,6 @@
 <div class="lista-container">
   <div class="header-actions">
     <h2>Lista de Ambulâncias</h2>
-    <p-button label="Nova Ambulância" icon="pi pi-plus" (onClick)="novaAmbulancia()"/>
   </div>
 
   <p-confirmDialog></p-confirmDialog>
@@ -12,11 +11,14 @@
            styleClass="p-datatable-sm p-datatable-striped" [rowHover]="true">
 
     <ng-template pTemplate="caption">
-      <div class="flex justify-content-end">
+      <div class="flex align-items-center justify-content-start gap-5">
+
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
           <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar..."/>
-        </span>
+       </span>
+
+        <p-button class="btn-novo-equipamento" label="Nova Ambulância" icon="pi pi-plus" (onClick)="novaAmbulancia()"></p-button>
       </div>
     </ng-template>
 

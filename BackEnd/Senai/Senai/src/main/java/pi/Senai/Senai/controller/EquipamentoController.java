@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import pi.Senai.Senai.dto.RetiradaEstoqueDTO;
 import pi.Senai.Senai.entity.Equipamento;
 import pi.Senai.Senai.service.EquipamentoService;
 
@@ -46,5 +47,15 @@ public class EquipamentoController {
     @GetMapping("/nome/{nome}")
     public List<Equipamento> buscarPorNome(@PathVariable String nome) {
         return equipamentoService.buscarPorNome(nome);
+    }
+
+    @PutMapping("/colocar/{id}")
+    public void colocarQuantidade(@PathVariable UUID id, @RequestBody Double quantidade) {
+        equipamentoService.adicionarQuantidade(id, quantidade);
+    }
+
+    @PutMapping("/retirar/{id}")
+    public void retirarQuantidade(@PathVariable UUID id, @RequestBody RetiradaEstoqueDTO retiradaDTO) {
+        equipamentoService.retirarQuantidade(id, retiradaDTO);
     }
 }

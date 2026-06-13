@@ -9,6 +9,7 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
 
+
   // 2. ROTA PÚBLICA (Fora do Layout)
   {
     path: 'login',
@@ -30,14 +31,19 @@ export const routes: Routes = [
           import('./features/dashboard/pages/dashboard-principal/dashboard-principal')
             .then(m => m.DashboardPrincipal)
       },
-      
+
       // 💡 Rota Atualizada: Apontando para o seu pacote correto de Gerenciamento
       {
         path: 'usuarios',
         canActivate: [adminGuard],
-        loadComponent: () => 
+        loadComponent: () =>
           import('./features/users/pages/gerenciamento-usuario/gerenciamento-usuario/gerenciamento-usuario')
             .then(m => m.GerenciamentoUsuarioComponent)
+      },
+      {
+        path: 'equipamentos',
+        loadComponent: () => import('./features/equipamento-lista/equipamento-lista.component')
+          .then(m => m.EquipamentoListaComponent)
       },
 
       // Rota de Cadastro
@@ -53,7 +59,7 @@ export const routes: Routes = [
       {
         path: 'usuarios/editar/:id',
         canActivate: [adminGuard],
-        loadComponent: () => 
+        loadComponent: () =>
           import('./features/users/pages/cadastro-usuario/cadastro-usuario')
             .then(m => m.CadastroUsuarioComponent)
       },

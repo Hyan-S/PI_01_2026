@@ -1,0 +1,119 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="lista-container">
+  <div class="header-actions">
+    <h2>Estoque de Equipamentos</h2>
+  </div>
+
+  <p-table #dt [value]="equipamentos" [paginator]="true" [rows]="10" [globalFilterFields]="['nome']"
+           styleClass="p-datatable-sm p-datatable-striped" [rowHover]="true">
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-start gap-5">
+        <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar..."/>
+    </span>
+        <p-button class="btn-novo-equipamento" label="Novo Equipamento" icon="pi pi-plus" (onClick)="novoEquipamento()"></p-button>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="nome">Nome
+          <p-sortIcon field="nome"></p-sortIcon>
+        </th>
+        <th pSortableColumn="quantidade">Estoque
+          <p-sortIcon field="quantidade"></p-sortIcon>
+        </th>
+        <th>Unidade</th>
+        <th class="text-center">Ações</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-eqp>
+      <tr>
+        <td><strong>{{ eqp.nome }}</strong></td>
+        <td>
+          <span [style.color]="eqp.quantidade <= 0 ? '#ef4444' : 'inherit'">
+             {{ eqp.quantidade }}
+          </span>
+        </td>
+        <td>{{ eqp.unidadeMedida }}</td>
+        <td class="text-center">
+          <div class="flex justify-content-center gap-2">
+            <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-success p-button-text"
+                      pTooltip="Adicionar Estoque" (onClick)="abrirMovimentacao(eqp, 'ADICIONAR')"></p-button>
+
+            <p-button icon="pi pi-minus" styleClass="p-button-rounded p-button-warning p-button-text"
+                      pTooltip="Enviar para Ambulância" (onClick)="abrirMovimentacao(eqp, 'RETIRAR')"></p-button>
+
+            <p-button icon="pi pi-history" styleClass="p-button-rounded p-button-info p-button-text"
+                      pTooltip="Ver Histórico" (onClick)="verDetalhes(eqp)"></p-button>
+            <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-secondary p-button-text"
+                      pTooltip="Editar" (onClick)="editarEquipamento(eqp)"></p-button>
+            <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-text"
+                      (onClick)="confirmarExclusao(eqp)"></p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<app-equipamento-form
+  [visible]="exibirDialogForm"
+  (visibleChange)="exibirDialogForm = $event"
+  [equipamentoId]="idParaEditar"
+  [equipamentoData]="equipamentoParaEditar"
+  (salvo)="carregarEquipamentos()">
+</app-equipamento-form>
+
+<p-dialog header="Detalhes e Histórico" [(visible)]="exibirDialogDetalhes" [modal]="true" [style]="{ width: '50vw' }">
+  <div *ngIf="equipamentoDetalhe" class="detalhes-container">
+    <div class="detalhe-item"><strong>Nome:</strong> <span>{{ equipamentoDetalhe.nome }}</span></div>
+    <div class="detalhe-item"><strong>Estoque Atual:</strong>
+      <span>{{ equipamentoDetalhe.quantidade }} {{ equipamentoDetalhe.unidadeMedida }}</span></div>
+    <div class="detalhe-item" *ngIf="equipamentoDetalhe.observacao"><strong>Observação:</strong>
+      <span>{{ equipamentoDetalhe.observacao }}</span></div>
+
+    <div class="mt-4">
+      <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">Histórico de Movimentações</h3>
+      <pre
+        style="background: #f8fafc; padding: 1rem; border-radius: 8px; font-family: monospace; white-space: pre-wrap;">{{ equipamentoDetalhe.historico || 'Nenhuma movimentação registrada.' }}</pre>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog [header]="tipoMovimentacao === 'ADICIONAR' ? 'Adicionar ao Estoque' : 'Transferir para Ambulância'"
+          [(visible)]="exibirDialogMovimentacao" [modal]="true" [style]="{ width: '30vw' }">
+  <div class="form-ambulancia" *ngIf="equipamentoMovimentacao">
+    <p>Operação no item: <strong>{{ equipamentoMovimentacao.nome }}</strong></p>
+
+    <div class="campo">
+      <label>Quantidade *</label>
+      <input type="number" pInputText [(ngModel)]="movimentacaoQuantidade" placeholder="Digite a quantidade" min="1"/>
+    </div>
+
+    <div class="campo" *ngIf="tipoMovimentacao === 'RETIRAR'">
+      <label>Destino (Ambulância) *</label>
+      <p-select
+        [options]="ambulancias"
+        [(ngModel)]="movimentacaoAmbulanciaId"
+        optionLabel="descricao"
+        optionValue="id"
+        placeholder="Selecione a Ambulância"
+        [appendTo]="'body'">
+        <ng-template let-amb pTemplate="item">
+          {{ amb.descricao }} - Placa: {{ amb.placa }}
+        </ng-template>
+      </p-select>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="secondary"
+              (click)="exibirDialogMovimentacao = false"></p-button>
+    <p-button label="Confirmar" icon="pi pi-check" (click)="confirmarMovimentacao()"
+              [disabled]="!movimentacaoQuantidade || (tipoMovimentacao === 'RETIRAR' && !movimentacaoAmbulanciaId)"></p-button>
+  </ng-template>
+</p-dialog>

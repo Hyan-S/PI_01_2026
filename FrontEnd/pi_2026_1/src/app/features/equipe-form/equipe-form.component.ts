@@ -137,15 +137,28 @@ export class EquipeFormComponent implements OnInit, OnChanges {
       ambulancia: formValue.ambulanciaId ? { id: formValue.ambulanciaId } : undefined,
     };
 
-    const request = this.equipeId
-      ? this.equipeService.atualizar(equipe)
-      : this.equipeService.salvar(equipe);
+    if (this.equipeId) {
+      this.equipeService.atualizar(equipe).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Operação realizada com sucesso!' });
+          this.salvo.emit();
+          this.fechar();
+        },
+        error: () => {
+          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Ocorreu uma falha na operação com o banco de dados.' });
+        },
+      });
+      return;
+    }
 
-    request.subscribe({
-      next: () => {
-        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Operação realizada com sucesso!' });
+    this.equipeService.salvar(equipe).subscribe({
+      next: (criada) => {
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Equipe criada. Adicione os membros abaixo.' });
         this.salvo.emit();
-        this.fechar();
+        this.equipeId = criada.id!;
+        this.titulo = 'Editar Equipe';
+        this.formEquipe.patchValue({ id: criada.id });
+        this.funcionarios = [];
       },
       error: () => {
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Ocorreu uma falha na operação com o banco de dados.' });
