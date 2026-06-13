@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import pi.Senai.Senai.entity.Equipe;
 import pi.Senai.Senai.repository.EquipeRepository;
@@ -16,27 +18,31 @@ public class EquipeService {
     private EquipeRepository equipeRepository;
 
     public Equipe salvar(Equipe equipe) {
+
+        if(equipe.getNomeEquipe() == null || equipe.getNomeEquipe().isBlank())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O Nome da equipe é obrigatório.");
+
         if(equipe.getIdentificador() == null || equipe.getIdentificador().isEmpty())
-            throw new RuntimeException("Identificador da equipe é obrigatório");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Identificador da equipe é obrigatório");
 
         String identificador = equipe.getIdentificador().toUpperCase().trim();
         equipe.setIdentificador(identificador);
 
         if (!identificador.matches("^[A-Z]{2}-\\d{3}$")) 
-            throw new RuntimeException("Formato de identificador inválido! Use o padrão LL-NNN (Exemplo: AB-123).");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de identificador inválido! Use o padrão LL-NNN (Exemplo: AB-123)."); 
     
         return equipeRepository.save(equipe);
     }
 
-    public void atualizar(Equipe equipe) {
+    public Equipe atualizar(Equipe equipe) {
         if (!equipeRepository.existsById(equipe.getId()))
-            throw new RuntimeException("Equipe não encontrada");
-        equipeRepository.save(equipe);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Equipe não encontrada");
+        return equipeRepository.save(equipe);
     }
 
     public void excluir(UUID id) {
         if (!equipeRepository.existsById(id))
-            throw new RuntimeException("Equipe não encontrada");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Equipe não encontrada");
         equipeRepository.deleteById(id);
     }
 
@@ -46,12 +52,12 @@ public class EquipeService {
 
     public Equipe buscarPorId(UUID id) {
         return equipeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Equipe não encontrada"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Equipe não encontrada"));
     }
 
     public Equipe buscarPorIdentificador(String identificador) {
         return equipeRepository.findByIdentificador(identificador)
-                .orElseThrow(() -> new RuntimeException("Equipe não encontrada com o identificador: " + identificador));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Equipe não encontrada com o identificador: " + identificador));
     }
     
 }

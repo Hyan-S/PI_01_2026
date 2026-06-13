@@ -85,9 +85,15 @@ export class EquipeFormComponent implements OnInit, OnChanges {
 
   iniciarFormularios() {
     this.formEquipe = this.fb.group({
-      id: [null],
+id: [null],
+      // Nome é obrigatório
       nomeEquipe: ['', Validators.required],
-      identificador: ['', Validators.required],
+      
+      // Regex de LL-NNN
+      identificador: ['', [
+        Validators.required, 
+        Validators.pattern(/^[A-Za-z]{2}-\d{3}$/) 
+      ]],
       ambulanciaId: [null],
     });
 

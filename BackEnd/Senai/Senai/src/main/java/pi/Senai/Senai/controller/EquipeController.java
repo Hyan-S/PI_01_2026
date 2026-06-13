@@ -1,20 +1,15 @@
 package pi.Senai.Senai.controller;
 
-import java.util.List;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import pi.Senai.Senai.entity.Equipe;
 import pi.Senai.Senai.service.EquipeService;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/equipe")
@@ -24,32 +19,35 @@ public class EquipeController {
     private EquipeService equipeService;
 
     @PostMapping("/salvar")
-    public Equipe salvar(@RequestBody Equipe equipe) {
-        return equipeService.salvar(equipe);
+    public ResponseEntity<Equipe> salvar(@RequestBody Equipe equipe) {
+        Equipe salva = equipeService.salvar(equipe);
+        return ResponseEntity.status(HttpStatus.CREATED).body(salva);
     }
 
     @PutMapping("/atualizar")
-    public void atualizar(@RequestBody Equipe equipe) {
-        equipeService.atualizar(equipe);
+    public ResponseEntity<Equipe> atualizar(@RequestBody Equipe equipe) {
+        Equipe atualizada = equipeService.atualizar(equipe);
+        return ResponseEntity.ok(atualizada);
     }
 
     @DeleteMapping("/excluir/{id}")
-    public void excluir(@PathVariable UUID id) {
+    public ResponseEntity<Void> excluir(@PathVariable UUID id) {
         equipeService.excluir(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/listar")
-    public List<Equipe> listar() {
-        return equipeService.listar();
+    public ResponseEntity<List<Equipe>> listar() {
+        return ResponseEntity.ok(equipeService.listar());
     }
 
     @GetMapping("/{id}")
-    public Equipe buscarPorId(@PathVariable UUID id) {
-        return equipeService.buscarPorId(id);
+    public ResponseEntity<Equipe> buscarPorId(@PathVariable UUID id) {
+        return ResponseEntity.ok(equipeService.buscarPorId(id));
     }
 
     @GetMapping("/identificador/{identificador}")
-    public Equipe buscarPorIdentificador(@PathVariable String identificador) {
-        return equipeService.buscarPorIdentificador(identificador);
+    public ResponseEntity<Equipe> buscarPorIdentificador(@PathVariable String identificador) {
+        return ResponseEntity.ok(equipeService.buscarPorIdentificador(identificador));
     }
 }

@@ -31,8 +31,8 @@ export const routes: Routes = [
           import('./features/dashboard/pages/dashboard-principal/dashboard-principal')
             .then(m => m.DashboardPrincipal)
       },
-
-      // 💡 Rota Atualizada: Apontando para o seu pacote correto de Gerenciamento
+      
+      // === ROTAS DE USUÁRIOS (IAM / CREDENCIAIS) ===
       {
         path: 'usuarios',
         canActivate: [adminGuard],
@@ -54,8 +54,6 @@ export const routes: Routes = [
           import('./features/users/pages/cadastro-usuario/cadastro-usuario')
             .then(m => m.CadastroUsuarioComponent)
       },
-
-      // Rota de Edição (Adicionada pela branch DevelopRefactor)
       {
         path: 'usuarios/editar/:id',
         canActivate: [adminGuard],
@@ -64,22 +62,21 @@ export const routes: Routes = [
             .then(m => m.CadastroUsuarioComponent)
       },
 
+      // === ROTAS OPERACIONAIS (OCORRÊNCIAS E EQUIPES) ===
       {
         path: 'ocorrencias',
         loadComponent: () =>
-          import('./features/ocorrencia-lista/ocorrencia-lista.component').then(
-            (m) => m.OcorrenciaListaComponent,
-          ),
+          import('./features/ocorrencia-lista/ocorrencia-lista.component')
+            .then(m => m.OcorrenciaListaComponent),
       },
       {
         path: 'equipes',
         loadComponent: () =>
-          import('./features/equipe-lista/equipe-lista.component').then(
-            (m) => m.EquipeListaComponent,
-          ),
+          import('./features/equipe-lista/equipe-lista.component')
+            .then(m => m.EquipeListaComponent),
       },
 
-      // ROTAS DE AMBULÂNCIAS (Adicionadas pela branch feature/ambulanciaCompleta)
+      // === ROTAS DE AMBULÂNCIAS ===
       {
         path: 'ambulancias',
         loadComponent: () => import('./features/ambulancia-lista/ambulancia-lista.component')
@@ -99,7 +96,28 @@ export const routes: Routes = [
         path: 'ambulancias/detalhes/:id',
         loadComponent: () => import('./features/ambulancia-form/ambulancia-form.component')
           .then(m => m.AmbulanciaFormComponent)
-      }
+      },
+
+      // === ROTAS DE FUNCIONÁRIOS (ADICIONADO) ===
+      {
+        path: 'funcionarios',
+        // ATENÇÃO: Se o adminGuard só deixar o ADMIN passar, o REGULADOR não vai conseguir entrar aqui.
+        canActivate: [adminGuard], 
+        loadComponent: () => import('./features/funcionarios/pages/funcionarios-list/funcionarios-list')
+          .then(m => m.FuncionarioListComponent)
+      },/*
+      {
+        path: 'funcionarios/cadastro',
+        canActivate: [adminGuard],
+        loadComponent: () => import('./features/funcionarios/pages/funcionario-form/funcionario-form.component')
+          .then(m => m.FuncionarioFormComponent) // Substitua pelo nome real do componente quando criar
+      },
+      {
+        path: 'funcionarios/editar/:id',
+        canActivate: [adminGuard],
+        loadComponent: () => import('./features/funcionarios/pages/funcionario-form/funcionario-form.component')
+          .then(m => m.FuncionarioFormComponent) // Substitua pelo nome real do componente quando criar
+      }*/
     ]
   },
 
