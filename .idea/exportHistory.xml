@@ -7,141 +7,141 @@
           <option name="fileCount" value="3" />
           <option name="filePaths">
             <list>
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.css" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.html" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.ts" />
+              <option value="equipamento-lista.component.css" />
+              <option value="equipamento-lista.component.html" />
+              <option value="equipamento-lista.component.ts" />
             </list>
           </option>
-          <option name="sizeBytes" value="9317" />
-          <option name="summary" value="3 files, 9,1 KB, ~2.575 tokens" />
-          <option name="timestamp" value="1781215976127" />
-          <option name="tokens" value="2575" />
+          <option name="sizeBytes" value="13340" />
+          <option name="summary" value="3 files, 13,0 KB, ~3.596 tokens" />
+          <option name="timestamp" value="1781361864531" />
+          <option name="tokens" value="3596" />
         </ExportEntry>
         <ExportEntry>
           <option name="fileCount" value="3" />
           <option name="filePaths">
             <list>
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.css" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.html" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.ts" />
+              <option value="equipamento-lista.component.css" />
+              <option value="equipamento-lista.component.html" />
+              <option value="equipamento-lista.component.ts" />
             </list>
           </option>
-          <option name="sizeBytes" value="6780" />
-          <option name="summary" value="3 files, 6,6 KB, ~1.795 tokens" />
-          <option name="timestamp" value="1781215970973" />
-          <option name="tokens" value="1795" />
+          <option name="sizeBytes" value="13013" />
+          <option name="summary" value="3 files, 12,7 KB, ~3.540 tokens" />
+          <option name="timestamp" value="1781361404117" />
+          <option name="tokens" value="3540" />
         </ExportEntry>
         <ExportEntry>
           <option name="fileCount" value="3" />
           <option name="filePaths">
             <list>
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.css" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.html" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.ts" />
+              <option value="ambulancia-lista.component.css" />
+              <option value="ambulancia-lista.component.html" />
+              <option value="ambulancia-lista.component.ts" />
             </list>
           </option>
-          <option name="sizeBytes" value="9280" />
-          <option name="summary" value="3 files, 9,1 KB, ~2.565 tokens" />
-          <option name="timestamp" value="1781215194769" />
-          <option name="tokens" value="2565" />
+          <option name="sizeBytes" value="9158" />
+          <option name="summary" value="3 files, 8,9 KB, ~2.521 tokens" />
+          <option name="timestamp" value="1781360118067" />
+          <option name="tokens" value="2521" />
         </ExportEntry>
         <ExportEntry>
           <option name="fileCount" value="3" />
           <option name="filePaths">
             <list>
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.css" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.html" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.ts" />
+              <option value="equipamento-lista.component.css" />
+              <option value="equipamento-lista.component.html" />
+              <option value="equipamento-lista.component.ts" />
             </list>
           </option>
-          <option name="sizeBytes" value="6780" />
-          <option name="summary" value="3 files, 6,6 KB, ~1.795 tokens" />
-          <option name="timestamp" value="1781215189277" />
-          <option name="tokens" value="1795" />
+          <option name="sizeBytes" value="12951" />
+          <option name="summary" value="3 files, 12,6 KB, ~3.520 tokens" />
+          <option name="timestamp" value="1781360112583" />
+          <option name="tokens" value="3520" />
         </ExportEntry>
         <ExportEntry>
           <option name="fileCount" value="3" />
           <option name="filePaths">
             <list>
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.css" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.html" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.ts" />
+              <option value="layout.component.ts" />
+              <option value="layout.css" />
+              <option value="layout.html" />
             </list>
           </option>
-          <option name="sizeBytes" value="8668" />
-          <option name="summary" value="3 files, 8,5 KB, ~2.376 tokens" />
-          <option name="timestamp" value="1781214126626" />
-          <option name="tokens" value="2376" />
+          <option name="sizeBytes" value="6179" />
+          <option name="summary" value="3 files, 6,0 KB, ~1.742 tokens" />
+          <option name="timestamp" value="1781359844612" />
+          <option name="tokens" value="1742" />
         </ExportEntry>
         <ExportEntry>
           <option name="fileCount" value="3" />
           <option name="filePaths">
             <list>
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.css" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.html" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.ts" />
+              <option value="ambulancia-lista.component.css" />
+              <option value="ambulancia-lista.component.html" />
+              <option value="ambulancia-lista.component.ts" />
             </list>
           </option>
-          <option name="sizeBytes" value="6841" />
-          <option name="summary" value="3 files, 6,7 KB, ~1.801 tokens" />
-          <option name="timestamp" value="1781214036771" />
-          <option name="tokens" value="1801" />
+          <option name="sizeBytes" value="9158" />
+          <option name="summary" value="3 files, 8,9 KB, ~2.521 tokens" />
+          <option name="timestamp" value="1781359691767" />
+          <option name="tokens" value="2521" />
         </ExportEntry>
         <ExportEntry>
           <option name="fileCount" value="3" />
           <option name="filePaths">
             <list>
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.css" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.html" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.ts" />
+              <option value="equipamento-lista.component.css" />
+              <option value="equipamento-lista.component.html" />
+              <option value="equipamento-lista.component.ts" />
             </list>
           </option>
-          <option name="sizeBytes" value="6589" />
-          <option name="summary" value="3 files, 6,4 KB, ~1.736 tokens" />
-          <option name="timestamp" value="1781213818912" />
-          <option name="tokens" value="1736" />
+          <option name="sizeBytes" value="13015" />
+          <option name="summary" value="3 files, 12,7 KB, ~3.539 tokens" />
+          <option name="timestamp" value="1781359669329" />
+          <option name="tokens" value="3539" />
         </ExportEntry>
         <ExportEntry>
           <option name="fileCount" value="3" />
           <option name="filePaths">
             <list>
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.css" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.html" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.ts" />
+              <option value="equipamento-form.component.css" />
+              <option value="equipamento-form.component.html" />
+              <option value="equipamento-form.component.ts" />
             </list>
           </option>
-          <option name="sizeBytes" value="8522" />
-          <option name="summary" value="3 files, 8,3 KB, ~2.333 tokens" />
-          <option name="timestamp" value="1781213517848" />
-          <option name="tokens" value="2333" />
+          <option name="sizeBytes" value="5909" />
+          <option name="summary" value="3 files, 5,8 KB, ~1.544 tokens" />
+          <option name="timestamp" value="1781359423970" />
+          <option name="tokens" value="1544" />
         </ExportEntry>
         <ExportEntry>
           <option name="fileCount" value="3" />
           <option name="filePaths">
             <list>
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.css" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.html" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-form/ambulancia-form.component.ts" />
+              <option value="equipamento-lista.component.css" />
+              <option value="equipamento-lista.component.html" />
+              <option value="equipamento-lista.component.ts" />
             </list>
           </option>
-          <option name="sizeBytes" value="6590" />
-          <option name="summary" value="3 files, 6,4 KB, ~1.737 tokens" />
-          <option name="timestamp" value="1781213513732" />
-          <option name="tokens" value="1737" />
+          <option name="sizeBytes" value="12949" />
+          <option name="summary" value="3 files, 12,6 KB, ~3.519 tokens" />
+          <option name="timestamp" value="1781359193409" />
+          <option name="tokens" value="3519" />
         </ExportEntry>
         <ExportEntry>
           <option name="fileCount" value="3" />
           <option name="filePaths">
             <list>
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.css" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.html" />
-              <option value="FrontEnd/pi_2026_1/src/app/features/ambulancia-lista/ambulancia-lista.component.ts" />
+              <option value="equipamento-lista.component.css" />
+              <option value="equipamento-lista.component.html" />
+              <option value="equipamento-lista.component.ts" />
             </list>
           </option>
-          <option name="sizeBytes" value="8522" />
-          <option name="summary" value="3 files, 8,3 KB, ~2.333 tokens" />
-          <option name="timestamp" value="1781213309124" />
-          <option name="tokens" value="2333" />
+          <option name="sizeBytes" value="12959" />
+          <option name="summary" value="3 files, 12,7 KB, ~3.523 tokens" />
+          <option name="timestamp" value="1781359070086" />
+          <option name="tokens" value="3523" />
         </ExportEntry>
       </list>
     </option>
