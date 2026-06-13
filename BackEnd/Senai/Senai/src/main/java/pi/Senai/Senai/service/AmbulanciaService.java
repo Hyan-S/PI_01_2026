@@ -61,6 +61,23 @@ public class AmbulanciaService extends CrudBaseService<Ambulancia, UUID> {
     }
 
     @Override
+    protected void prepararParaSalvar(Ambulancia ambulancia){
+        if(ambulancia.getPlaca() == null || ambulancia.getPlaca().isBlank())
+            throw new RuntimeException("A placa da ambulância é obrigatória.");
+
+        String placa = ambulancia.getPlaca().toUpperCase().trim();
+        ambulancia.setPlaca(placa);
+
+        java.util.Optional<Ambulancia> ambulanciaExiste = repositorio.findByPlaca(ambulancia.getPlaca());
+
+        if (!placa.matches("^[A-Z]{3}\\d[A-Z]\\d{2}$")) 
+            throw new RuntimeException("Formato de placa inválido! O formato correto é o padrão Mercosul (Ex: ABC1D23).");
+
+        if(ambulanciaExiste.isPresent())
+            throw new RuntimeException("Já existe uma ambulância cadastrada com a placa: " + ambulancia.getPlaca()); 
+    }
+
+    @Override
     protected String getMensagemNaoEncontrado() { 
         return "Ambulância não encontrada"; 
     }
