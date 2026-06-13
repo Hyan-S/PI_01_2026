@@ -13,38 +13,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import pi.Senai.Senai.entity.Equipamento;
-import pi.Senai.Senai.service.EquipamentoService;
+import pi.Senai.Senai.entity.Equipe;
+import pi.Senai.Senai.service.EquipeService;
 
 @RestController
-@RequestMapping("/equipamento")
-public class EquipamentoController {
+@RequestMapping("/equipe")
+public class EquipeController {
 
     @Autowired
-    private EquipamentoService equipamentoService;
+    private EquipeService equipeService;
 
     @PostMapping("/salvar")
-    public void salvar(@RequestBody Equipamento equipamento) {
-        equipamentoService.salvar(equipamento);
+    public void salvar(@RequestBody Equipe equipe) {
+        equipeService.salvar(equipe);
     }
 
     @PutMapping("/atualizar")
-    public void atualizar(@RequestBody Equipamento equipamento) {
-        equipamentoService.atualizar(equipamento);
+    public void atualizar(@RequestBody Equipe equipe) {
+        equipeService.atualizar(equipe);
     }
 
     @DeleteMapping("/excluir/{id}")
     public void excluir(@PathVariable UUID id) {
-        equipamentoService.excluir(id);
+        equipeService.excluir(id);
     }
 
     @GetMapping("/listar")
-    public List<Equipamento> listar() {
-        return equipamentoService.listar();
+    public List<Equipe> listar() {
+        return equipeService.listar();
     }
 
-    @GetMapping("/nome/{nome}")
-    public List<Equipamento> buscarPorNome(@PathVariable String nome) {
-        return equipamentoService.buscarPorNome(nome);
+    @GetMapping("/{id}")
+    public Equipe buscarPorId(@PathVariable UUID id) {
+        return equipeService.buscarPorId(id);
+    }
+
+    @GetMapping("/identificador/{identificador}")
+    public Equipe buscarPorIdentificador(@PathVariable String identificador) {
+        return equipeService.buscarPorIdentificador(identificador);
     }
 }

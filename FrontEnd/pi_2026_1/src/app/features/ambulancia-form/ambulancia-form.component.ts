@@ -102,12 +102,9 @@ export class AmbulanciaFormComponent implements OnInit, OnChanges {
   }
 
   carregarDadosAmbulancia(id: string) {
-    this.ambulanciaService.listar().subscribe({
-      next: (ambulancias) => {
-        const ambulancia = ambulancias.find((a) => a.id === id);
-        if (ambulancia) {
-          this.formAmbulancia.patchValue(ambulancia);
-        }
+    this.ambulanciaService.buscarPorId(id).subscribe({
+      next: (ambulancia) => {
+        this.formAmbulancia.patchValue(ambulancia);
       },
     });
   }

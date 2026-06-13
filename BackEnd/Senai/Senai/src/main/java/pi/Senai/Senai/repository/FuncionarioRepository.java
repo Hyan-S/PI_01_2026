@@ -9,5 +9,6 @@ import pi.Senai.Senai.entity.Funcionario;
 
 @Repository
 public interface FuncionarioRepository extends JpaRepository<Funcionario, UUID>{
-    
+
+    java.util.List<Funcionario> findByFuncao(String funcao);
 }

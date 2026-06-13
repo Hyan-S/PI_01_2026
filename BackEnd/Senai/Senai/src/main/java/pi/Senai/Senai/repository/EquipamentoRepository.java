@@ -9,5 +9,6 @@ import pi.Senai.Senai.entity.Equipamento;
 
 @Repository
 public interface EquipamentoRepository extends JpaRepository<Equipamento, UUID>{
-    
+
+    java.util.List<Equipamento> findByNomeContainingIgnoreCase(String nome);
 }

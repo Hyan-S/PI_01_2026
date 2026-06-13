@@ -11,4 +11,6 @@ import pi.Senai.Senai.entity.Equipe;
 public interface EquipeRepository extends JpaRepository<Equipe, UUID> {
 
     long countByAmbulanciaIsNotNull();
+
+    java.util.Optional<Equipe> findByIdentificador(String identificador);
 }

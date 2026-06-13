@@ -15,4 +15,6 @@ public interface AmbulanciaRepository extends JpaRepository<Ambulancia, UUID>{
 
 
     long countByAtivoTrue();
+
+    java.util.Optional<Ambulancia> findByPlaca(String placa);
 }

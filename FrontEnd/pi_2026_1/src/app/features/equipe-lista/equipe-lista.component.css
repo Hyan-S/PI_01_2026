@@ -1,0 +1,41 @@
+.p-input-icon-left {
+  position: relative;
+  display: inline-block;
+}
+
+.p-input-icon-left i {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0.75rem;
+  color: #64748b;
+  z-index: 1;
+}
+
+.p-input-icon-left input {
+  padding-left: 2.5rem !important;
+}
+
+.detalhes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.detalhe-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 0.5rem;
+}
+
+.detalhe-item strong {
+  width: 120px;
+  color: #475569;
+}
+
+.detalhe-item span {
+  color: #1e293b;
+}

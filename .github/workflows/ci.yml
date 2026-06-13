@@ -2,9 +2,9 @@ name: CI - Build Backend e Frontend
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, DevelopRefactor ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, develop, DevelopRefactor ]
 
 jobs:
   backend:

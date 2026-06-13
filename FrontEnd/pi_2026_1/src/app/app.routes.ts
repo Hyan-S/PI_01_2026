@@ -58,6 +58,21 @@ export const routes: Routes = [
             .then(m => m.CadastroUsuarioComponent)
       },
 
+      {
+        path: 'ocorrencias',
+        loadComponent: () =>
+          import('./features/ocorrencia-lista/ocorrencia-lista.component').then(
+            (m) => m.OcorrenciaListaComponent,
+          ),
+      },
+      {
+        path: 'equipes',
+        loadComponent: () =>
+          import('./features/equipe-lista/equipe-lista.component').then(
+            (m) => m.EquipeListaComponent,
+          ),
+      },
+
       // ROTAS DE AMBULÂNCIAS (Adicionadas pela branch feature/ambulanciaCompleta)
       {
         path: 'ambulancias',
