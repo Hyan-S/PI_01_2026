@@ -57,4 +57,9 @@ public class AmbulanciaController {
     public AmbulanciaEquipadaDTO obterEquipada(@PathVariable UUID id) {
         return ambulanciaService.obterEquipada(id);
     }
+
+    @GetMapping("/placa/{placa}")
+    public Ambulancia buscarPorPlaca(@PathVariable String placa) {
+        return ambulanciaService.buscarPorPlaca(placa);
+    }
 }

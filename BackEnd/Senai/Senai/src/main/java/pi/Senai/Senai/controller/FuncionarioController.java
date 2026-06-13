@@ -42,4 +42,9 @@ public class FuncionarioController {
     public List<Funcionario> ListarFuncionarios() {
         return _funcionarioService.ListarFuncionarios();
     }
+
+    @GetMapping("/funcao/{funcao}")
+    public List<Funcionario> buscarPorFuncao(@PathVariable String funcao) {
+        return _funcionarioService.buscarPorFuncao(funcao);
+    }
 }

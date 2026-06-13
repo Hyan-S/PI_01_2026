@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import pi.Senai.Senai.entity.Ocorrencia;
+import pi.Senai.Senai.enums.GravidadeOcorrencia;
+import pi.Senai.Senai.enums.StatusOcorrencia;
 import pi.Senai.Senai.service.OcorrenciaService;
 
 @RestController
@@ -47,5 +49,20 @@ public class OcorrenciaController {
     @GetMapping("/listar/prioridade")
     public List<Ocorrencia> listarPorPrioridade() {
         return _ocorrenciaService.listarPorPrioridade();
+    }
+
+    @GetMapping("/protocolo/{protocolo}")
+    public Ocorrencia buscarPorProtocolo(@PathVariable String protocolo) {
+        return _ocorrenciaService.buscarPorProtocolo(protocolo);
+    }
+
+    @GetMapping("/status/{status}")
+    public List<Ocorrencia> buscarPorStatus(@PathVariable StatusOcorrencia status) {
+        return _ocorrenciaService.buscarPorStatus(status);
+    }
+
+    @GetMapping("/gravidade/{gravidade}")
+    public List<Ocorrencia> buscarPorGravidade(@PathVariable GravidadeOcorrencia gravidade) {
+        return _ocorrenciaService.buscarPorGravidade(gravidade);
     }
 }

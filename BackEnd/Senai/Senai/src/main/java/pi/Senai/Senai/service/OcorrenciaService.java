@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pi.Senai.Senai.entity.Ocorrencia;
+import pi.Senai.Senai.enums.GravidadeOcorrencia;
 import pi.Senai.Senai.enums.StatusAmbulancia;
 import pi.Senai.Senai.enums.StatusOcorrencia;
 import pi.Senai.Senai.repository.AmbulanciaRepository;
@@ -82,6 +83,19 @@ public class OcorrenciaService {
         List<Ocorrencia> resultado = new java.util.ArrayList<>();
         lista.forEach(resultado::add);
         return resultado;
+    }
+
+    public Ocorrencia buscarPorProtocolo(String protocolo) {
+        return _OcorrenciaRepository.findByProtocolo(protocolo)
+                .orElseThrow(() -> new RuntimeException("Ocorrência não encontrada com o protocolo: " + protocolo));
+    }
+
+    public List<Ocorrencia> buscarPorStatus(StatusOcorrencia status) {
+        return _OcorrenciaRepository.findByStatus(status);
+    }
+
+    public List<Ocorrencia> buscarPorGravidade(GravidadeOcorrencia gravidade) {
+        return _OcorrenciaRepository.findByGravidade(gravidade);
     }
 
     private String GerarProtocolo(){
