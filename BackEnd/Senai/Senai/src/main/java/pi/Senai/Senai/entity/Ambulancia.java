@@ -2,21 +2,12 @@ package pi.Senai.Senai.entity;
 
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.PrePersist;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import pi.Senai.Senai.entity.base.EntidadeGerenciavel;
 import pi.Senai.Senai.enums.TipoItemMedico;
 import pi.Senai.Senai.enums.StatusAmbulancia;
@@ -54,6 +45,10 @@ public class Ambulancia implements EntidadeGerenciavel {
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_item")
     private Set<TipoItemMedico> ItensMedicos = new HashSet<>();
+
+    @OneToMany(mappedBy = "ambulancia", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("ambulancia")
+    private List<Equipamento> equipamentos;
 
     @PrePersist
     protected void onCreate() {
@@ -135,5 +130,13 @@ public class Ambulancia implements EntidadeGerenciavel {
 
     public void setItensMedicos(Set<TipoItemMedico> itensMedicos) {
         ItensMedicos = itensMedicos;
+    }
+
+    public List<Equipamento> getEquipamentos() {
+        return equipamentos;
+    }
+
+    public void setEquipamentos(List<Equipamento> equipamentos) {
+        this.equipamentos = equipamentos;
     }
 }

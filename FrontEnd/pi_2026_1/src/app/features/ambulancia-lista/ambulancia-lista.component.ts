@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { AmbulanciaFormComponent } from '../ambulancia-form/ambulancia-form.component';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-ambulancia-lista',
@@ -26,6 +27,7 @@ import { ToastModule } from 'primeng/toast';
     AmbulanciaFormComponent,
     DialogModule,
     ToastModule,
+    SelectModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './ambulancia-lista.component.html',
@@ -37,7 +39,13 @@ export class AmbulanciaListaComponent implements OnInit {
 
   exibirDialogDetalhes: boolean = false;
   ambulanciaDetalhe: Ambulancia | null = null;
-
+  opcoesStatus = [
+    { label: 'Todos', value: null },
+    { label: 'Disponível', value: 'DISPONIVEL' },
+    { label: 'A Caminho', value: 'A_CAMINHO' },
+    { label: 'Em Atendimento', value: 'EM_ATENDIMENTO' },
+    { label: 'Em Manutenção', value: 'EM_MANUTENCAO' }
+  ];
   constructor(
     private ambulanciaService: AmbulanciaService,
     private router: Router,
