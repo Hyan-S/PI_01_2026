@@ -1,0 +1,146 @@
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+<div class="page-container">
+  
+  <div class="page-header">
+    <h2>Gerenciamento de Funcionários</h2>
+    <p>Cadastro de recursos humanos operacionais (Médicos, Enfermeiros, Motoristas)</p>
+  </div>
+
+  <div class="card-tabela">
+    
+    <div class="toolbar-container">
+      <div class="toolbar-left">
+        <span class="p-input-icon-left w-full search-bar">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="filtrarGlobal($event)" placeholder="Pesquisar por descrição..." />
+        </span>
+      </div>
+
+      <div class="toolbar-right">
+        <p-select 
+          [options]="funcoesFiltro" 
+          optionLabel="label"
+          optionValue="value"
+          (onChange)="dt.filter($event.value, 'funcao', 'equals')" 
+          placeholder="Filtrar por Função" 
+          styleClass="dropdown-filtro">
+        </p-select>
+
+        <p-button 
+          label="Cadastrar Funcionário" 
+          icon="pi pi-plus" 
+          styleClass="p-button-primary" 
+          (onClick)="abrirDialogoNovo()">
+        </p-button>
+      </div>
+    </div>
+
+    <p-table 
+      #dt 
+      [value]="funcionarios" 
+      [paginator]="true" 
+      [rows]="10" 
+      [globalFilterFields]="['descricao', 'funcao']" 
+      [loading]="carregando"
+      styleClass="p-datatable-sm tabela-minimalista">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Identificação (Nome / Registro)</th>
+          <th>Função</th>
+          <th>Nº Registro</th>
+          <th class="text-center">Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-funcionario>
+        <tr>
+          <td class="font-semibold text-main">{{ funcionario.descricao }}</td>
+          <td>
+            <p-tag [value]="funcionario.funcao" [severity]="getSeveridadeFuncao(funcionario.funcao)"></p-tag>
+          </td>
+          <td class="text-muted">{{ funcionario.numeroFuncao }}</td>
+          <td class="text-center">  
+            <div class="action-buttons">
+              <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-text p-button-secondary" (onClick)="editarFuncionario(funcionario.id)"></p-button>
+              <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text p-button-danger" (onClick)="excluirFuncionario(funcionario)"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4" class="text-center p-4 text-muted">
+            Nenhum funcionário operacional encontrado.
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+
+  </div>
+</div>
+
+<p-dialog 
+  [(visible)]="exibirDialogo" 
+  [style]="{width: '450px'}" 
+  header="Cadastrar Funcionário" 
+  [modal]="true" 
+  styleClass="p-fluid">
+  
+  <ng-template pTemplate="content">
+    <form [formGroup]="funcionarioForm" class="form-container">
+      
+      <div class="field">
+        <label for="funcao" class="font-semibold">Função Operacional</label>
+        <p-select 
+          id="funcao"
+          [options]="funcoesOpcoes" 
+          formControlName="funcao"
+          placeholder="Selecione a Função"
+          appendTo="body">
+        </p-select>
+      </div>
+
+      <div class="field">
+        <label for="descricao" class="font-semibold">Identificação (Nome / Título)</label>
+        <input 
+          type="text" 
+          pInputText 
+          id="descricao" 
+          formControlName="descricao" 
+          placeholder="Ex: Dr. Carlos Silva" />
+      </div>
+
+      <div class="field">
+        <label for="numeroFuncao" class="font-semibold">Nº do Registro (CRM/COREN/CNH)</label>
+        <p-inputNumber 
+          id="numeroFuncao" 
+          formControlName="numeroFuncao" 
+          [useGrouping]="false"
+          placeholder="Apenas números">
+        </p-inputNumber>
+      </div>
+
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="Cancelar" 
+      icon="pi pi-times" 
+      styleClass="p-button-text p-button-secondary" 
+      (onClick)="esconderDialogo()">
+    </p-button>
+    <p-button 
+      label="Salvar" 
+      icon="pi pi-check" 
+      styleClass="p-button-primary" 
+      [disabled]="funcionarioForm.invalid" 
+      (onClick)="salvarFuncionario()">
+    </p-button>
+  </ng-template>
+</p-dialog>
