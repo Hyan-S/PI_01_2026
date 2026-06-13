@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pi.Senai.Senai.dto.DespachoDTO;
 import pi.Senai.Senai.entity.Ocorrencia;
 import pi.Senai.Senai.enums.GravidadeOcorrencia;
 import pi.Senai.Senai.enums.StatusAmbulancia;
@@ -29,7 +30,7 @@ public class OcorrenciaService {
     private AmbulanciaRepository _AmbulanciaRepository;
 
     @Transactional
-    public void SalvarOcorrencia(Ocorrencia ocorrencia){
+    public Ocorrencia SalvarOcorrencia(Ocorrencia ocorrencia){
         ocorrencia.setDataHoraAbertura(LocalDateTime.now());
 
         if(ocorrencia.getStatus() == null)
@@ -37,9 +38,10 @@ public class OcorrenciaService {
 
         ocorrencia.setProtocolo(GerarProtocolo());
 
-        _OcorrenciaRepository.save(ocorrencia);
+        Ocorrencia salva = _OcorrenciaRepository.save(ocorrencia);
 
         sincronizarStatusAmbulancia(ocorrencia.getVeiculoId(), ocorrencia.getStatus());
+        return salva;
     }
 
     @Transactional
@@ -76,6 +78,20 @@ public class OcorrenciaService {
         if (ocorrencia.getVeiculoId() != null) {
             atualizarStatusAmbulanciaUnico(ocorrencia.getVeiculoId(), StatusAmbulancia.DISPONIVEL);
         }
+    }
+
+    @Transactional
+    public void DespacharOcorrencia(UUID id, DespachoDTO dto) {
+        Ocorrencia ocorrencia = _OcorrenciaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ocorrência não encontrada"));
+
+        ocorrencia.setVeiculoId(dto.getVeiculoId());
+        if (dto.getEquipeId() != null)
+            ocorrencia.setEquipeId(dto.getEquipeId());
+        ocorrencia.setStatus(StatusOcorrencia.A_CAMINHO);
+
+        _OcorrenciaRepository.save(ocorrencia);
+        sincronizarStatusAmbulancia(dto.getVeiculoId(), StatusOcorrencia.A_CAMINHO);
     }
 
     public List<Ocorrencia> ListarOcorrencias(){

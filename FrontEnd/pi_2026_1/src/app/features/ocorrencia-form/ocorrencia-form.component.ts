@@ -39,7 +39,7 @@ export class OcorrenciaFormComponent implements OnInit, OnChanges {
   @Input() ocorrencia: Ocorrencia | null = null;
 
   @Output() visibleChange = new EventEmitter<boolean>();
-  @Output() salvo = new EventEmitter<void>();
+  @Output() salvo = new EventEmitter<Ocorrencia | null>();
 
   titulo: string = 'Nova Ocorrência';
   formOcorrencia!: FormGroup;
@@ -115,18 +115,24 @@ export class OcorrenciaFormComponent implements OnInit, OnChanges {
       dados.operadorId = this.authService.getUsuarioSessao()?.id;
     }
 
-    const request = this.ocorrencia
-      ? this.ocorrenciaService.atualizar(dados)
-      : this.ocorrenciaService.salvar(dados);
+    if (this.ocorrencia) {
+      this.ocorrenciaService.atualizar(dados).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Operação realizada com sucesso!' });
+          this.salvo.emit(null);
+          this.fechar();
+        },
+        error: () => {
+          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Ocorreu uma falha na operação com o banco de dados.' });
+        },
+      });
+      return;
+    }
 
-    request.subscribe({
-      next: () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: 'Operação realizada com sucesso!',
-        });
-        this.salvo.emit();
+    this.ocorrenciaService.salvar(dados).subscribe({
+      next: (criada) => {
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Operação realizada com sucesso!' });
+        this.salvo.emit(criada);
         this.fechar();
       },
       error: () => {

@@ -17,6 +17,99 @@
   color: #475569;
 }
 
-.campo input {
+.campo input,
+.campo p-select {
   width: 100%;
+}
+
+.linha-dupla {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.secao-membros {
+  padding: 0.5rem 0;
+}
+
+.membros-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.membros-titulo {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.form-membro {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.linha-tripla {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.campo-numero {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.campo-numero label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.membro-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.lista-membros {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.membro-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: #f1f5f9;
+  border-radius: 6px;
+}
+
+.membro-funcao {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #1e40af;
+  min-width: 100px;
+}
+
+.membro-descricao {
+  font-size: 0.85rem;
+  color: #64748b;
+  flex: 1;
+}
+
+.sem-membros {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-style: italic;
+  padding: 0.5rem 0;
 }

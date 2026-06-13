@@ -15,8 +15,8 @@ export class OcorrenciaService {
     return this.http.get<Ocorrencia[]>(`${this.apiUrl}/listar`);
   }
 
-  salvar(ocorrencia: Ocorrencia): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/salvar`, ocorrencia);
+  salvar(ocorrencia: Ocorrencia): Observable<Ocorrencia> {
+    return this.http.post<Ocorrencia>(`${this.apiUrl}/salvar`, ocorrencia);
   }
 
   atualizar(ocorrencia: Ocorrencia): Observable<void> {
@@ -25,5 +25,9 @@ export class OcorrenciaService {
 
   excluir(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/excluir/${id}`);
+  }
+
+  despachar(id: string, veiculoId: string, equipeId?: string): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/despachar/${id}`, { veiculoId, equipeId: equipeId ?? null });
   }
 }
