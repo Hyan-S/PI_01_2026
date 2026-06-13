@@ -39,7 +39,7 @@ export class LayoutComponent implements OnInit {
       {
         label: 'Principal',
         items: [
-          { label: 'Ocorrências', icon: 'pi pi-bolt', routerLink: '/ocorrencias' }
+          { label: 'Dashboard', icon: 'pi pi-home', routerLink: '/dashboard' }
         ]
       }
     ];
@@ -49,9 +49,6 @@ export class LayoutComponent implements OnInit {
       const itensGestao: MenuItem[] = [
         { label: 'Equipes', icon: 'pi pi-users', routerLink: '/equipes' },
         { label: 'Ambulâncias', icon: 'pi pi-car', routerLink: '/ambulancias' },
-        { label: 'Insumos', icon: 'pi pi-box', routerLink: '/insumos' },
-        { label: 'Relatórios', icon: 'pi pi-chart-bar', routerLink: '/relatorios' }
-
       ];
 
       // Apenas o ADMIN pode gerenciar outros Usuários
