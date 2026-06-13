@@ -16,6 +16,15 @@ public class EquipeService {
     private EquipeRepository equipeRepository;
 
     public Equipe salvar(Equipe equipe) {
+        if(equipe.getIdentificador() == null || equipe.getIdentificador().isEmpty())
+            throw new RuntimeException("Identificador da equipe é obrigatório");
+
+        String identificador = equipe.getIdentificador().toUpperCase().trim();
+        equipe.setIdentificador(identificador);
+
+        if (!identificador.matches("^[A-Z]{2}-\\d{3}$")) 
+            throw new RuntimeException("Formato de identificador inválido! Use o padrão LL-NNN (Exemplo: AB-123).");
+    
         return equipeRepository.save(equipe);
     }
 
@@ -44,4 +53,5 @@ public class EquipeService {
         return equipeRepository.findByIdentificador(identificador)
                 .orElseThrow(() -> new RuntimeException("Equipe não encontrada com o identificador: " + identificador));
     }
+    
 }
