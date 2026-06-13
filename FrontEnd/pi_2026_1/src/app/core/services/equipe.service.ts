@@ -15,8 +15,8 @@ export class EquipeService {
     return this.http.get<Equipe[]>(`${this.apiUrl}/listar`);
   }
 
-  salvar(equipe: Equipe): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/salvar`, equipe);
+  salvar(equipe: Equipe): Observable<Equipe> {
+    return this.http.post<Equipe>(`${this.apiUrl}/salvar`, equipe);
   }
 
   atualizar(equipe: Equipe): Observable<void> {

@@ -24,8 +24,8 @@ public class EquipeController {
     private EquipeService equipeService;
 
     @PostMapping("/salvar")
-    public void salvar(@RequestBody Equipe equipe) {
-        equipeService.salvar(equipe);
+    public Equipe salvar(@RequestBody Equipe equipe) {
+        return equipeService.salvar(equipe);
     }
 
     @PutMapping("/atualizar")

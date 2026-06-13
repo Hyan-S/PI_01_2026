@@ -51,6 +51,8 @@ export class OcorrenciaListaComponent implements OnInit {
   equipeSelecionada: string | null = null;
   ambulancias: Ambulancia[] = [];
   equipes: Equipe[] = [];
+  ambulanciasFiltradas: Ambulancia[] = [];
+  equipesFiltradas: Equipe[] = [];
 
   constructor(
     private ocorrenciaService: OcorrenciaService,
@@ -79,13 +81,19 @@ export class OcorrenciaListaComponent implements OnInit {
 
   carregarAmbulanciasFiltros() {
     this.ambulanciaService.listar().subscribe({
-      next: (lista) => (this.ambulancias = lista.filter((a) => a.status === 'DISPONIVEL')),
+      next: (lista) => {
+        this.ambulancias = lista.filter((a) => a.status === 'DISPONIVEL');
+        this.ambulanciasFiltradas = [...this.ambulancias];
+      },
     });
   }
 
   carregarEquipes() {
     this.equipeService.listar().subscribe({
-      next: (lista) => (this.equipes = lista),
+      next: (lista) => {
+        this.equipes = lista;
+        this.equipesFiltradas = [...lista];
+      },
     });
   }
 
@@ -108,8 +116,43 @@ export class OcorrenciaListaComponent implements OnInit {
     this.ocorrenciaParaDespachar = ocorrencia;
     this.ambulanciasSelecionada = null;
     this.equipeSelecionada = null;
+    this.ambulanciasFiltradas = [...this.ambulancias];
+    this.equipesFiltradas = [...this.equipes];
     this.carregarAmbulanciasFiltros();
     this.exibirDialogDespacho = true;
+  }
+
+  onAmbulanciaDespachoChange(ambulanciaId: string | null) {
+    if (!ambulanciaId) {
+      this.equipesFiltradas = [...this.equipes];
+      this.equipeSelecionada = null;
+      return;
+    }
+    const equipeVinculada = this.equipes.find((e) => e.ambulancia?.id === ambulanciaId);
+    if (equipeVinculada) {
+      this.equipesFiltradas = [equipeVinculada];
+      this.equipeSelecionada = equipeVinculada.id!;
+    } else {
+      this.equipesFiltradas = [...this.equipes];
+      this.equipeSelecionada = null;
+    }
+  }
+
+  onEquipeDespachoChange(equipeId: string | null) {
+    if (!equipeId) {
+      this.ambulanciasFiltradas = [...this.ambulancias];
+      this.ambulanciasSelecionada = null;
+      return;
+    }
+    const equipe = this.equipes.find((e) => e.id === equipeId);
+    const ambId = equipe?.ambulancia?.id;
+    const ambVinculada = ambId ? this.ambulancias.find((a) => a.id === ambId) : null;
+    if (ambVinculada) {
+      this.ambulanciasFiltradas = [ambVinculada];
+      this.ambulanciasSelecionada = ambVinculada.id!;
+    } else {
+      this.ambulanciasFiltradas = [...this.ambulancias];
+    }
   }
 
   confirmarDespacho() {
