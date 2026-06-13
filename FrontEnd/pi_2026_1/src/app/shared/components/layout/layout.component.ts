@@ -39,7 +39,8 @@ export class LayoutComponent implements OnInit {
       {
         label: 'Principal',
         items: [
-          { label: 'Dashboard', icon: 'pi pi-home', routerLink: '/dashboard' }
+          { label: 'Dashboard', icon: 'pi pi-home', routerLink: '/dashboard' },
+          { label: 'Ocorrências', icon: 'pi pi-bolt', routerLink: '/ocorrencias' }
         ]
       }
     ];

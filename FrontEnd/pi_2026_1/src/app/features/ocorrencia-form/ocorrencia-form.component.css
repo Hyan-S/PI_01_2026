@@ -1,0 +1,29 @@
+.form-ocorrencia {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 0.5rem 0;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.campo label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.campo input,
+.campo textarea {
+  width: 100%;
+}
+
+.linha-dupla {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}

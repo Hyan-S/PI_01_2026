@@ -1,0 +1,116 @@
+<p-toast></p-toast>
+<div class="lista-container">
+  <div class="header-actions">
+    <h2>Ocorrências</h2>
+    <p-button label="Nova Ocorrência" icon="pi pi-plus" (onClick)="novaOcorrencia()" />
+  </div>
+
+  <p-confirmDialog></p-confirmDialog>
+
+  <p-table
+    #dt
+    [value]="ocorrencias"
+    [paginator]="true"
+    [rows]="10"
+    [globalFilterFields]="['protocolo', 'titulo', 'tipo', 'endereco']"
+    styleClass="p-datatable-sm p-datatable-striped"
+    [rowHover]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-end">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Buscar..."
+          />
+        </span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="protocolo">Protocolo</th>
+        <th pSortableColumn="titulo">Título</th>
+        <th pSortableColumn="tipo">Tipo</th>
+        <th pSortableColumn="gravidade">Gravidade</th>
+        <th pSortableColumn="status">Status</th>
+        <th pSortableColumn="endereco">Endereço</th>
+        <th class="text-center">Ações</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-oc>
+      <tr>
+        <td><code>{{ oc.protocolo }}</code></td>
+        <td>{{ oc.titulo }}</td>
+        <td>{{ oc.tipo }}</td>
+        <td>
+          <span class="p-tag" [ngClass]="obterClasseGravidade(oc.gravidade)">
+            {{ oc.gravidade }}
+          </span>
+        </td>
+        <td>
+          <span class="p-tag" [ngClass]="obterClasseStatus(oc.status)">
+            {{ oc.status }}
+          </span>
+        </td>
+        <td>{{ oc.endereco }}</td>
+        <td class="text-center">
+          <div class="flex justify-content-center gap-2">
+            <p-button
+              icon="pi pi-eye"
+              styleClass="p-button-rounded p-button-info p-button-text"
+              (onClick)="detalhes(oc)"
+            ></p-button>
+            <p-button
+              icon="pi pi-pencil"
+              styleClass="p-button-rounded p-button-warning p-button-text"
+              (onClick)="editar(oc)"
+            ></p-button>
+            <p-button
+              icon="pi pi-ban"
+              styleClass="p-button-rounded p-button-danger p-button-text"
+              (click)="confirmarCancelamento(oc)"
+            ></p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<app-ocorrencia-form
+  [visible]="exibirDialog"
+  (visibleChange)="fecharModalForm($event)"
+  [ocorrencia]="ocorrenciaParaEditar"
+  (salvo)="carregarOcorrencias()"
+>
+</app-ocorrencia-form>
+
+<p-dialog
+  header="Detalhes da Ocorrência"
+  [(visible)]="exibirDialogDetalhes"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+>
+  <div *ngIf="ocorrenciaDetalhe" class="detalhes-container">
+    <div class="detalhe-item"><strong>Protocolo:</strong> <span>{{ ocorrenciaDetalhe.protocolo }}</span></div>
+    <div class="detalhe-item"><strong>Título:</strong> <span>{{ ocorrenciaDetalhe.titulo }}</span></div>
+    <div class="detalhe-item"><strong>Tipo:</strong> <span>{{ ocorrenciaDetalhe.tipo }}</span></div>
+    <div class="detalhe-item"><strong>Gravidade:</strong>
+      <span class="p-tag" [ngClass]="obterClasseGravidade(ocorrenciaDetalhe.gravidade)">{{ ocorrenciaDetalhe.gravidade }}</span>
+    </div>
+    <div class="detalhe-item"><strong>Status:</strong>
+      <span class="p-tag" [ngClass]="obterClasseStatus(ocorrenciaDetalhe.status)">{{ ocorrenciaDetalhe.status }}</span>
+    </div>
+    <div class="detalhe-item"><strong>Endereço:</strong> <span>{{ ocorrenciaDetalhe.endereco }}</span></div>
+    <div class="detalhe-item"><strong>Descrição:</strong> <span>{{ ocorrenciaDetalhe.descricao }}</span></div>
+    <div class="detalhe-item"><strong>Abertura:</strong> <span>{{ ocorrenciaDetalhe.dataHoraAbertura | date:'dd/MM/yyyy HH:mm' }}</span></div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button label="Fechar" icon="pi pi-check" (onClick)="exibirDialogDetalhes = false"></p-button>
+  </ng-template>
+</p-dialog>

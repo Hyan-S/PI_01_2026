@@ -47,6 +47,10 @@ public class OcorrenciaService {
         Ocorrencia ocorrenciaAntiga = _OcorrenciaRepository.findById(ocorrencia.getId())
                 .orElseThrow(() -> new RuntimeException("Ocorrência não cadastrada, não encontrada"));
 
+        ocorrencia.setDataHoraAbertura(ocorrenciaAntiga.getDataHoraAbertura());
+        if (ocorrencia.getOperadorId() == null)
+            ocorrencia.setOperadorId(ocorrenciaAntiga.getOperadorId());
+
         UUID veiculoAntigoId = ocorrenciaAntiga.getVeiculoId();
         UUID veiculoNovoId = ocorrencia.getVeiculoId();
 
