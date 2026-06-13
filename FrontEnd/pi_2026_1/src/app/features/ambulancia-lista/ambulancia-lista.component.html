@@ -1,55 +1,56 @@
 <p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
 <div class="lista-container">
   <div class="header-actions">
     <h2>Lista de Ambulâncias</h2>
   </div>
 
-  <p-confirmDialog></p-confirmDialog>
+  <div class="card-tabela">
+    <p-table #dt [value]="ambulancias" [paginator]="true" [rows]="10"
+             [globalFilterFields]="['descricao', 'placa']"
+             styleClass="p-datatable-sm" [rowHover]="true">
 
-  <p-table #dt [value]="ambulancias" [paginator]="true" [rows]="10"
-           [globalFilterFields]="['descricao', 'placa']"
-           styleClass="p-datatable-sm p-datatable-striped" [rowHover]="true">
-
-    <ng-template pTemplate="caption">
-      <div class="flex align-items-center justify-content-start gap-5">
-
-        <span class="p-input-icon-left">
-          <i class="pi pi-search"></i>
-          <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar..."/>
-       </span>
-
-        <p-button class="btn-novo-equipamento" label="Nova Ambulância" icon="pi pi-plus" (onClick)="novaAmbulancia()"></p-button>
-      </div>
-    </ng-template>
-
-    <ng-template pTemplate="header">
-      <tr>
-        <th pSortableColumn="descricao">Descrição</th>
-        <th pSortableColumn="placa">Placa</th>
-        <th pSortableColumn="status">Status</th>
-        <th class="text-center">Ações</th>
-      </tr>
-    </ng-template>
-
-    <ng-template pTemplate="body" let-amb>
-      <tr>
-        <td>{{ amb.descricao }}</td>
-        <td>{{ amb.placa }}</td>
-        <td>
-          <span class="p-tag" [ngClass]="obterClasseStatus(amb.status)">
-            {{ amb.status ? (amb.status | titlecase) : 'Sem Status' }}
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-start gap-5">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar..."/>
           </span>
-        </td>
-        <td class="text-center">
-          <div class="flex justify-content-center gap-2">
-            <p-button icon="pi pi-eye" styleClass="p-button-rounded p-button-info p-button-text" (onClick)="detalhes(amb.id)"></p-button>
-            <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-warning p-button-text" (onClick)="editar(amb.id)"></p-button>
-            <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-text" (click)="confirmarExclusao(amb)"></p-button>
-          </div>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+
+          <p-button class="btn-nova-ambulancia" label="Nova Ambulância" icon="pi pi-plus" (onClick)="novaAmbulancia()"></p-button>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="descricao">Descrição</th>
+          <th pSortableColumn="placa">Placa</th>
+          <th pSortableColumn="status">Status</th>
+          <th class="text-center">Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-amb>
+        <tr>
+          <td>{{ amb.descricao }}</td>
+          <td>{{ amb.placa }}</td>
+          <td>
+            <span class="p-tag" [ngClass]="obterClasseStatus(amb.status)">
+              {{ amb.status ? (amb.status | titlecase) : 'Sem Status' }}
+            </span>
+          </td>
+          <td class="text-center">
+            <div class="flex justify-content-center gap-2">
+              <p-button icon="pi pi-eye" styleClass="p-button-rounded p-button-info p-button-text" (onClick)="detalhes(amb.id)"></p-button>
+              <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-warning p-button-text" (onClick)="editar(amb.id)"></p-button>
+              <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-text" (click)="confirmarExclusao(amb)"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>
 
 <app-ambulancia-form
