@@ -15,8 +15,8 @@ public class EquipeService {
     @Autowired
     private EquipeRepository equipeRepository;
 
-    public void salvar(Equipe equipe) {
-        equipeRepository.save(equipe);
+    public Equipe salvar(Equipe equipe) {
+        return equipeRepository.save(equipe);
     }
 
     public void atualizar(Equipe equipe) {

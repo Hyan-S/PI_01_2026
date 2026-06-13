@@ -90,6 +90,11 @@
     <div class="detalhe-item">
       <strong>Identificador:</strong> <span>{{ equipeDetalhe.identificador }}</span>
     </div>
+    <div class="detalhe-item">
+      <strong>Ambulância:</strong>
+      <span *ngIf="equipeDetalhe.ambulancia">{{ equipeDetalhe.ambulancia.placa }} — {{ equipeDetalhe.ambulancia.descricao }}</span>
+      <span *ngIf="!equipeDetalhe.ambulancia">Nenhuma</span>
+    </div>
   </div>
   <ng-template pTemplate="footer">
     <p-button
