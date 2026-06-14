@@ -17,7 +17,7 @@ public class Equipamento implements EntidadeGerenciavel {
     @Column(nullable = false)
     private String nome;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String historico;
 
     @Column(nullable = false)

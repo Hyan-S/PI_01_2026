@@ -7,6 +7,132 @@
           <option name="fileCount" value="3" />
           <option name="filePaths">
             <list>
+              <option value="equipamento-lista.component.css" />
+              <option value="equipamento-lista.component.html" />
+              <option value="equipamento-lista.component.ts" />
+            </list>
+          </option>
+          <option name="sizeBytes" value="16260" />
+          <option name="summary" value="3 files, 15,9 KB, ~4.506 tokens" />
+          <option name="timestamp" value="1781447824281" />
+          <option name="tokens" value="4506" />
+        </ExportEntry>
+        <ExportEntry>
+          <option name="fileCount" value="3" />
+          <option name="filePaths">
+            <list>
+              <option value="equipamento-lista.component.css" />
+              <option value="equipamento-lista.component.html" />
+              <option value="equipamento-lista.component.ts" />
+            </list>
+          </option>
+          <option name="sizeBytes" value="16260" />
+          <option name="summary" value="3 files, 15,9 KB, ~4.506 tokens" />
+          <option name="timestamp" value="1781447082124" />
+          <option name="tokens" value="4506" />
+        </ExportEntry>
+        <ExportEntry>
+          <option name="fileCount" value="3" />
+          <option name="filePaths">
+            <list>
+              <option value="equipamento-lista.component.css" />
+              <option value="equipamento-lista.component.html" />
+              <option value="equipamento-lista.component.ts" />
+            </list>
+          </option>
+          <option name="sizeBytes" value="15954" />
+          <option name="summary" value="3 files, 15,6 KB, ~4.445 tokens" />
+          <option name="timestamp" value="1781446633867" />
+          <option name="tokens" value="4445" />
+        </ExportEntry>
+        <ExportEntry>
+          <option name="fileCount" value="3" />
+          <option name="filePaths">
+            <list>
+              <option value="equipamento-lista.component.css" />
+              <option value="equipamento-lista.component.html" />
+              <option value="equipamento-lista.component.ts" />
+            </list>
+          </option>
+          <option name="sizeBytes" value="15739" />
+          <option name="summary" value="3 files, 15,4 KB, ~4.383 tokens" />
+          <option name="timestamp" value="1781446037775" />
+          <option name="tokens" value="4383" />
+        </ExportEntry>
+        <ExportEntry>
+          <option name="fileCount" value="3" />
+          <option name="filePaths">
+            <list>
+              <option value="ambulancia-lista.component.css" />
+              <option value="ambulancia-lista.component.html" />
+              <option value="ambulancia-lista.component.ts" />
+            </list>
+          </option>
+          <option name="sizeBytes" value="11337" />
+          <option name="summary" value="3 files, 11,1 KB, ~3.185 tokens" />
+          <option name="timestamp" value="1781445613576" />
+          <option name="tokens" value="3185" />
+        </ExportEntry>
+        <ExportEntry>
+          <option name="fileCount" value="3" />
+          <option name="filePaths">
+            <list>
+              <option value="equipamento-form.component.css" />
+              <option value="equipamento-form.component.html" />
+              <option value="equipamento-form.component.ts" />
+            </list>
+          </option>
+          <option name="sizeBytes" value="5967" />
+          <option name="summary" value="3 files, 5,8 KB, ~1.570 tokens" />
+          <option name="timestamp" value="1781445148299" />
+          <option name="tokens" value="1570" />
+        </ExportEntry>
+        <ExportEntry>
+          <option name="fileCount" value="3" />
+          <option name="filePaths">
+            <list>
+              <option value="equipamento-lista.component.css" />
+              <option value="equipamento-lista.component.html" />
+              <option value="equipamento-lista.component.ts" />
+            </list>
+          </option>
+          <option name="sizeBytes" value="14310" />
+          <option name="summary" value="3 files, 14,0 KB, ~3.918 tokens" />
+          <option name="timestamp" value="1781445140258" />
+          <option name="tokens" value="3918" />
+        </ExportEntry>
+        <ExportEntry>
+          <option name="fileCount" value="3" />
+          <option name="filePaths">
+            <list>
+              <option value="ambulancia-lista.component.css" />
+              <option value="ambulancia-lista.component.html" />
+              <option value="ambulancia-lista.component.ts" />
+            </list>
+          </option>
+          <option name="sizeBytes" value="10862" />
+          <option name="summary" value="3 files, 10,6 KB, ~3.077 tokens" />
+          <option name="timestamp" value="1781444953442" />
+          <option name="tokens" value="3077" />
+        </ExportEntry>
+        <ExportEntry>
+          <option name="fileCount" value="3" />
+          <option name="filePaths">
+            <list>
+              <option value="ambulancia-form.component.css" />
+              <option value="ambulancia-form.component.html" />
+              <option value="ambulancia-form.component.ts" />
+            </list>
+          </option>
+          <option name="sizeBytes" value="6628" />
+          <option name="summary" value="3 files, 6,5 KB, ~1.783 tokens" />
+          <option name="timestamp" value="1781444947807" />
+          <option name="tokens" value="1783" />
+        </ExportEntry>
+        <ExportEntry>
+          <option name="fileCount" value="3" />
+          <option name="filePaths">
+            <list>
               <option value="ambulancia-lista.component.css" />
               <option value="ambulancia-lista.component.html" />
               <option value="ambulancia-lista.component.ts" />

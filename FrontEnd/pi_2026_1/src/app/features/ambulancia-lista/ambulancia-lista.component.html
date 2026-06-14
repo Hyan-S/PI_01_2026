@@ -12,13 +12,31 @@
              styleClass="p-datatable-sm" [rowHover]="true">
 
       <ng-template pTemplate="caption">
-        <div class="flex align-items-center justify-content-start gap-5">
-          <span class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar..."/>
-          </span>
+        <div class="toolbar-container">
 
-          <p-button class="btn-nova-ambulancia" label="Nova Ambulância" icon="pi pi-plus" (onClick)="novaAmbulancia()"></p-button>
+          <div class="toolbar-right">
+            <span class="p-input-icon-left search-bar">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar..."/>
+            </span>
+          </div>
+          <div class="toolbar-center">
+            <p-select
+              [options]="opcoesStatus"
+              [(ngModel)]="statusSelecionado"
+              (onChange)="dt.filter($event.value, 'status', 'equals')"
+              placeholder="Filtrar por Status"
+              [showClear]="true"
+              [appendTo]="'body'"
+              styleClass="dropdown-filtro">
+            </p-select>
+          </div>
+
+
+          <div class="toolbar-left">
+            <p-button class="btn-nova-ambulancia" label="Nova Ambulância" icon="pi pi-plus" (onClick)="novaAmbulancia()"></p-button>
+          </div>
+
         </div>
       </ng-template>
 

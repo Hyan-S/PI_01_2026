@@ -14,8 +14,6 @@ import pi.Senai.Senai.entity.Usuario;
 import pi.Senai.Senai.repository.UsuarioRepository;
 import pi.Senai.Senai.service.TokenService;
 
-import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.util.Collections;
 
@@ -30,28 +28,34 @@ public class SecurityFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException{
-        String token=recuperarToken(request);
-        if (token != null){
-            String login =tokenService.validarToken(token);
-            if (!login.isEmpty()){
-                Usuario usuario= usuarioRepository.findByCpf(login).orElseGet(()->usuarioRepository.findByEmail(login).orElse(null));
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String token = recuperarToken(request);
+        if (token != null) {
+            String login = tokenService.validarToken(token);
+            if (login != null && !login.isEmpty()) {
+                Usuario usuario = usuarioRepository.findByCpf(login)
+                        .orElseGet(() -> usuarioRepository.findByEmail(login).orElse(null));
 
-                if (usuario != null && usuario.isAtivo()){
-                    SimpleGrantedAuthority authority=new SimpleGrantedAuthority("ROLE_"+usuario.getNivelAcesso().name());
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario,null, Collections.singleton(authority));
+                if (usuario != null && usuario.isAtivo()) {
+                    System.out.println("Usuário autenticado com sucesso: " + usuario.getEmail());
+                    SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + usuario.getNivelAcesso().name());
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null, Collections.singleton(authority));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
+                } else {
+                    System.out.println("Falha na autenticação: Usuário nulo ou inativo. CPF/Email: " + login);
                 }
+            } else {
+                System.out.println("Token inválido ou expirado.");
             }
         }
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 
-    private String recuperarToken(HttpServletRequest request){
-        String authHeader=request.getHeader("Authorization");
-        if (authHeader == null|| !authHeader.startsWith("Bearer ")){
+    private String recuperarToken(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return null;
         }
-        return authHeader.replace("Bearer ","");
+        return authHeader.replace("Bearer ", "");
     }
 }
