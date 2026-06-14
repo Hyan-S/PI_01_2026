@@ -1,11 +1,4 @@
-<p-dialog
-  [header]="titulo"
-  [visible]="visible"
-  (visibleChange)="fechar()"
-  [modal]="true"
-  [style]="{ width: '52rem' }"
-  [closable]="true"
->
+<p-dialog [header]="titulo" [visible]="visible" (visibleChange)="fechar()" [modal]="true" [style]="{ width: '52rem' }" [closable]="true">
   <form [formGroup]="formEquipe" class="form-equipe">
     <div class="linha-dupla">
       <div class="campo">
@@ -19,68 +12,56 @@
     </div>
 
     <div class="campo">
-      <label for="ambulanciaId">Ambulância</label>
-      <p-select
-        id="ambulanciaId"
-        formControlName="ambulanciaId"
-        [options]="ambulancias"
-        optionLabel="placa"
-        optionValue="id"
-        placeholder="Selecione uma ambulância (opcional)"
-        [showClear]="true"
-        [appendTo]="'body'"
-      ></p-select>
+      <label for="ambulanciaId">Ambulância (Opcional)</label>
+      <p-select id="ambulanciaId" formControlName="ambulanciaId" [options]="ambulancias" optionLabel="placa" optionValue="id" placeholder="Selecione uma ambulância disponível" [showClear]="true" [appendTo]="'body'"></p-select>
     </div>
   </form>
 
   <p-divider *ngIf="equipeId"></p-divider>
 
   <div class="secao-membros" *ngIf="equipeId">
-    <div class="membros-header">
-      <span class="membros-titulo">Membros da Equipe</span>
-      <p-button
-        label="Adicionar Membro"
-        icon="pi pi-plus"
-        size="small"
-        [text]="true"
-        (click)="adicionandoMembro = true"
-        *ngIf="!adicionandoMembro"
-      ></p-button>
+    <div class="membros-header flex justify-content-between align-items-center mb-3">
+      <span class="membros-titulo font-bold text-lg">Membros da Equipe</span>
+      <p-button label="Vincular Profissional" icon="pi pi-user-plus" size="small" [text]="true" (click)="abrirPainelAdicionarMembro()" *ngIf="!adicionandoMembro"></p-button>
     </div>
 
-    <div class="form-membro" *ngIf="adicionandoMembro">
-      <form [formGroup]="formMembro" class="linha-tripla">
-        <div class="campo">
-          <label>Função *</label>
-          <input pInputText formControlName="funcao" placeholder="Ex: Paramédico" />
+    <div class="form-membro surface-100 p-3 border-round mb-4" *ngIf="adicionandoMembro">
+      <form [formGroup]="formMembro" class="flex flex-column gap-3">
+        
+        <div class="linha-dupla flex gap-3">
+          <div class="campo flex-1">
+            <label class="block mb-2">1. Selecione o Cargo *</label>
+            <p-select formControlName="cargo" [options]="cargos" optionLabel="label" optionValue="value" placeholder="Qual a função?" [appendTo]="'body'" styleClass="w-full"></p-select>
+          </div>
+          
+          <div class="campo flex-1">
+            <label class="block mb-2">2. Selecione o Profissional *</label>
+            <p-select formControlName="funcionarioId" [options]="funcionariosFiltrados" optionLabel="descricao" optionValue="id" placeholder="Escolha um profissional livre" [appendTo]="'body'" [showClear]="true" styleClass="w-full"></p-select>
+            <small *ngIf="formMembro.get('cargo')?.value && funcionariosFiltrados.length === 0" class="p-error block mt-1">Nenhum profissional livre para este cargo.</small>
+          </div>
         </div>
-        <div class="campo">
-          <label>Descrição</label>
-          <input pInputText formControlName="descricao" placeholder="Ex: Socorrista líder" />
-        </div>
-        <div class="campo-numero">
-          <label>Nº</label>
-          <p-inputnumber formControlName="numeroFuncao" [min]="0" [max]="99"></p-inputnumber>
-        </div>
+
       </form>
-      <div class="membro-acoes">
+      <div class="membro-acoes flex justify-content-end gap-2 mt-3">
         <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="secondary" size="small" (click)="adicionandoMembro = false"></p-button>
-        <p-button label="Confirmar" icon="pi pi-check" size="small" [disabled]="formMembro.invalid" (click)="adicionarMembro()"></p-button>
+        <p-button label="Vincular à Equipe" icon="pi pi-check" size="small" [disabled]="formMembro.invalid" (click)="adicionarMembro()"></p-button>
       </div>
     </div>
 
-    <div class="lista-membros">
-      <div class="membro-item" *ngFor="let m of funcionarios">
-        <span class="membro-funcao">{{ m.funcao }}</span>
-        <span class="membro-descricao">{{ m.descricao }}</span>
-        <p-button icon="pi pi-trash" [text]="true" severity="danger" size="small" (click)="removerMembro(m)"></p-button>
+    <div class="lista-membros flex flex-column gap-2">
+      <div class="membro-item flex justify-content-between align-items-center border-1 surface-border p-2 border-round" *ngFor="let m of funcionariosDaEquipe">
+        <div>
+          <span class="membro-funcao font-bold text-primary mr-2">{{ m.funcao }}</span>
+          <span class="membro-descricao">{{ m.descricao }}</span>
+        </div>
+        <p-button icon="pi pi-user-minus" pTooltip="Desvincular profissional" [text]="true" severity="danger" size="small" (click)="removerMembro(m)"></p-button>
       </div>
-      <span class="sem-membros" *ngIf="funcionarios.length === 0">Nenhum membro cadastrado.</span>
+      <span class="sem-membros text-500" *ngIf="funcionariosDaEquipe.length === 0">Nenhum membro vinculado à equipe ainda.</span>
     </div>
   </div>
 
   <ng-template pTemplate="footer">
     <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="secondary" (click)="fechar()"></p-button>
-    <p-button label="Salvar" icon="pi pi-check" (click)="salvar()" [disabled]="formEquipe.invalid"></p-button>
+    <p-button label="Salvar Equipe" icon="pi pi-save" (click)="salvar()" [disabled]="formEquipe.invalid"></p-button>
   </ng-template>
 </p-dialog>
