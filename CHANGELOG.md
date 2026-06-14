@@ -2,9 +2,9 @@
 
 ## BL0: Criação do Repositório
 Esta baseline representa o estado inicial do projeto, onde a estrutura básica foi criada.
-* **Data:**  10/02/2026
-* **Commit de Referência:** 69e78c6
-* **Descrição:** Repositório inicializado vazio / Criação da estrutura básica de pastas do Backend e Frontend.
+* **Data:** 02/06/2026
+* **Commit de Referência:**: 69e78c6
+* **Descrição:** Implementação de Scaffolding
 
 ---
 
