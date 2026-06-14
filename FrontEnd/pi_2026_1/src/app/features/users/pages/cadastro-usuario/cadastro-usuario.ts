@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router'; // 💡 ActivatedRoute adicionado
+import { ActivatedRoute, Router } from '@angular/router'; 
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
@@ -8,8 +8,11 @@ import { PasswordModule } from 'primeng/password';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
-import { UsuarioService } from '../../../../core/services/usuario.service';
 import { Toast } from 'primeng/toast';
+
+import { UsuarioService } from '../../../../core/services/usuario.service';
+import { FuncionarioService } from '../../../../core/services/funcionario.service';
+import { Funcionario } from '../../../../core/models/funcionario.model';
 
 @Component({
   selector: 'app-cadastro-usuario',
@@ -24,12 +27,10 @@ import { Toast } from 'primeng/toast';
 export class CadastroUsuarioComponent implements OnInit {
   formUsuario!: FormGroup;
   
-  // 💡 Controle de Estado da Tela
   isEdicao: boolean = false;
   usuarioId: string | null = null;
   tituloPagina: string = 'Cadastro de Novo Usuário';
 
-  // 💡 Dicionário Sincronizado com o Back-end
   niveisAcesso = [
     { label: 'Administrador', value: 'ADMIN' },
     { label: 'Operador', value: 'OPERADOR' },
@@ -37,20 +38,36 @@ export class CadastroUsuarioComponent implements OnInit {
     { label: 'Motorista', value: 'MOTORISTA' },
     { label: 'Médico', value: 'MEDICO' },
     { label: 'Enfermeiro', value: 'ENFERMEIRO' },
-    { label: 'Solicitante', value: 'SOLICITANTE' }
   ];
+
+  todosFuncionarios: Funcionario[] = [];
+  funcionariosFiltrados: Funcionario[] = [];
 
   constructor(
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
+    private funcionarioService: FuncionarioService,
     private router: Router,
-    private route: ActivatedRoute, // Para ler a URL
+    private route: ActivatedRoute, 
     private messageService: MessageService
   ) {}
 
   ngOnInit() {
+    this.carregarFuncionarios();
     this.iniciarFormulario();
     this.verificarModoEdicao();
+  }
+
+  carregarFuncionarios() {
+    this.funcionarioService.listarTodos().subscribe({
+      next: (dados) => {
+        this.todosFuncionarios = dados;
+        this.funcionariosFiltrados = dados;
+      },
+      error: () => {
+        this.messageService.add({ severity: 'warn', summary: 'Aviso', detail: 'Falha ao carregar a lista de funcionários.' });
+      }
+    });
   }
 
   iniciarFormulario() {
@@ -59,9 +76,33 @@ export class CadastroUsuarioComponent implements OnInit {
       cpf: ['', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)]],
       email: ['', Validators.email],
       nivelAcesso: ['', Validators.required],
+      funcionarioId: [null],    
       senha: ['', [Validators.required, Validators.minLength(6)]],
       confirmarSenha: ['', Validators.required]
     }, { validators: this.senhasIguaisValidator });
+
+    this.formUsuario.get('nivelAcesso')?.valueChanges.subscribe(nivelSelecionado => {
+      this.filtrarFuncionariosPorNivel(nivelSelecionado);
+    });
+  }
+
+  filtrarFuncionariosPorNivel(nivel: string | null) {
+    if (!nivel) {
+      this.funcionariosFiltrados = this.todosFuncionarios;
+      return;
+    }
+
+    this.funcionariosFiltrados = this.todosFuncionarios.filter(f => 
+      f.funcao.toUpperCase() === nivel.toUpperCase()
+    );
+
+    const funcionarioIdControl = this.formUsuario.get('funcionarioId');
+    if (funcionarioIdControl?.value) {
+      const funcionarioAindaValido = this.funcionariosFiltrados.find(f => f.id === funcionarioIdControl.value);
+      if (!funcionarioAindaValido) {
+        funcionarioIdControl.setValue(null);
+      }
+    }
   }
 
   verificarModoEdicao() {
@@ -70,8 +111,6 @@ export class CadastroUsuarioComponent implements OnInit {
     if (this.usuarioId) {
       this.isEdicao = true;
       this.tituloPagina = 'Editar Usuário';
-      
-      // 💡 Se é edição, a senha passa a ser opcional
       this.removerObrigatoriedadeSenha();
       this.carregarDadosUsuario(this.usuarioId);
     }
@@ -79,7 +118,7 @@ export class CadastroUsuarioComponent implements OnInit {
 
   removerObrigatoriedadeSenha() {
     this.formUsuario.get('senha')?.clearValidators();
-    this.formUsuario.get('senha')?.setValidators([Validators.minLength(6)]); // Se digitar, tem que ter no mínimo 6. Mas não é required.
+    this.formUsuario.get('senha')?.setValidators([Validators.minLength(6)]); 
     this.formUsuario.get('senha')?.updateValueAndValidity();
 
     this.formUsuario.get('confirmarSenha')?.clearValidators();
@@ -89,15 +128,17 @@ export class CadastroUsuarioComponent implements OnInit {
   carregarDadosUsuario(id: string) {
     this.usuarioService.buscarPorId(id).subscribe({
       next: (usuario) => {
-        // 💡 Preenche o formulário com os dados vindos do banco
         this.formUsuario.patchValue({
           nome: usuario.nome,
           cpf: usuario.cpf,
           email: usuario.email,
-          nivelAcesso: usuario.nivelAcesso
+          nivelAcesso: usuario.nivelAcesso,
+          funcionarioId: usuario.funcionarioId 
         });
+
+        this.filtrarFuncionariosPorNivel(usuario.nivelAcesso);
       },
-      error: (err) => {
+      error: () => {
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Não foi possível carregar os dados do usuário.' });
         this.voltar();
       }
@@ -108,9 +149,7 @@ export class CadastroUsuarioComponent implements OnInit {
     const senha = control.get('senha')?.value;
     const confirmarSenha = control.get('confirmarSenha')?.value;
     
-    // Se a senha estiver vazia (em modo de edição), passa direto
     if (!senha && !confirmarSenha) return null;
-    
     return senha === confirmarSenha ? null : { senhasDiferentes: true };
   }
 
@@ -122,12 +161,11 @@ export class CadastroUsuarioComponent implements OnInit {
 
     const { confirmarSenha, ...dadosRequisicao } = this.formUsuario.value;
 
-    // 💡 Bifurcação Arquitetural: POST ou PUT?
     if (this.isEdicao && this.usuarioId) {
       this.usuarioService.editar(this.usuarioId, dadosRequisicao).subscribe({
         next: () => {
           this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Usuário atualizado com sucesso!' });
-          setTimeout(() => this.voltar(), 1500); // Dá tempo do usuário ler o Toast antes de redirecionar
+          setTimeout(() => this.voltar(), 1500); 
         },
         error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Erro', detail: err.error?.message || 'Falha ao atualizar usuário.' });
@@ -147,7 +185,6 @@ export class CadastroUsuarioComponent implements OnInit {
   }
 
   voltar() {
-    // 💡 Redireciona para a lista de usuários ao invés do dashboard genérico
     this.router.navigate(['/usuarios']);
   }
 }
