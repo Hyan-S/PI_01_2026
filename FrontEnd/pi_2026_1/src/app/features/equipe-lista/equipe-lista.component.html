@@ -1,8 +1,9 @@
 <p-toast></p-toast>
 <div class="lista-container">
-  <div class="header-actions">
+  
+  <div class="page-header">
     <h2>Lista de Equipes</h2>
-    <p-button label="Nova Equipe" icon="pi pi-plus" (onClick)="novaEquipe()" />
+    <p>Controle de cadastro e vinculação de equipes no sistema</p>
   </div>
 
   <p-confirmDialog></p-confirmDialog>
@@ -17,16 +18,27 @@
     [rowHover]="true"
   >
     <ng-template pTemplate="caption">
-      <div class="flex justify-content-end">
-        <span class="p-input-icon-left">
+      <div class="table-header-toolbar">
+        
+        <span class="p-input-icon-left search-container">
           <i class="pi pi-search"></i>
           <input
             pInputText
             type="text"
             (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-            placeholder="Buscar..."
+            placeholder="Pesquisar por nome..."
           />
         </span>
+
+        <div class="toolbar-actions">
+          <p-button 
+            label="Nova Equipe" 
+            icon="pi pi-plus" 
+            styleClass="btn-cadastrar" 
+            (onClick)="novaEquipe()">
+          </p-button>
+        </div>
+        
       </div>
     </ng-template>
 

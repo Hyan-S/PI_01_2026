@@ -1,6 +1,89 @@
+/* =======================================================
+   ESTRUTURA PRINCIPAL
+   ======================================================= */
+.lista-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =======================================================
+   CABEÇALHO DA PÁGINA (TÍTULO EXTERNO)
+   ======================================================= */
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.page-header h2 {
+  font-size: 1.8rem;
+  color: #1e293b; /* Azul escuro corporativo */
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.page-header p {
+  margin: 0;
+  color: #64748b; /* Cinza chumbo */
+  font-size: 1rem;
+}
+
+/* =======================================================
+   CARD DA TABELA (BOX BRANCO COM SOMBRA)
+   ======================================================= */
+:host ::ng-deep .p-datatable {
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden; /* Garante que as bordas da tabela não vazem o card */
+}
+
+/* =======================================================
+   TOOLBAR INTERNA (PESQUISA E BOTÃO)
+   ======================================================= */
+:host ::ng-deep .p-datatable .p-datatable-caption {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1.25rem 1.5rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.table-header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 .p-input-icon-left {
   position: relative;
   display: inline-block;
+  width: 100%;
+  max-width: 350px;
+}
+
+.p-input-icon-left input {
+  width: 100%;
+  padding-left: 2.5rem !important;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
 }
 
 .p-input-icon-left i {
@@ -8,19 +91,33 @@
   top: 50%;
   transform: translateY(-50%);
   left: 0.75rem;
-  color: #64748b;
+  color: #94a3b8;
   z-index: 1;
 }
 
-.p-input-icon-left input {
-  padding-left: 2.5rem !important;
+/* 💡 BOTÃO VERDE IDÊNTICO À IMAGEM */
+:host ::ng-deep .btn-cadastrar {
+  background-color: #10b981 !important; /* Emerald 500 */
+  border: 1px solid #10b981 !important;
+  border-radius: 6px;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  transition: background-color 0.2s;
 }
 
+:host ::ng-deep .btn-cadastrar:hover {
+  background-color: #059669 !important; /* Emerald 600 */
+  border-color: #059669 !important;
+}
+
+/* =======================================================
+   MODAL DE DETALHES E Z-INDEX
+   ======================================================= */
 .detalhes-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
 }
 
 .detalhe-item {
@@ -28,14 +125,24 @@
   justify-content: flex-start;
   align-items: center;
   border-bottom: 1px solid #f1f5f9;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.75rem;
 }
 
 .detalhe-item strong {
-  width: 120px;
+  width: 130px;
   color: #475569;
+  font-weight: 600;
 }
 
 .detalhe-item span {
-  color: #1e293b;
+  color: #0f172a;
+  font-weight: 500;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+  overflow: visible !important;
+}
+
+:host ::ng-deep .p-select-overlay {
+  z-index: 9999 !important;
 }

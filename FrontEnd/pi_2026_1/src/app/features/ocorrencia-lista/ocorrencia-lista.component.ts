@@ -16,6 +16,8 @@ import { OcorrenciaService } from '../../core/services/ocorrencia.service';
 import { AmbulanciaService } from '../../core/services/ambulancia.service';
 import { EquipeService } from '../../core/services/equipe.service';
 import { OcorrenciaFormComponent } from '../ocorrencia-form/ocorrencia-form.component';
+import { DividerModule } from 'primeng/divider';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-ocorrencia-lista',
@@ -30,6 +32,7 @@ import { OcorrenciaFormComponent } from '../ocorrencia-form/ocorrencia-form.comp
     DialogModule,
     ToastModule,
     SelectModule,
+    DividerModule,
     OcorrenciaFormComponent,
   ],
   providers: [ConfirmationService],
@@ -38,6 +41,10 @@ import { OcorrenciaFormComponent } from '../ocorrencia-form/ocorrencia-form.comp
 })
 export class OcorrenciaListaComponent implements OnInit {
   ocorrencias: Ocorrencia[] = [];
+
+  isOperacional: boolean = false;
+  ocorrenciaAtivaMotorista: Ocorrencia | null = null;
+  usuarioLogadoId: string | null = null;
 
   exibirDialog: boolean = false;
   ocorrenciaParaEditar: Ocorrencia | null = null;
@@ -58,14 +65,50 @@ export class OcorrenciaListaComponent implements OnInit {
     private ocorrenciaService: OcorrenciaService,
     private ambulanciaService: AmbulanciaService,
     private equipeService: EquipeService,
+    private authService: AuthService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
   ) {}
 
-  ngOnInit(): void {
-    this.carregarOcorrencias();
-    this.carregarAmbulanciasFiltros();
-    this.carregarEquipes();
+ngOnInit(): void {
+    const usuarioInfo = this.authService.getUsuarioSessao();
+    this.usuarioLogadoId = usuarioInfo?.id || null;
+    const nivel = usuarioInfo?.nivelAcesso;
+
+    this.isOperacional = nivel === 'MOTORISTA' || nivel === 'MEDICO' || nivel === 'ENFERMEIRO';
+
+    if (this.isOperacional) {
+      this.carregarOcorrenciaMotorista();
+    } else {
+      this.carregarOcorrencias();
+      this.carregarAmbulanciasFiltros();
+      this.carregarEquipes();
+    }
+  }
+
+  carregarOcorrenciaMotorista() {
+    if (!this.usuarioLogadoId) return;
+
+    this.ocorrenciaService.buscarPorMotorista(this.usuarioLogadoId).subscribe({
+      next: (dados) => {
+        this.ocorrenciaAtivaMotorista = dados.length > 0 ? dados[0] : null;
+      },
+      error: () => this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao buscar sua viagem.' })
+    });
+  }
+
+  atualizarStatusOcorrencia(novoStatus: string) {
+    if (!this.ocorrenciaAtivaMotorista?.id) return;
+
+    this.ocorrenciaService.atualizarStatus(this.ocorrenciaAtivaMotorista.id, novoStatus).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Atualizado', detail: 'Status da viagem atualizado.' });
+        this.carregarOcorrenciaMotorista(); // Recarrega para ver se a viagem sumiu (ENCERRADA)
+      },
+      error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: err.error?.message || 'Falha ao atualizar status.' });
+      }
+    });
   }
 
   carregarOcorrencias() {
@@ -91,9 +134,12 @@ export class OcorrenciaListaComponent implements OnInit {
   carregarEquipes() {
     this.equipeService.listar().subscribe({
       next: (lista) => {
-        this.equipes = lista;
-        this.equipesFiltradas = [...lista];
+        this.equipes = lista.filter((e) => !e.ambulancia || e.ambulancia?.status === 'DISPONIVEL');
+        this.equipesFiltradas = [...this.equipes];
       },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao carregar equipes elegíveis.' });
+      }
     });
   }
 

@@ -45,4 +45,9 @@ public class FuncionarioController {
     public ResponseEntity<List<Funcionario>> buscarPorFuncao(@PathVariable String funcao) {
         return ResponseEntity.ok(_funcionarioService.buscarPorFuncao(funcao));
     }
+
+    @GetMapping("/equipe/{equipeId}")
+    public ResponseEntity<List<Funcionario>> buscarPorEquipe(@PathVariable UUID equipeId) {
+        return ResponseEntity.ok(_funcionarioService.buscarPorEquipe(equipeId));
+    }
 }

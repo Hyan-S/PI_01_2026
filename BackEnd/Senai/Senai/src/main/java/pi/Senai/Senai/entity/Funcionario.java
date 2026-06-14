@@ -2,6 +2,8 @@ package pi.Senai.Senai.entity;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -33,7 +35,8 @@ public class Funcionario {
     @Column
     private int NumeroFuncao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "equipe_id")
     private Equipe equipe;
 
