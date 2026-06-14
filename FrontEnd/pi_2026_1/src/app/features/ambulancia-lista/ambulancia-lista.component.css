@@ -1,3 +1,5 @@
+/* filename: ambulancia-lista.component.css */
+
 .lista-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -16,7 +18,7 @@
 
 .card-tabela {
   background-color: var(--bg-card, #ffffff);
-  border-radius: var(--radius-lg, 8px);
+  border-radius: var(--radius-default);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 1.5rem;
   border: 1px solid var(--border-light, #e2e8f0);
@@ -35,25 +37,51 @@
   background-color: #f8fafc !important;
 }
 
+/* =========================================================
+   ONDE MUDOU: CLASSES DA TOOLBAR (ESQUERDA, MEIO E DIREITA)
+   ========================================================= */
 .toolbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   gap: 1rem;
   padding-bottom: 0.5rem;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Garante que não quebre em telas muito pequenas */
 }
 
+/* Divide o espaço igualmente em 3 e alinha seu conteúdo */
 .toolbar-left {
+  display: flex;
+  justify-content: flex-start;
   flex: 1;
-  min-width: 250px;
-  max-width: 400px;
+  min-width: 200px;
+}
+
+.toolbar-center {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  min-width: 200px;
+}
+
+.toolbar-right {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Controle de largura para não ficarem gigantes e nem espremidos */
+.dropdown-filtro {
+  width: 100%;
+  max-width: 260px;
 }
 
 .search-bar {
   position: relative;
-  display: block;
   width: 100%;
+  max-width: 260px;
 }
 
 .search-bar i {
@@ -70,17 +98,9 @@
   padding-left: 2.5rem !important;
 }
 
-.toolbar-right {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.dropdown-filtro {
-  min-width: 220px;
-}
-
+/* =========================================================
+   RESTANTE DO CSS INTACTO
+   ========================================================= */
 .p-tag {
   padding: 0.35rem 0.75rem;
   border-radius: 6px;

@@ -36,7 +36,7 @@ import { SelectModule } from 'primeng/select';
 export class AmbulanciaListaComponent implements OnInit {
   ambulancias: Ambulancia[] = [];
   termoBusca: string = '';
-
+  statusSelecionado: string | null = null;
   exibirDialogDetalhes: boolean = false;
   ambulanciaDetalhe: Ambulancia | null = null;
   opcoesStatus = [
@@ -44,7 +44,7 @@ export class AmbulanciaListaComponent implements OnInit {
     { label: 'Disponível', value: 'DISPONIVEL' },
     { label: 'A Caminho', value: 'A_CAMINHO' },
     { label: 'Em Atendimento', value: 'EM_ATENDIMENTO' },
-    { label: 'Em Manutenção', value: 'EM_MANUTENCAO' }
+    { label: 'Em Manutenção', value: 'EM_MANUTENCAO' },
   ];
   constructor(
     private ambulanciaService: AmbulanciaService,
@@ -61,7 +61,6 @@ export class AmbulanciaListaComponent implements OnInit {
     this.ambulanciaService.listar().subscribe({
       next: (dados) => {
         this.ambulancias = dados.filter((amb) => amb.ativo === true);
-
       },
       error: () => {
         this.messageService.add({

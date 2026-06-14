@@ -21,13 +21,21 @@ import { EquipamentoFormComponent } from '../equipamento-form/equipamento-form.c
   selector: 'app-equipamento-lista',
   standalone: true,
   imports: [
-    CommonModule, TableModule, ButtonModule, InputTextModule, FormsModule,
-    ConfirmDialogModule, DialogModule, ToastModule, EquipamentoFormComponent,
-    TooltipModule, SelectModule
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    InputTextModule,
+    FormsModule,
+    ConfirmDialogModule,
+    DialogModule,
+    ToastModule,
+    EquipamentoFormComponent,
+    TooltipModule,
+    SelectModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './equipamento-lista.component.html',
-  styleUrl: './equipamento-lista.component.css' // Use o mesmo da lista de ambulâncias
+  styleUrl: './equipamento-lista.component.css', // Use o mesmo da lista de ambulâncias
 })
 export class EquipamentoListaComponent implements OnInit {
   equipamentos: Equipamento[] = [];
@@ -50,7 +58,7 @@ export class EquipamentoListaComponent implements OnInit {
     private equipamentoService: EquipamentoService,
     private ambulanciaService: AmbulanciaService, // Injetado para popular o p-select
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {}
 
   ngOnInit(): void {
@@ -60,14 +68,14 @@ export class EquipamentoListaComponent implements OnInit {
 
   carregarEquipamentos() {
     this.equipamentoService.listar().subscribe({
-      next: (dados) => this.equipamentos = dados.filter(e => e.ativo !== false),
-      error: () => this.mostrarErro('Falha ao carregar estoque.')
+      next: (dados) => (this.equipamentos = dados.filter((e) => e.ativo !== false)),
+      error: () => this.mostrarErro('Falha ao carregar estoque.'),
     });
   }
 
   carregarAmbulancias() {
     this.ambulanciaService.listar().subscribe({
-      next: (dados) => this.ambulancias = dados.filter(a => a.ativo === true)
+      next: (dados) => (this.ambulancias = dados.filter((a) => a.ativo === true)),
     });
   }
 
@@ -96,21 +104,31 @@ export class EquipamentoListaComponent implements OnInit {
     this.exibirDialogMovimentacao = true;
   }
 
-  confirmarMovimentacao() {
-    if (!this.equipamentoMovimentacao || !this.equipamentoMovimentacao.id || !this.movimentacaoQuantidade) return;
+  confirmarMovimentacao(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
+
+    if (
+      !this.equipamentoMovimentacao ||
+      !this.equipamentoMovimentacao.id ||
+      !this.movimentacaoQuantidade
+    )
+      return;
 
     if (this.tipoMovimentacao === 'ADICIONAR') {
-      this.equipamentoService.colocarQuantidade(this.equipamentoMovimentacao.id, this.movimentacaoQuantidade).subscribe({
-        next: () => this.finalizarMovimentacao('Estoque atualizado!'),
-        error: () => this.mostrarErro('Falha ao adicionar quantidade.')
-      });
-    }
-    else if (this.tipoMovimentacao === 'RETIRAR') {
+      this.equipamentoService
+        .colocarQuantidade(this.equipamentoMovimentacao.id, this.movimentacaoQuantidade)
+        .subscribe({
+          next: () => this.finalizarMovimentacao('Estoque atualizado!'),
+          error: () => this.mostrarErro('Falha ao adicionar quantidade.'),
+        });
+    } else if (this.tipoMovimentacao === 'RETIRAR') {
       if (!this.movimentacaoAmbulanciaId) return;
 
       const dto: RetiradaEstoqueDTO = {
         quantidade: this.movimentacaoQuantidade,
-        idAmbulancia: this.movimentacaoAmbulanciaId
+        idAmbulancia: this.movimentacaoAmbulanciaId,
       };
 
       this.equipamentoService.retirarQuantidade(this.equipamentoMovimentacao.id, dto).subscribe({
@@ -118,7 +136,7 @@ export class EquipamentoListaComponent implements OnInit {
         error: (err) => {
           const msg = err.error?.message || 'Falha ao retirar. Verifique o saldo em estoque.';
           this.mostrarErro(msg);
-        }
+        },
       });
     }
   }
@@ -141,13 +159,17 @@ export class EquipamentoListaComponent implements OnInit {
         if (equipamento.id) {
           this.equipamentoService.excluir(equipamento.id).subscribe({
             next: () => {
-              this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Item excluído.' });
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Sucesso',
+                detail: 'Item excluído.',
+              });
               this.carregarEquipamentos();
             },
-            error: () => this.mostrarErro('Não foi possível excluir.')
+            error: () => this.mostrarErro('Não foi possível excluir.'),
           });
         }
-      }
+      },
     });
   }
 

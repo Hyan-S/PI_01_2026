@@ -11,27 +11,19 @@
              styleClass="p-datatable-sm p-datatable-striped" [rowHover]="true">
 
       <ng-template pTemplate="caption">
-        <!-- Adicionei style="width: 100%" para forçar o container a ocupar toda a largura -->
         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-
           <div class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar pelo nome..."/>
           </div>
-
           <p-button label="Novo Equipamento" icon="pi pi-plus" (onClick)="novoEquipamento()"></p-button>
-
         </div>
       </ng-template>
 
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="nome">Nome
-            <p-sortIcon field="nome"></p-sortIcon>
-          </th>
-          <th pSortableColumn="quantidade">Estoque
-            <p-sortIcon field="quantidade"></p-sortIcon>
-          </th>
+          <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon></th>
+          <th pSortableColumn="quantidade">Estoque <p-sortIcon field="quantidade"></p-sortIcon></th>
           <th>Unidade</th>
           <th class="text-center">Ações</th>
         </tr>
@@ -50,10 +42,8 @@
             <div class="flex justify-content-center gap-2">
               <p-button icon="pi pi-plus" styleClass="p-button-rounded p-button-success p-button-text"
                         pTooltip="Adicionar Estoque" (onClick)="abrirMovimentacao(eqp, 'ADICIONAR')"></p-button>
-
               <p-button icon="pi pi-minus" styleClass="p-button-rounded p-button-warning p-button-text"
                         pTooltip="Enviar para Ambulância" (onClick)="abrirMovimentacao(eqp, 'RETIRAR')"></p-button>
-
               <p-button icon="pi pi-history" styleClass="p-button-rounded p-button-info p-button-text"
                         pTooltip="Ver Histórico" (onClick)="verDetalhes(eqp)"></p-button>
               <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-secondary p-button-text"
@@ -65,7 +55,9 @@
         </tr>
       </ng-template>
     </p-table>
-  </div> </div>
+  </div>
+</div>
+
 <app-equipamento-form
   [visible]="exibirDialogForm"
   (visibleChange)="exibirDialogForm = $event"
@@ -84,42 +76,54 @@
 
     <div class="mt-4">
       <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">Histórico de Movimentações</h3>
-      <pre
-        style="background: #f8fafc; padding: 1rem; border-radius: 8px; font-family: monospace; white-space: pre-wrap;">{{ equipamentoDetalhe.historico || 'Nenhuma movimentação registrada.' }}</pre>
+      <pre style="background: #f8fafc; padding: 1rem; border-radius: 8px; font-family: monospace; white-space: pre-wrap;">{{ equipamentoDetalhe.historico || 'Nenhuma movimentação registrada.' }}</pre>
     </div>
   </div>
 </p-dialog>
 
 <p-dialog [header]="tipoMovimentacao === 'ADICIONAR' ? 'Adicionar ao Estoque' : 'Transferir para Ambulância'"
-          [(visible)]="exibirDialogMovimentacao" [modal]="true" [style]="{ width: '30vw' }">
-  <div class="form-ambulancia" *ngIf="equipamentoMovimentacao">
-    <p>Operação no item: <strong>{{ equipamentoMovimentacao.nome }}</strong></p>
+          [(visible)]="exibirDialogMovimentacao" [modal]="true" [style]="{ width: '400px' }">
 
-    <div class="campo">
-      <label>Quantidade *</label>
-      <input type="number" pInputText [(ngModel)]="movimentacaoQuantidade" placeholder="Digite a quantidade" min="1"/>
+  <div class="form-movimentacao" *ngIf="equipamentoMovimentacao">
+
+    <div class="info-item-movimentacao">
+      <div class="info-texto">
+        <p class="nome-item">{{ equipamentoMovimentacao.nome }}</p>
+        <span class="estoque-badge">Em estoque: {{ equipamentoMovimentacao.quantidade }} {{ equipamentoMovimentacao.unidadeMedida | lowercase }}</span>
+      </div>
     </div>
 
-    <div class="campo" *ngIf="tipoMovimentacao === 'RETIRAR'">
+    <div class="campo-movimentacao mt-3">
+      <label>Quantidade a {{ tipoMovimentacao === 'ADICIONAR' ? 'adicionar' : 'retirar' }} *</label>
+      <input type="number" pInputText [(ngModel)]="movimentacaoQuantidade" placeholder="Digite a quantidade" min="1"
+             [max]="tipoMovimentacao === 'RETIRAR' ? equipamentoMovimentacao.quantidade : null"/>
+    </div>
+
+    <div class="campo-movimentacao mt-3" *ngIf="tipoMovimentacao === 'RETIRAR'">
       <label>Destino (Ambulância) *</label>
       <p-select
         [options]="ambulancias"
         [(ngModel)]="movimentacaoAmbulanciaId"
         optionLabel="descricao"
         optionValue="id"
-        placeholder="Selecione a Ambulância"
-        [appendTo]="'body'">
+        placeholder="Selecione a Ambulância..."
+        styleClass="w-full"
+        appendTo="body"
+        scrollHeight="200px">
         <ng-template let-amb pTemplate="item">
-          {{ amb.descricao }} - Placa: {{ amb.placa }}
+          <div class="flex flex-column gap-1">
+            <span class="font-bold">{{ amb.descricao }}</span>
+            <small style="color: #64748b;">Placa: {{ amb.placa }}</small>
+          </div>
         </ng-template>
       </p-select>
     </div>
   </div>
 
   <ng-template pTemplate="footer">
-    <p-button label="Cancelar" icon="pi pi-times" [text]="true" severity="secondary"
+    <p-button type="button" label="Cancelar" icon="pi pi-times" [text]="true" severity="secondary"
               (click)="exibirDialogMovimentacao = false"></p-button>
-    <p-button label="Confirmar" icon="pi pi-check" (click)="confirmarMovimentacao()"
+    <p-button type="button" label="Confirmar" icon="pi pi-check" (click)="confirmarMovimentacao($event)"
               [disabled]="!movimentacaoQuantidade || (tipoMovimentacao === 'RETIRAR' && !movimentacaoAmbulanciaId)"></p-button>
   </ng-template>
 </p-dialog>
