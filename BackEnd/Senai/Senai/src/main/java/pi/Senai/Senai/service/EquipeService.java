@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import pi.Senai.Senai.entity.Ambulancia;
 import pi.Senai.Senai.entity.Equipe;
+import pi.Senai.Senai.repository.AmbulanciaRepository;
 import pi.Senai.Senai.repository.EquipeRepository;
 
 @Service
@@ -16,6 +18,9 @@ public class EquipeService {
 
     @Autowired
     private EquipeRepository equipeRepository;
+
+    @Autowired
+    private AmbulanciaRepository ambulanciaRepository;
 
     public Equipe salvar(Equipe equipe) {
 
@@ -31,13 +36,30 @@ public class EquipeService {
         if (!identificador.matches("^[A-Z]{2}-\\d{3}$")) 
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de identificador inválido! Use o padrão LL-NNN (Exemplo: AB-123)."); 
     
+        // BLINDAGEM
+        vincularAmbulanciaReal(equipe);
+
         return equipeRepository.save(equipe);
     }
 
     public Equipe atualizar(Equipe equipe) {
         if (!equipeRepository.existsById(equipe.getId()))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Equipe não encontrada");
+        
+        vincularAmbulanciaReal(equipe);
+        
         return equipeRepository.save(equipe);
+    }
+
+    private void vincularAmbulanciaReal(Equipe equipe) {
+        if (equipe.getAmbulancia() != null && equipe.getAmbulancia().getId() != null) {
+            Ambulancia ambReal = ambulanciaRepository.findById(equipe.getAmbulancia().getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ambulância referenciada não existe."));
+            
+            equipe.setAmbulancia(ambReal);
+        } else {
+            equipe.setAmbulancia(null); 
+        }
     }
 
     public void excluir(UUID id) {
@@ -59,5 +81,4 @@ public class EquipeService {
         return equipeRepository.findByIdentificador(identificador)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Equipe não encontrada com o identificador: " + identificador));
     }
-    
 }

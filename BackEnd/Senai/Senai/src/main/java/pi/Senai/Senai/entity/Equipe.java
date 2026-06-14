@@ -2,6 +2,8 @@ package pi.Senai.Senai.entity;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,8 +25,9 @@ public class Equipe{
     @Column
     private String identificador;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ambulancia_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Ambulancia ambulancia;
 
     public UUID getId() {

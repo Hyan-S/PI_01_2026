@@ -42,4 +42,8 @@ public class FuncionarioService {
     public List<Funcionario> buscarPorFuncao(String funcao) {
         return _FuncionarioRepository.findByFuncao(funcao);
     }
+
+    public List<Funcionario> buscarPorEquipe(UUID equipeId) {
+        return _FuncionarioRepository.findByEquipeId(equipeId);
+    }
 }
