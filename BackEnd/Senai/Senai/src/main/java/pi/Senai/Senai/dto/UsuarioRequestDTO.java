@@ -28,6 +28,8 @@ public class UsuarioRequestDTO {
     @NotNull(message = "O nível de acesso é obrigatório.")
     private NivelAcesso nivelAcesso;
 
+    private UUID funcionarioId;
+
     public UsuarioRequestDTO() {
     }
 
@@ -43,4 +45,6 @@ public class UsuarioRequestDTO {
     public void setCategoriaId(UUID categoriaId) { this.categoriaId = categoriaId; }
     public NivelAcesso getNivelAcesso() { return nivelAcesso; }
     public void setNivelAcesso(NivelAcesso nivelAcesso) { this.nivelAcesso = nivelAcesso; }
+    public UUID getFuncionarioId() { return funcionarioId; }
+    public void setFuncionarioId(UUID funcionarioId) { this.funcionarioId = funcionarioId; }
 }

@@ -18,6 +18,7 @@ public class UsuarioResponseDTO {
     private LocalDateTime dataAtualizacao;
     private String nomeCategoria;
     private String nomeFuncao;
+    private UUID funcionarioId;
 
     public UsuarioResponseDTO() {
     }
@@ -38,6 +39,7 @@ public class UsuarioResponseDTO {
         }
         
         if (usuario.getFuncionario() != null) {
+            this.funcionarioId = usuario.getFuncionario().getId();
             this.nomeFuncao = usuario.getFuncionario().getFuncao();
         }
     }
