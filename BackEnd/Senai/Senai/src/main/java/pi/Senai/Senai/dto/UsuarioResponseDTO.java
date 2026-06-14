@@ -65,4 +65,6 @@ public class UsuarioResponseDTO {
     public void setNomeCategoria(String nomeCategoria) { this.nomeCategoria = nomeCategoria; }
     public String getNomeFuncao() { return nomeFuncao; }
     public void setNomeFuncao(String nomeFuncao) { this.nomeFuncao = nomeFuncao; }
+    public UUID getFuncionarioId() {return funcionarioId;}
+    public void setFuncionarioId(UUID funcionarioId) {this.funcionarioId = funcionarioId;}
 }

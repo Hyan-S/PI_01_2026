@@ -5,7 +5,6 @@ public enum NivelAcesso {
     REGULADOR, 
     OPERADOR, 
     MOTORISTA, 
-    SOLICITANTE, 
     MEDICO, 
     ENFERMEIRO
 }
