@@ -1,10 +1,8 @@
 package pi.Senai.Senai.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import pi.Senai.Senai.entity.Usuario;
 import pi.Senai.Senai.enums.NivelAcesso;
 
 import java.util.UUID;
@@ -28,6 +26,8 @@ public class UsuarioRequestDTO {
     @NotNull(message = "O nível de acesso é obrigatório.")
     private NivelAcesso nivelAcesso;
 
+    private UUID funcionarioId;
+
     public UsuarioRequestDTO() {
     }
 
@@ -43,4 +43,6 @@ public class UsuarioRequestDTO {
     public void setCategoriaId(UUID categoriaId) { this.categoriaId = categoriaId; }
     public NivelAcesso getNivelAcesso() { return nivelAcesso; }
     public void setNivelAcesso(NivelAcesso nivelAcesso) { this.nivelAcesso = nivelAcesso; }
+    public UUID getFuncionarioId() { return funcionarioId; }
+    public void setFuncionarioId(UUID funcionarioId) { this.funcionarioId = funcionarioId; }
 }

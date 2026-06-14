@@ -8,7 +8,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import pi.Senai.Senai.dto.UsuarioRequestDTO;
 import pi.Senai.Senai.dto.UsuarioResponseDTO;
+import pi.Senai.Senai.entity.Funcionario;
 import pi.Senai.Senai.entity.Usuario;
+import pi.Senai.Senai.enums.NivelAcesso;
+import pi.Senai.Senai.repository.FuncionarioRepository;
 import pi.Senai.Senai.repository.UsuarioRepository;
 
 import java.util.List;
@@ -19,10 +22,12 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final FuncionarioRepository funcionarioRepository;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, FuncionarioRepository funcionarioRepository) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
+        this.funcionarioRepository = funcionarioRepository;
     }
 
     @Transactional
@@ -51,8 +56,11 @@ public class UsuarioService {
         usuario.setNivelAcesso(dto.getNivelAcesso());
         usuario.setAtivo(true);
 
-        usuario = usuarioRepository.save(usuario);
+        // Chama a função de validação de cargos
+        Funcionario funcVinculado = validarEVincularFuncionario(dto.getNivelAcesso(), dto.getFuncionarioId());
+        usuario.setFuncionario(funcVinculado);
 
+        usuario = usuarioRepository.save(usuario);
         return new UsuarioResponseDTO(usuario);
     }
 
@@ -89,6 +97,10 @@ public class UsuarioService {
             usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
         }
 
+        // Chama a função de validação de cargos
+        Funcionario funcVinculado = validarEVincularFuncionario(dto.getNivelAcesso(), dto.getFuncionarioId());
+        usuario.setFuncionario(funcVinculado);
+        
         return new UsuarioResponseDTO(usuarioRepository.save(usuario));
     }
 
@@ -116,5 +128,30 @@ public class UsuarioService {
         if (cpf == null || !cpf.matches("^([0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2})$")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O CPF informado é inválido ou não segue o padrão exigido.");
         }
+    }
+
+    // 💡 1. CRIE ESTE MÉTODO NO FINAL DA CLASSE UsuarioService
+    private Funcionario validarEVincularFuncionario(NivelAcesso nivel, UUID funcionarioId) {
+        if (funcionarioId == null) {
+            return null; // Usuário comum sem vínculo operacional
+        }
+
+        Funcionario funcReal = funcionarioRepository.findById(funcionarioId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário referenciado não encontrado."));
+
+        String nivelUsuario = nivel.name();
+        // NullPointer se o funionário tiver vindo sem função do banco
+        String funcaoFuncionario = funcReal.getFuncao() != null ? funcReal.getFuncao().toUpperCase() : "";
+
+        // Compara os cargos
+        if (!nivelUsuario.equals(funcaoFuncionario)) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, 
+                "Inconsistência: Não é permitido vincular um acesso de " + nivelUsuario + 
+                " a um funcionário que é " + funcaoFuncionario + "."
+            );
+        }
+
+        return funcReal;
     }
 }

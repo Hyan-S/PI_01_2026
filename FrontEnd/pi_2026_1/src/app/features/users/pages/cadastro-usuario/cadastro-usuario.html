@@ -31,12 +31,26 @@
         }
       </div>
 
-      <div class="p-field col-12">
+      <div class="p-field col-12 md:col-6">
         <label for="nivelAcesso">Nível de Acesso <span class="text-danger">*</span></label>
         <p-select id="nivelAcesso" [options]="niveisAcesso" formControlName="nivelAcesso" placeholder="Selecione um nível" styleClass="w-full"></p-select>
         @if (formUsuario.get('nivelAcesso')?.touched && formUsuario.get('nivelAcesso')?.invalid) {
           <small class="p-error">O nível de acesso é obrigatório.</small>
         }
+      </div>
+
+      <div class="p-field col-12 md:col-6">
+        <label for="funcionarioId">Vincular a Funcionário (Opcional)</label>
+        <p-select 
+          id="funcionarioId" 
+          [options]="funcionariosFiltrados" 
+          optionLabel="descricao" 
+          optionValue="id" 
+          formControlName="funcionarioId" 
+          placeholder="Selecione um funcionário" 
+          [showClear]="true"
+          styleClass="w-full">
+        </p-select>
       </div>
 
       <div class="p-field col-12 md:col-6">
